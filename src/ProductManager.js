@@ -39,17 +39,15 @@ class ProductManager {
             price: info.price,
             thumbnail: info.thumbnail , //(ruta de imagen)
             code: info.code,
-            stock: info.stock
+            status: info.status,
+            stock: info.stock,
+            category: info.category
         }
 
         return this.getProducts()
           .then((prod) => {
             //Autoincrementacion del id:
             newProduct.id = prod.length + 1
-
-            //Nombre autoincrementable:
-            const name = prod.length + 1
-            newProduct.tittle = `Producto ${name}`
 
             //Autoincrementacion del code para que no se repita:
             const co = prod.length + 1
@@ -131,9 +129,6 @@ class ProductManager {
       
     }
 
-    getLimit() {
-
-    }
 
     }
 
@@ -167,7 +162,7 @@ const  managerDB = new ProductManager("./managerDB.json")
 */
 
 //Mostrando todos los productos que se agregan al archivo:
-managerDB.getProducts()
+/*managerDB.getProducts()
   .then((e) => {
     console.log(e)
     return e
@@ -176,7 +171,7 @@ managerDB.getProducts()
     console.log("No hay productos en el archivo")
     return a
   })
-
+*/
 
 /*
 //Modificando el producto creado:

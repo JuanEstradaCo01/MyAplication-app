@@ -1,182 +1,222 @@
 [
   {
     "id": 1,
-    "tittle": "Producto 1",
-    "description": "Caracteristicas",
-    "price": 250,
+    "tittle": "lenteja modificada",
+    "description": "Caracteristicas modificadas",
+    "price": 10,
     "thumbnail": "Sin imagen",
     "code": "abc0001",
-    "stock": 30
+    "status": true,
+    "stock": 300,
+    "category": "Grano"
   },
   {
     "id": 2,
-    "tittle": "Producto 2",
+    "tittle": "MANZANA",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 9,
     "thumbnail": "Sin imagen",
     "code": "abc0002",
-    "stock": 30
+    "status": true,
+    "stock": 20,
+    "category": "fruta"
   },
   {
     "id": 3,
-    "tittle": "Producto 3",
+    "tittle": "SANDIA",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 20,
     "thumbnail": "Sin imagen",
     "code": "abc0003",
-    "stock": 30
+    "status": true,
+    "stock": 50,
+    "category": "fruta"
   },
   {
     "id": 4,
-    "tittle": "Producto 4",
+    "tittle": "PAPAYA",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 25,
     "thumbnail": "Sin imagen",
     "code": "abc0004",
-    "stock": 30
+    "status": true,
+    "stock": 76,
+    "category": "fruta"
   },
   {
     "id": 5,
-    "tittle": "Producto 5",
+    "tittle": "BANANO",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 5,
     "thumbnail": "Sin imagen",
     "code": "abc0005",
-    "stock": 30
+    "status": true,
+    "stock": 150,
+    "category": "fruta"
   },
   {
     "id": 6,
-    "tittle": "Producto 6",
+    "tittle": "FRESA",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 3,
     "thumbnail": "Sin imagen",
     "code": "abc0006",
-    "stock": 30
+    "status": true,
+    "stock": 250,
+    "category": "fruta"
   },
   {
     "id": 7,
-    "tittle": "Producto 7",
+    "tittle": "GUANABANA",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 14,
     "thumbnail": "Sin imagen",
     "code": "abc0007",
-    "stock": 30
+    "status": true,
+    "stock": 90,
+    "category": "fruta"
   },
   {
     "id": 8,
-    "tittle": "Producto 8",
+    "tittle": "COCO",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 13,
     "thumbnail": "Sin imagen",
     "code": "abc0008",
-    "stock": 30
+    "status": true,
+    "stock": 120,
+    "category": "fruta"
   },
   {
     "id": 9,
-    "tittle": "Producto 9",
+    "tittle": "LULO",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 2.5,
     "thumbnail": "Sin imagen",
     "code": "abc0009",
-    "stock": 30
+    "status": true,
+    "stock": 500,
+    "category": "fruta"
   },
   {
     "id": 10,
-    "tittle": "Producto 10",
+    "tittle": "CIRUELA",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 5,
     "thumbnail": "Sin imagen",
     "code": "abc00010",
-    "stock": 30
+    "status": true,
+    "stock": 300,
+    "category": "fruta"
   },
   {
     "id": 11,
-    "tittle": "Producto 11",
-    "description": "Caracteristicas",
-    "price": 250,
+    "tittle": "lenteja modificada",
+    "description": "Caracteristicas modificadas",
+    "price": 10,
     "thumbnail": "Sin imagen",
     "code": "abc00011",
-    "stock": 30
+    "status": true,
+    "stock": 500,
+    "category": "fruta"
   },
   {
     "id": 12,
-    "tittle": "Producto 12",
+    "tittle": "MANGO",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 7,
     "thumbnail": "Sin imagen",
     "code": "abc00012",
-    "stock": 30
+    "status": true,
+    "stock": 90,
+    "category": "fruta"
   },
   {
     "id": 13,
-    "tittle": "Producto 13",
+    "tittle": "UVA",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 2,
     "thumbnail": "Sin imagen",
     "code": "abc00013",
-    "stock": 30
+    "status": true,
+    "stock": 200,
+    "category": "fruta"
   },
   {
     "id": 14,
-    "tittle": "Producto 14",
+    "tittle": "AGUACATE",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 15,
     "thumbnail": "Sin imagen",
     "code": "abc00014",
-    "stock": 30
+    "status": true,
+    "stock": 100,
+    "category": "verdura"
   },
   {
     "id": 15,
-    "tittle": "Producto 15",
+    "tittle": "TOMATE",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 1.5,
     "thumbnail": "Sin imagen",
     "code": "abc00015",
-    "stock": 30
+    "status": true,
+    "stock": 500,
+    "category": "verdura"
   },
   {
     "id": 16,
-    "tittle": "Producto 16",
+    "tittle": "LIMON",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 1,
     "thumbnail": "Sin imagen",
     "code": "abc00016",
-    "stock": 30
+    "status": true,
+    "stock": 500,
+    "category": "verdura"
   },
   {
     "id": 17,
-    "tittle": "Producto 17",
+    "tittle": "PIÑA",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 10,
     "thumbnail": "Sin imagen",
     "code": "abc00017",
-    "stock": 30
+    "status": true,
+    "stock": 100,
+    "category": "fruta"
   },
   {
     "id": 18,
-    "tittle": "Producto 18",
+    "tittle": "CEBOLLA",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 2,
     "thumbnail": "Sin imagen",
     "code": "abc00018",
-    "stock": 30
+    "status": true,
+    "stock": 50,
+    "category": "verdura"
   },
   {
     "id": 19,
-    "tittle": "Producto 19",
+    "tittle": "MANDARINA",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 2.5,
     "thumbnail": "Sin imagen",
     "code": "abc00019",
-    "stock": 30
+    "status": true,
+    "stock": 250,
+    "category": "fruta"
   },
   {
     "id": 20,
-    "tittle": "Producto 20",
+    "tittle": "ZANAHORIA",
     "description": "Caracteristicas",
-    "price": 250,
+    "price": 4,
     "thumbnail": "Sin imagen",
     "code": "abc00020",
-    "stock": 30
+    "status": true,
+    "stock": 100,
+    "category": "verdura"
   }
 ]

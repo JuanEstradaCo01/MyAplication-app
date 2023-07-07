@@ -23,13 +23,13 @@
   },
   {
     "id": 3,
-    "tittle": "SANDIA",
-    "description": "Caracteristicas",
-    "price": 20,
+    "tittle": "Sandia modificada",
+    "description": "Caracteristicas modificadas",
+    "price": 10,
     "thumbnail": "Sin imagen",
     "code": "abc0003",
     "status": true,
-    "stock": 50,
+    "stock": 300,
     "category": "fruta"
   },
   {

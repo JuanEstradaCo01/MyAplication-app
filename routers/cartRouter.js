@@ -8,6 +8,8 @@ const { Router } = express
 
 const cartRouter = Router()
 
+const carrito01 = require("../src/carrito.json")
+
 cartRouter.post("/", async(req, res) => {
     const data = req.body
 
@@ -28,11 +30,18 @@ cartRouter.get("/:cid", async(req, res) => {
   
     if (!cartBuscar) {
         return res.status(404).json({
-            error: "No encontrado"
+            error: `No existe el carrito con el ID:${Id}`
         })
     }else {
         return res.send(cartBuscar)
     }
+})
+
+cartRouter.post("/cid/products/pid", async(req, res) => {
+    const data = req.body
+
+    
+    return res.status(201).json(data)
 })
 
 module.exports = cartRouter

@@ -55,6 +55,25 @@ class CartManager {
               return []
           })
     }
+
+    addProductToCart(data) {
+      const newProduct = {
+        product: data.product,
+        quantity: data.quantity
+      }
+
+      return this.getCarts()
+      .then((prod) => { 
+
+      prod.push(newProduct)
+            
+        return fs.promises.writeFile(this.path, JSON.stringify(prod, null, 2))
+      })
+      .catch((e) => {
+        console.log("Ocurrio un error al agregar el producto al carrito")
+        return e
+      })
+    }
     }
 
 

@@ -5,6 +5,7 @@ const CartManager = require("../src/CartManager")
 const carrito = new CartManager("../src/carrito.json")
 
 const ProductManager = require("../src/ProductManager")
+const { monthsShort } = require("moment/moment")
 
 const managerDB = new ProductManager("../src/managerDB.json")
 
@@ -41,46 +42,52 @@ cartRouter.get("/:cid", async(req, res) => {
 
 cartRouter.post("/:cid/products/:pid", async(req, res) => {
 
-    const data = req.body
     const cid = parseInt(req.params.cid)
     const pid = parseInt(req.params.pid)
     try{
-        const carts = await carrito.getCarts()
-        const cartById = await carrito.getCartById(cid)
+        
+        const cartById = await carrito.getCartById(cid)      
 
         if (!cartById) {
             return res.status(404).json({
-                error: "Not found"
+                error: "No se encontro el carrito"
             })
         }
 
         const productById = await managerDB.getProductById(pid)
-
+       
         if (!productById) {
             return res.status(404).json({
-                error: "Not found"
+                error: "No se encontro el producto"
             })
-        }
-
-        const productCar = cartById.product.find(item => item.product === pid)
-
-        if (!productCar) {
+        }      
+       
+        if (cartById.products.length === 0 ){
             const newProduct = {
                 product: pid,
                 quantity: 1
             }
-            cartById.product.push(newProduct)
-        }else {
-            productCar.quantity = productCar.quantity + 1 
+            cartById.products.push(newProduct)
+        }else{
+            const encontrar = cartById.products.findIndex(item => item.product === pid)
+            if (encontrar >=0){
+                cartById.products[encontrar].quantity = cartById.products[encontrar].quantity + 1
+            }else{
+                const newProduct = {
+                    product: pid,
+                    quantity: 1
+                }
+                cartById.products.push(newProduct)
+            }
         }
-        const posCart = carts.findIndex(item => item.id === cid)
-        carts[posCart].product = cartById.product
-        await carrito.addProductToCart(carts)
+        const products = []
+        products.push(cartById)
+        await carrito.saveCart(products)
+        return res.status(201).json(products)
+        
     }catch(error) {
         error
-    }
-
-    return res.status(201).json(data)
+    }    
 })
 
 module.exports = cartRouter

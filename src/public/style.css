@@ -1,0 +1,43 @@
+body{
+    background-color: rgb(27, 26, 26);
+}
+
+h1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    color: rgb(0, 248, 145);
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input{
+    margin-top: .5rem;
+    font-size: 1rem;
+    border-radius: .5rem;
+}
+
+label{
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    color: rgb(2, 119, 74);
+}
+
+.inputEnviar{
+    margin-top: 2rem;
+    background-color: black;
+    color: white;
+    width: 6rem;
+}
+
+.inputEnviar:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+}

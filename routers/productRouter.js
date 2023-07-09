@@ -8,7 +8,17 @@ const { Router } = express
 
 const productRouter = Router()
 
-productRouter.get("/", async(req, res) => {
+productRouter.get("/", (req, res, next) => {
+    console.log("pasando por el primer middleware (1)")
+    return next()
+},(req, res, next) => {
+    console.log("pasando por el segundo middleware (2)")
+    return next()
+},(req, res, next) => {
+    console.log("pasando por el tercer middleware (3)")
+    return next()
+}, async(req, res) => {
+    console.log("pasando por el controlador")
     try {
         const productos = await managerDB.getProducts()
         

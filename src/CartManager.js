@@ -24,7 +24,7 @@ class CartManager {
         return fs.promises.writeFile(this.path, JSON.stringify(prod, null, 2))
       })
       .catch((e) => {
-        console.log("Ocurrio un error")
+        console.log("Ocurrio un error al agregar el carrito")
         return e
       })
        
@@ -38,7 +38,7 @@ class CartManager {
             return prods
           })
           .catch((e) => {
-            console.log("Ocurrio un error")
+            console.log("Ocurrio un error al traer el carrito por ID")
             return e
           })
 
@@ -51,28 +51,14 @@ class CartManager {
             return produ
           })
           .catch((e) => {
-              console.log("Ocurio un error")
+              console.log("Ocurio un error al traer los carrito")
               return []
           })
     }
 
-    addProductToCart(data) {
-      const newProduct = {
-        product: data.product,
-        quantity: data.quantity
-      }
-
-      return this.getCarts()
-      .then((prod) => { 
-
-      prod.push(newProduct)
+    saveCart(prod) {     
             
         return fs.promises.writeFile(this.path, JSON.stringify(prod, null, 2))
-      })
-      .catch((e) => {
-        console.log("Ocurrio un error al agregar el producto al carrito")
-        return e
-      })
     }
     }
 

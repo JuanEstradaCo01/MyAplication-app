@@ -10,7 +10,7 @@ class ProductManager {
     addProduct(info) {
 
         //Validacion: para que todos los campos sean requeridos:
-        if ( !info.tittle || !info.description || !info.price || !info.thumbnail || !info.code ) {
+        if ( !info.tittle || !info.description || !info.price || !info.thumbnail) {
             const error = "Error: Todos los campos son requeridos"
             console.log(error)
             return error

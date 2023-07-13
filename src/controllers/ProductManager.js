@@ -10,7 +10,7 @@ class ProductManager {
     addProduct(info) {
 
         //Validacion: para que todos los campos sean requeridos:
-        if ( !info.tittle || !info.description || !info.price || !info.thumbnail) {
+        if ( !info.tittle || !info.description || !info.price) {
             const error = "Error: Todos los campos son requeridos"
             console.log(error)
             return error
@@ -34,7 +34,7 @@ class ProductManager {
 
         const newProduct = {
             id: info.id,
-            tittle: info.tittle.toUpperCase(),
+            tittle: info.tittle,
             description: info.description,
             price: info.price,
             thumbnail: info.thumbnail , //(ruta de imagen)
@@ -84,7 +84,7 @@ class ProductManager {
             return produ
           })
           .catch((e) => {
-              console.log("Ocurio un error")
+              console.log("Ocurio un error al mostrar los productos")
               return []
           })
     }

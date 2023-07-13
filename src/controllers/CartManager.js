@@ -7,10 +7,10 @@ class CartManager {
         this.path = path
     }
 
-    addCart(info) {
+    addCart(data) {
 
       const newCart = {
-        id: info.id,
+        id: data.id,
         products: []
     }
 
@@ -51,7 +51,7 @@ class CartManager {
             return produ
           })
           .catch((e) => {
-              console.log("Ocurio un error al traer los carrito")
+              console.log("Ocurio un error al traer los carritos")
               return []
           })
     }

@@ -1,24 +1,20 @@
 const express = require("express")
 
-const ProductManager = require("../src/ProductManager")
+const ProductManager = require("../controllers/ProductManager")
+const uploader = require("../utils")
+//const io = require("../app")
+const init = require("../utils/io")
 
-const managerDB = new ProductManager("../src/managerDB.json")
+const managerDB = new ProductManager("./managerDB.json")
 
 const { Router } = express
 
 const productRouter = Router()
 
-productRouter.get("/", (req, res, next) => {
-    console.log("pasando por el primer middleware (1)")
-    return next()
-},(req, res, next) => {
-    console.log("pasando por el segundo middleware (2)")
-    return next()
-},(req, res, next) => {
-    console.log("pasando por el tercer middleware (3)")
-    return next()
-}, async(req, res) => {
-    console.log("pasando por el controlador")
+const io = init()
+
+productRouter.get("/", async (req, res, ) =>  {
+
     try {
         const productos = await managerDB.getProducts()
         
@@ -50,14 +46,18 @@ productRouter.get("/:pid", async(req, res) => {
 
 productRouter.post("/", async(req, res) => {
     const data = req.body
-
     const guardar = await managerDB.getProducts()
 
     data.id = guardar.length + 1
+    //data.path = req.file.originalname
+
     await managerDB.addProduct(data)
+
+    io.emit("NuevoProducto", JSON.stringify(data))
    
     return res.status(201).json(data)
 })
+
 
 productRouter.put("/:pid", async(req, res) => {
     const data = req.body

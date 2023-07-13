@@ -41,3 +41,55 @@ label{
     transform: scale(1.2);
     cursor: pointer;
 }
+
+.tableContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tableContainer2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.h2{
+    color: rgb(0, 172, 37);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+table{
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: rgb(165, 165, 68);
+    border-style: solid;
+    border-color: rgb(0, 0, 0);
+}
+
+td{
+    border-bottom: double;
+}
+
+th{
+    border: solid;
+    border-right: solid;
+}
+
+body{
+    display: flex;
+}
+
+#formulario,#tabla{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    border: solid;
+    border-color: rgb(88, 82, 82);
+    padding: 1rem;
+    padding-top: 1rem;
+}

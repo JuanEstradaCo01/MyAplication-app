@@ -1,13 +1,13 @@
 const express = require("express")
 
-const CartManager = require("../src/CartManager")
+const CartManager = require("../controllers/CartManager.js")
 
-const carrito = new CartManager("../src/carrito.json")
+const carrito = new CartManager("../carrito.json")
 
-const ProductManager = require("../src/ProductManager")
-const { monthsShort } = require("moment/moment")
+const ProductManager = require("../controllers/ProductManager.js")
 
-const managerDB = new ProductManager("../src/managerDB.json")
+
+const managerDB = new ProductManager("../managerDB.json")
 
 const { Router } = express
 

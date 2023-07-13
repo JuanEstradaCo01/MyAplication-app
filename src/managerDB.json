@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "tittle": "lenteja modificada",
+    "tittle": "papaya",
     "description": "Caracteristicas modificadas",
     "price": 10,
     "thumbnail": "Sin imagen",
@@ -12,7 +12,7 @@
   },
   {
     "id": 2,
-    "tittle": "MANZANA",
+    "tittle": "manzana",
     "description": "Caracteristicas",
     "price": 9,
     "thumbnail": "Sin imagen",
@@ -23,7 +23,7 @@
   },
   {
     "id": 3,
-    "tittle": "Sandia modificada",
+    "tittle": "sandia",
     "description": "Caracteristicas modificadas",
     "price": 10,
     "thumbnail": "Sin imagen",
@@ -34,7 +34,7 @@
   },
   {
     "id": 4,
-    "tittle": "PAPAYA",
+    "tittle": "papaya",
     "description": "Caracteristicas",
     "price": 25,
     "thumbnail": "Sin imagen",
@@ -45,7 +45,7 @@
   },
   {
     "id": 5,
-    "tittle": "BANANO",
+    "tittle": "banano",
     "description": "Caracteristicas",
     "price": 5,
     "thumbnail": "Sin imagen",
@@ -56,7 +56,7 @@
   },
   {
     "id": 6,
-    "tittle": "FRESA",
+    "tittle": "fresa",
     "description": "Caracteristicas",
     "price": 3,
     "thumbnail": "Sin imagen",
@@ -67,7 +67,7 @@
   },
   {
     "id": 7,
-    "tittle": "GUANABANA",
+    "tittle": "guanabana",
     "description": "Caracteristicas",
     "price": 14,
     "thumbnail": "Sin imagen",
@@ -78,7 +78,7 @@
   },
   {
     "id": 8,
-    "tittle": "COCO",
+    "tittle": "coco",
     "description": "Caracteristicas",
     "price": 13,
     "thumbnail": "Sin imagen",
@@ -89,7 +89,7 @@
   },
   {
     "id": 9,
-    "tittle": "LULO",
+    "tittle": "lulo",
     "description": "Caracteristicas",
     "price": 2.5,
     "thumbnail": "Sin imagen",
@@ -100,7 +100,7 @@
   },
   {
     "id": 10,
-    "tittle": "CIRUELA",
+    "tittle": "ciruela",
     "description": "Caracteristicas",
     "price": 5,
     "thumbnail": "Sin imagen",
@@ -111,7 +111,7 @@
   },
   {
     "id": 11,
-    "tittle": "lenteja modificada",
+    "tittle": "lenteja",
     "description": "Caracteristicas modificadas",
     "price": 10,
     "thumbnail": "Sin imagen",
@@ -122,7 +122,7 @@
   },
   {
     "id": 12,
-    "tittle": "MANGO",
+    "tittle": "mango",
     "description": "Caracteristicas",
     "price": 7,
     "thumbnail": "Sin imagen",
@@ -133,7 +133,7 @@
   },
   {
     "id": 13,
-    "tittle": "UVA",
+    "tittle": "uva",
     "description": "Caracteristicas",
     "price": 2,
     "thumbnail": "Sin imagen",
@@ -144,7 +144,7 @@
   },
   {
     "id": 14,
-    "tittle": "AGUACATE",
+    "tittle": "aguacate",
     "description": "Caracteristicas",
     "price": 15,
     "thumbnail": "Sin imagen",
@@ -155,7 +155,7 @@
   },
   {
     "id": 15,
-    "tittle": "TOMATE",
+    "tittle": "tomate",
     "description": "Caracteristicas",
     "price": 1.5,
     "thumbnail": "Sin imagen",
@@ -166,7 +166,7 @@
   },
   {
     "id": 16,
-    "tittle": "LIMON",
+    "tittle": "limon",
     "description": "Caracteristicas",
     "price": 1,
     "thumbnail": "Sin imagen",
@@ -177,7 +177,7 @@
   },
   {
     "id": 17,
-    "tittle": "PIÑA",
+    "tittle": "piña",
     "description": "Caracteristicas",
     "price": 10,
     "thumbnail": "Sin imagen",
@@ -188,7 +188,7 @@
   },
   {
     "id": 18,
-    "tittle": "CEBOLLA",
+    "tittle": "cebolla",
     "description": "Caracteristicas",
     "price": 2,
     "thumbnail": "Sin imagen",
@@ -199,7 +199,7 @@
   },
   {
     "id": 19,
-    "tittle": "MANDARINA",
+    "tittle": "mandarina",
     "description": "Caracteristicas",
     "price": 2.5,
     "thumbnail": "Sin imagen",
@@ -210,7 +210,7 @@
   },
   {
     "id": 20,
-    "tittle": "ZANAHORIA",
+    "tittle": "zanahoria",
     "description": "Caracteristicas",
     "price": 4,
     "thumbnail": "Sin imagen",

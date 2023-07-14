@@ -2,7 +2,7 @@ const express = require("express")
 
 const ProductManager = require("../controllers/ProductManager")
 const uploader = require("../utils")
-//const io = require("../app")
+
 const init = require("../utils/io")
 
 const managerDB = new ProductManager("./managerDB.json")
@@ -49,12 +49,9 @@ productRouter.post("/", async(req, res) => {
     const guardar = await managerDB.getProducts()
 
     data.id = guardar.length + 1
-    //data.path = req.file.originalname
 
-    await managerDB.addProduct(data)
-
-    io.emit("NuevoProducto", JSON.stringify(data))
-   
+    await managerDB.addProduct(data) 
+ 
     return res.status(201).json(data)
 })
 
@@ -93,18 +90,22 @@ productRouter.delete("/:pid", async(req, res) => {
 
     const guardar = await managerDB.getProducts()
 
-    const productIndex = guardar.findIndex( item => item.id === pid)
+    const productIndex = guardar.find( item => item.id === pid)
+    const indice = guardar.indexOf(productIndex)
 
-    if (productIndex === -1) {
+    if (productIndex === undefined) {
         return res.status(404).json({
             error: "!Producto no encontrado!"
         })
     }
 
-    guardar.splice(productIndex, 1)
+    guardar.splice(indice, 1)
+
+    const nombre = productIndex.tittle
 
     return res.json({
-        ok: "Producto eliminado"
+        ok:`(${nombre}) ha sido eliminado`,
+        
     })
 })
 

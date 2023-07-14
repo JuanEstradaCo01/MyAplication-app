@@ -3,12 +3,6 @@ const socket = io()
 console.log(socket)
 
 
-function stopDefAction(evt) {
-    evt.preventDefault();
-  }
-
-
-
 socket.on("NuevoProducto", (data) => {
     const product = JSON.parse(data)
 

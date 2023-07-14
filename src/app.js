@@ -40,14 +40,13 @@ const httpServer = app.listen(puerto, () => {
     console.log(`Servidor espress escuchando en el puerto ${puerto}`)
 })
 
-
 const io = socketServer(httpServer)
 
-
-//Agregar producto por postman
+//Agregar producto enviado desde el formulario (/static) o desde postman
 
 const products = require("./managerDB.json")
 
+//Peticion post en la que estoy utilizando "emit"
 app.post("/api/products", async(req, res) => {
     const product = req.body
     console.log(product)
@@ -60,8 +59,6 @@ app.post("/api/products", async(req, res) => {
 
     return res.status(201).json(product)
 })
-
-
 
 
 app.use("/api/products", productRouter)

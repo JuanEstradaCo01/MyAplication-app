@@ -1,25 +1,43 @@
-<div class="tableContainer2">
-        
-    <table id="productos">
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Stock</th>
-            <th>Categoria</th>
-            <th>Code</th>
-        </tr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="tabla">
+        <div class="h2">
+        <h2>Lista de productos:</h2>
+        </div>
 
-        {{#each products}}
-        <tr>
-            <td>{{this.id}}</td>
-            <td>{{this.tittle}}</td>
-            <td>{{this.price}}</td>
-            <td>{{this.stock}}</td>
-            <td>{{this.category}}</td>
-            <td>{{this.code}}</td>       
-        </tr>
-        {{/each}}
-    </table>
-</div>
+    <div class="tableContainer">
+        
+        <table id="productos">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Categoria</th>
+                <th>Code</th>
+            </tr>
+
+            {{#each products}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.tittle}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.stock}}</td>
+                <td>{{this.category}}</td>
+                <td>{{this.code}}</td>       
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+    </div>
+</body>
+</html>
     

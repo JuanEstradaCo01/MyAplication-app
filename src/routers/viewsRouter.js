@@ -6,6 +6,8 @@ const viewsRouter = new Router()
 
 const products = require("../managerDB.json")
 
+
+
 viewsRouter.get("/products", (req, res) => {
 
     const params = {

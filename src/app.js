@@ -57,7 +57,7 @@ app.post("/api/products", async(req, res) => {
 
     io.emit("NuevoProducto", JSON.stringify(product))
 
-    return res.status(201).json(product)
+    return res.redirect("/realtimeProducts")
 })
 
 

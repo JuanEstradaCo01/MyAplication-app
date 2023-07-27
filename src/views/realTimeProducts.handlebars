@@ -8,6 +8,23 @@
 </head>
 <body id="body">
 
+    <div id="formulario">
+        <h1>Agregar producto:</h1>
+
+        <form id="formu" action="/api/products" method="POST">
+            <label for="tittle">Tittle: </label><input type="text" name="tittle" placeholder="Nombre del producto" required>
+            <label for="description">Description: </label><input type="text" id="description" placeholder="Descripcion del producto" required>
+            <label for="price">Price: </label><input type="number" name="price" placeholder="Precio" required>
+            <label for="thumbnail">Imagen: </label><input type="text" id="thumbnail" placeholder="sin imagen">
+            <!--<label for="code">Code: </label><input type="number" name="code" placeholder="Codigo autogenerable" required>-->
+            <label for="status">Status: </label><input type="text" id="status" placeholder="True o false" required>
+            <label for="stock">Stock: </label><input type="number" name="stock" placeholder="Cantidad disponible" required>
+            <label for="category">Category: </label><input type="text" name="category" placeholder="Tipo de producto" required>
+    
+            <input class="inputEnviar" type="submit" value="Agregar" id="formButton">
+        </form>
+    </div>
+
     <div id="tabla">
         <div class="h2">
         <h2>Lista de productos:</h2>
@@ -22,7 +39,6 @@
                 <th>Precio</th>
                 <th>Stock</th>
                 <th>Categoria</th>
-                <th>Code</th>
             </tr>
 
             {{#each products}}
@@ -32,7 +48,7 @@
                 <td>{{this.price}}</td>
                 <td>{{this.stock}}</td>
                 <td>{{this.category}}</td>
-                <td>{{this.code}}</td>       
+                <td><button class="butn" id="deleteButton{{this.id}}" onclick="deleteProduct({{this.id}})">X</button></td>       
             </tr>
             {{/each}}
         </table>

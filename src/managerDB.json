@@ -218,5 +218,21 @@
     "status": true,
     "stock": 100,
     "category": "verdura"
+  },
+  {
+    "id": 21,
+    "tittle": "Guanabana",
+    "price": "10",
+    "code": "abc00021",
+    "stock": "150",
+    "category": "fruta"
+  },
+  {
+    "id": 22,
+    "tittle": "Lulo",
+    "price": "5",
+    "code": "abc00022",
+    "stock": "90",
+    "category": "fruta"
   }
 ]

@@ -8,7 +8,7 @@
     "code": "abc0001",
     "status": true,
     "stock": 300,
-    "category": "Grano"
+    "category": "fruta"
   },
   {
     "id": 2,
@@ -118,7 +118,7 @@
     "code": "abc00011",
     "status": true,
     "stock": 500,
-    "category": "fruta"
+    "category": "grano"
   },
   {
     "id": 12,
@@ -151,7 +151,7 @@
     "code": "abc00014",
     "status": true,
     "stock": 100,
-    "category": "verdura"
+    "category": "fruta"
   },
   {
     "id": 15,
@@ -162,7 +162,7 @@
     "code": "abc00015",
     "status": true,
     "stock": 500,
-    "category": "verdura"
+    "category": "fruta"
   },
   {
     "id": 16,
@@ -173,7 +173,7 @@
     "code": "abc00016",
     "status": true,
     "stock": 500,
-    "category": "verdura"
+    "category": "fruta"
   },
   {
     "id": 17,
@@ -218,21 +218,5 @@
     "status": true,
     "stock": 100,
     "category": "verdura"
-  },
-  {
-    "id": 21,
-    "tittle": "Guanabana",
-    "price": "10",
-    "code": "abc00021",
-    "stock": "150",
-    "category": "fruta"
-  },
-  {
-    "id": 22,
-    "tittle": "Lulo",
-    "price": "5",
-    "code": "abc00022",
-    "stock": "90",
-    "category": "fruta"
   }
 ]

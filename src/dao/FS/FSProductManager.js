@@ -63,10 +63,10 @@ class ProductManager {
 
     }
 
-    getProductById (ID) {
+    getProductById (id) {
         return this.getProducts()
           .then((prod) => {
-            const prods = prod.find(prods => prods.id === ID)
+            const prods = prod.find(prods => prods.id === id)
 
             return prods
           })

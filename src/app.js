@@ -3,36 +3,40 @@ const productRouter = require("./routers/productRouter")
 const cartRouter = require("./routers/cartRouter")
 const viewsRouter = require("./routers/viewsRouter")
 const handlebars = require("express-handlebars")
-const ProductManager = require("./controllers/ProductManager")
+const ProductManager = require("./dao/FS/FSProductManager")
 const managerDB = new ProductManager("./managerDB.json")
+const mongoose = require("mongoose")
+const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi.mongodb.net/ecommerce?retryWrites=true&w=majority"
+
+mongoose.connect(MONGODB_CONNECT)
+  .then(() => console.log("¡Conexion a la DB exitosa!"))
+  .catch((e) => console.log(e))
 
 const socketServer = require("./utils/io")
 
 const app = express()
 
+
+//NOTA: Para agregar productos ir a (/realtimeProducts) que nos muestra el formulario y la lista de productos la cual funciona en tiempo real al agregar un producto
+
+
+//Configuracion basica
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(express.static("public"))
 
 
 
 
-//Para agregar mediante un formulario por el front
-app.use("/static", express.static("public"))
-
-
+//app.use("/static", express.static("public"))
 
 
 //configurando handlebars
 app.engine("handlebars", handlebars.engine())
-
 app.set("views", "./views")
-
 app.set("view engine", "handlebars")
 
 
-
-
-app.use(express.static("public"))
 
 const puerto = 8080
 
@@ -42,10 +46,12 @@ const httpServer = app.listen(puerto, () => {
 
 const io = socketServer(httpServer)
 
-//Agregar producto enviado desde el formulario (/static) o desde postman
+
+
 
 const products = require("./managerDB.json")
 
+/*//descomentar si se quiere usar FS
 //Peticion post en la que estoy utilizando "emit"
 app.post("/api/products", async(req, res) => {
     const product = req.body
@@ -58,7 +64,7 @@ app.post("/api/products", async(req, res) => {
     io.emit("NuevoProducto", JSON.stringify(product))
 
     return res.redirect("/realtimeProducts")
-})
+})*/
 
 
 app.use("/api/products", productRouter)

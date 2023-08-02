@@ -1,35 +1,39 @@
 const express = require("express")
-
-const CartManager = require("../controllers/CartManager.js")
-
-const carrito = new CartManager("../carrito.json")
-
-const ProductManager = require("../controllers/ProductManager.js")
-
-
-const managerDB = new ProductManager("../managerDB.json")
-
+//const CartManager = require("../dao/FS/FSCartManager.js") --> Para FS
+//const carrito = new CartManager("../carrito.json") --> para FS
+//const ProductManager = require("../dao/FS/FSProductManager.js") --> para FS
+//const managerDB = new ProductManager("../managerDB.json") --> para FS
 const { Router } = express
-
 const cartRouter = Router()
 
+
+const DBProductManager = require("../dao/DBProductManager")
+const dbproductManager = new DBProductManager() //Para usar mongo
+const DBCartManager = require("../dao/DBCartManager")
+const dbcartManager = new DBCartManager()// Para usar mongo
+
+
+//NOTA: Descomentar todo lo que este comentado si se quiere usar FS
+
 cartRouter.post("/", async(req, res) => {
-    const data = req.body
+    /*const data = req.body
 
     const guardar = await carrito.getCarts()
 
     data.id = guardar.length + 1
     
-    await carrito.addCart(data)
+    await carrito.addCart(data)*/
 
-    return res.status(201).json(data)
+    const carts = await dbcartManager.getCarts()
+
+    res.json(carts)
 })
 
 cartRouter.get("/:cid", async(req, res) => {
 
-    const Id = parseInt(req.params.cid)
+    const cid = req.params.cid //convertirlo con parseInt cuando se quiera usar FS
 
-    const cartBuscar = await carrito.getCartById(Id)
+    const cartBuscar = await dbcartManager.getCartById(cid)
   
     if (!cartBuscar) {
         return res.status(404).json({
@@ -44,8 +48,9 @@ cartRouter.post("/:cid/products/:pid", async(req, res) => {
 
     const cid = parseInt(req.params.cid)
     const pid = parseInt(req.params.pid)
+    
     try{
-        
+        const productos = await getCarts()
         const cartById = await carrito.getCartById(cid)      
 
         if (!cartById) {

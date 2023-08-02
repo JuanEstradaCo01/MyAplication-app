@@ -1,22 +1,19 @@
 const express = require("express")
-
-const ProductManager = require("../controllers/ProductManager")
+const ProductManager = require("../dao/FS/FSProductManager")
 const uploader = require("../utils")
-
 const init = require("../utils/io")
-
-const managerDB = new ProductManager("./managerDB.json")
-
+//const managerDB = new ProductManager("./managerDB.json") //Para usar FS
 const { Router } = express
-
 const productRouter = Router()
+const DBProductManager = require("../dao/DBProductManager")
+const dbproductManager = new DBProductManager() //Para usar mongo
 
-const io = init()
+//NOTA: Descomentar todo lo que este comentado si se quiere usar FS
 
 productRouter.get("/", async (req, res, ) =>  {
 
     try {
-        const productos = await managerDB.getProducts()
+        const productos = await dbproductManager.getProducts()
         
         const limite = parseInt(req.query.limit)
 
@@ -33,31 +30,36 @@ productRouter.get("/", async (req, res, ) =>  {
 
 productRouter.get("/:pid", async(req, res) => {
 
-    const Id = parseInt(req.params.pid)
+    const pid = req.params.pid //convertirlo con parseInt cuando se quiera usar FS
 
-    const productBuscar = await managerDB.getProductById(Id)
+    const productBuscar = await dbproductManager.getProductById(pid)
   
     if (!productBuscar) {
-        return res.send({})
+        return res.send({error: "El producto no existe"})
     }else {
-        return res.send(productBuscar)
+        return res.json(productBuscar)
     }
 })
 
 productRouter.post("/", async(req, res) => {
-    const data = req.body
+    /*const data = req.body
     const guardar = await managerDB.getProducts()
 
-    data.id = guardar.length + 1
+    data.id = guardar.length + 1*/
+    const data = req.body
 
-    await managerDB.addProduct(data) 
+    const guardar = await dbproductManager.getProducts()
+
+    data.code = guardar.length + 1 //Autoincremento el code ya que debe ser unico
+
+    await dbproductManager.addProduct(data) 
  
     return res.status(201).json(data)
 })
 
 
 productRouter.put("/:pid", async(req, res) => {
-    const data = req.body
+    /*const data = req.body
 
     const pid = parseInt(req.params.pid)
 
@@ -80,13 +82,19 @@ productRouter.put("/:pid", async(req, res) => {
     product.stock = data.stock || product.stock
 
     const modificar = await managerDB.updateProduct(pid, product)
+*/
 
-    return res.json(product)
+    const body = req.body
+
+    const pid = req.params.pid
+
+    await dbproductManager.updateProduct(pid, body)
+    return res.status(200).json(body)
 })
 
 productRouter.delete("/:pid", async(req, res) => {
 
-    const pid = parseInt(req.params.pid)
+    /*const pid = parseInt(req.params.pid)
 
     const guardar = await managerDB.getProducts()
 
@@ -106,7 +114,17 @@ productRouter.delete("/:pid", async(req, res) => {
     return res.json({
         ok:`(${nombre}) ha sido eliminado`,
         
-    })
+    })*/
+
+    const pid = req.params.pid
+
+    try {
+        const product = await dbproductManager.deleteProduct(pid)
+
+        return res.json({OK: "Se ha eliminado el producto"})
+    }catch (e) {
+        return res.status(404).json({mensaje: "No existe el producto a eliminar"})
+    }
 })
 
 module.exports = productRouter

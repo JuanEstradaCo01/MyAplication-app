@@ -5,16 +5,26 @@ class DBCartManager {
         this.model = cartModel
     }
 
-    getCarts() {
+    async getCarts() {
         return this.model.find()
     }
 
-    getCartById(id) {
+    async getCartById(id) {
         return this.model.findById(id)
     }
 
-    addCart() {
+    async addCart(body) {
+        return this.model.create({
+            carrito: body.carrito,
+            products: []
+        })
+    }
 
+    async addProductToCart(body) {
+        return this.model.create({
+            product: body.product,
+            quantity: body.quantity
+        })
     }
 
 }

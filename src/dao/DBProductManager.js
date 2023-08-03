@@ -5,15 +5,15 @@ class DBProductManager {
         this.model = productModel
     }
 
-    getProducts() {
+    async getProducts() {
         return this.model.find()
     }
 
-    getProductById(id) {
+    async getProductById(id) {
         return this.model.findById(id)
     }
 
-    addProduct(body) {
+    async addProduct(body) {
         return this.model.create({
             tittle: body.tittle,
             description: body.description,

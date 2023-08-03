@@ -1,6 +1,120 @@
-body{
-    background-color: rgb(27, 26, 26);
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+body{
+    background-color: rgb(20, 20, 20);
+}
+
+#header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(2, 136, 80);
+    margin-bottom: 5rem;
+    height: 10rem;
+    color: white;
+}
+
+h2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: beige;
+    margin-bottom: 4rem;
+}
+
+h3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 12rem;
+    padding: 1rem;
+}
+
+.divh3{
+    display: flex;
+}
+
+footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(2, 136, 80);
+    color: white;
+    position:absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.foot{
+    margin: 1rem;
+}
+
+.inputIngresar{
+    height: 4rem;
+    width: 8rem;
+    border-radius: 1rem;
+    background-color: rgb(1, 43, 1);
+    border: rgb(1, 43, 1);
+    color: white;
+}
+
+.ingresar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5rem 0rem 2rem 0rem;
+}
+
+.inputIngresar:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+    background-color: rgb(1, 78, 1);
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: 18rem;
+    margin-right: 0rem;
+    background-color: rgb(39, 39, 39);
+    border-radius: 1rem;
+}
+
+.divForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.labelNombre{
+    margin-top: 2rem;
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.inputLogin{
+    margin-top: 1rem;
+    background-color: rgb(0, 0, 0);
+    border: black;
+    color: white;
+    height: 3rem;
+    border-radius: .5rem;
+}
+
+
 
 h1{
     display: flex;
@@ -8,7 +122,7 @@ h1{
     justify-content: center;
     margin-top: 5rem;
     margin-bottom: 5rem;
-    color: rgb(0, 248, 145);
+    color: rgb(255, 255, 255);
 }
 
 form{
@@ -17,6 +131,12 @@ form{
     justify-content: center;
     align-items: center;
 }
+
+
+#body{
+    display: flex;
+}
+
 
 input{
     margin-top: .5rem;
@@ -78,9 +198,6 @@ th{
     border-right: solid;
 }
 
-body{
-    display: flex;
-}
 
 #formulario,#tabla{
     display: flex;
@@ -107,5 +224,64 @@ body{
 
 .butn:hover{
     transform: scale(1.2);
+    cursor: pointer;
+}
+
+.h2enlinea{
+    margin-bottom: 4rem;
+    color: rgb(2, 216, 2);
+}
+
+#headerChat{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(2, 136, 80);
+    margin-bottom: 1rem;
+    height: 10rem;
+    color: rgb(255, 255, 255);
+}
+
+.divMensajes{
+    background-color: rgb(43, 42, 42);
+    color: white;
+    margin: 2rem 1rem 0rem 1rem;
+    border-radius: .5rem;
+    font-size: 1.1rem;
+    font-weight: bolder;
+}
+
+.contenedorNotificaciones{
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#barraBaja{
+    position: absolute;
+    width: 100%;
+    bottom: 1rem;
+}
+
+#mensajeInput{
+    margin-left: .5rem;
+    width: 90%;
+    height: 3.5rem;
+    font-size: 1.2rem;
+    background-color: rgb(43, 42, 42);
+    color: white;
+}
+
+#mensajeEnviar{
+    width: 8%;
+    height: 3.5rem;
+    background-color: rgb(13, 121, 13);
+    border-color: rgb(20, 139, 20);
+    color: white;
+}
+
+#mensajeEnviar:hover{
+    transform: scale(1.05);
     cursor: pointer;
 }

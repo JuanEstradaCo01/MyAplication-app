@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Chat</title>
+</head>
+<body>
+
+    <header id="headerChat">     
+        <h1>🌫MyChat</h1> 
+    </header>
+
+    <main>
+        <h2 class="h2enlinea">En linea</h2>
+    
+        <div class="contenedorNotificaciones">
+            <p id="notificacionesContenedor"></p>
+        </div>
+
+        <div class="divMensajes">
+            <p id="mensajesContenedor"></p>  
+        </div> 
+
+        <div id="barraBaja">
+            <input type="text" id="mensajeInput" placeholder="  Escribe un mensaje">
+            <input type="button" value="✔" id="mensajeEnviar">
+        </div>
+    </main>
+    
+
+    
+
+
+    <!--<footer>
+        <h3>🌫MyChat</h3>
+        <p class="foot">Aplicacion creada en el curso de Programacion-backend en CODERHOUSE por Juan Estrada</p>
+        <p class="foot">Todos los derechos reservados</p>
+    </footer>-->
+
+</body>
+</html>
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.3/qs.min.js"></script>
+<script src="/js/index.js"></script>

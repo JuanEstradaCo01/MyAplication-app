@@ -15,6 +15,17 @@ const dbcartManager = new DBCartManager()// Para usar mongo
 
 //NOTA: Descomentar todo lo que este comentado si se quiere usar FS
 
+cartRouter.get("/", async(req, res) => {
+    try{
+        const products = await dbcartManager.getCarts()
+
+        return res.json(products)
+    }catch (e) {
+        console.log("No existen carritos", e)
+    }
+    
+})
+
 cartRouter.post("/", async(req, res) => {
     /*const data = req.body
 
@@ -23,10 +34,15 @@ cartRouter.post("/", async(req, res) => {
     data.id = guardar.length + 1
     
     await carrito.addCart(data)*/
+    const body = req.body
 
-    const carts = await dbcartManager.getCarts()
+    const guardar = await dbcartManager.getCarts()
 
-    res.json(carts)
+    body.carrito = guardar.length + 1
+
+    await dbcartManager.addCart(body)
+
+    res.json(body)
 })
 
 cartRouter.get("/:cid", async(req, res) => {
@@ -46,12 +62,11 @@ cartRouter.get("/:cid", async(req, res) => {
 
 cartRouter.post("/:cid/products/:pid", async(req, res) => {
 
-    const cid = parseInt(req.params.cid)
-    const pid = parseInt(req.params.pid)
+    const cid = req.params.cid //convertirlo con parseInt cuando se quiera usar FS
+    const pid = req.params.pid //convertirlo con parseInt cuando se quiera usar FS
     
     try{
-        const productos = await getCarts()
-        const cartById = await carrito.getCartById(cid)      
+        const cartById = await dbcartManager.getCartById(cid)  
 
         if (!cartById) {
             return res.status(404).json({
@@ -59,8 +74,9 @@ cartRouter.post("/:cid/products/:pid", async(req, res) => {
             })
         }
 
-        const productById = await managerDB.getProductById(pid)
-       
+        const productById = await dbproductManager.getProductById(pid)
+
+
         if (!productById) {
             return res.status(404).json({
                 error: "No se encontro el producto"
@@ -75,7 +91,7 @@ cartRouter.post("/:cid/products/:pid", async(req, res) => {
             cartById.products.push(newProduct)
         }else{
             const encontrar = cartById.products.findIndex(item => item.product === pid)
-            if (encontrar >=0){
+            if (encontrar >= 0){
                 cartById.products[encontrar].quantity = cartById.products[encontrar].quantity + 1
             }else{
                 const newProduct = {
@@ -87,12 +103,14 @@ cartRouter.post("/:cid/products/:pid", async(req, res) => {
         }
         const products = []
         products.push(cartById)
-        await carrito.saveCart(products)
+        //await dbcartManager.addProductToCart(cartById)
+        
         return res.status(201).json(products)
         
     }catch(error) {
-        error
-    }    
+        console.log("Ha ocurrido un error", error)
+    }
+
 })
 
 module.exports = cartRouter

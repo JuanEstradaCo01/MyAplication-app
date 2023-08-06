@@ -1,12 +1,16 @@
 const messageModel = require("./models/mensajesModels")
 
 class DBMessagesManager {
-    constructor(){
+    constructor(io){
         this.model = messageModel
+        this.io = io
     }
 
-    getMessages() {
-        return this.model.find()
+    async getMessages(body) {
+        return this.model.create({
+            user: body.user,
+            message: body.message
+        })
     }
 }
 

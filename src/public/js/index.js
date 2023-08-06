@@ -36,6 +36,8 @@ socket.on('mensaje', mensajeString => {
 
 
 
+
+
 //Para que un usuario nuevo vea todo el historial de mensajes (descomentar si se quiere eso)
 /*socket.on('mensajes', mensajesString => {
   const mensajes = JSON.parse(mensajesString)
@@ -45,3 +47,5 @@ socket.on('mensaje', mensajeString => {
     <div>${mensaje.usuario}: ${mensaje.mensaje}`
   })
 })*/
+
+module.exports = container

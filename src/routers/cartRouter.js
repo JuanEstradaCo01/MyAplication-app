@@ -102,10 +102,13 @@ cartRouter.post("/:cid/products/:pid", async(req, res) => {
             }
         }
         const products = []
-        products.push(cartById)
-        //await dbcartManager.addProductToCart(cartById)
+        products.push(cartById)   
+        console.log(cartById)   
+
+        await dbcartManager.addProductToCart(cartById)
         
-        return res.status(201).json(products)
+
+        return res.status(201).json(cartById)
         
     }catch(error) {
         console.log("Ha ocurrido un error", error)

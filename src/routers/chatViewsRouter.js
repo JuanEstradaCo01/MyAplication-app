@@ -1,4 +1,8 @@
 const { Router } = require("express")
+const DBMessagesManager = require("../dao/DBMessagesManager")
+const dbmessagesmanager = new DBMessagesManager()
+
+
 
 const viewsRouterFn = (io) => {
 
@@ -21,13 +25,21 @@ const viewsRouterFn = (io) => {
 
         //io.emit("newUser", username)
 
+        console.log(users)
+
         return res.redirect(`/chat?username=${username}`)
     })
 
 
     viewsRouter.get("/chat", (req, res) => {
+
+        
+
         return res.render("index")
     })
+
+
+    
 
     return viewsRouter
 }

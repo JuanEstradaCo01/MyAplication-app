@@ -4,9 +4,10 @@ const cartRouter = require("./routers/cartRouter")
 const viewsRouter = require("./routers/viewsRouter")
 const handlebars = require("express-handlebars")
 const viewsRouterFn = require("./routers/chatViewsRouter") //chat
-const messageRouter = require("./routers/messagesRouter")
 const ProductManager = require("./dao/FS/FSProductManager")
 const managerDB = new ProductManager("./managerDB.json")
+const DBMessagesManager = require("./dao/DBMessagesManager")
+const dbmessagesmanager = new DBMessagesManager()
 const mongoose = require("mongoose")
 const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi.mongodb.net/ecommerce?retryWrites=true&w=majority"
 
@@ -73,9 +74,11 @@ io.on("connection", socket => {
     socket.on('nuevoMensaje', mensaje => {
         const usuario = users.find(u => u.socketId === socket.id)
         const nuevoMensaje = {
-            mensaje,
-            usuario: usuario.nombre
+            usuario: usuario.nombre,
+            mensaje
         }
+        console.log({Message: nuevoMensaje})
+        
         mensajesArray.push(nuevoMensaje)
 
         io.emit('mensaje', JSON.stringify(nuevoMensaje))
@@ -91,6 +94,7 @@ app.get("/healthcheck", (req, res) => {
 })
 
 const chatViewsRouter = viewsRouterFn(io)
+
 
 
 const products = require("./managerDB.json")
@@ -115,6 +119,5 @@ app.use("/api/products", productRouter)
 app.use("/api/carts", cartRouter)
 app.use("/", viewsRouter)
 app.use("/", chatViewsRouter)
-app.use("/messages", messageRouter)
 
 module.exports = io

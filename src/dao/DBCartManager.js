@@ -22,9 +22,11 @@ class DBCartManager {
 
     async addProductToCart(body) {
         return this.model.create({
-            product: body.product,
-            quantity: body.quantity
-        })
+            carrito: body.carrito,
+            products: [{ 
+                product: body.product, 
+                quantity: body.quantity
+        }]})
     }
 
 }

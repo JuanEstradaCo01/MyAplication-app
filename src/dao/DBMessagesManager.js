@@ -8,8 +8,8 @@ class DBMessagesManager {
 
     async getMessages(body) {
         return this.model.create({
-            user: body.user,
-            message: body.message
+            usuario: body.usuario,
+            mensaje: body.mensaje
         })
     }
 }

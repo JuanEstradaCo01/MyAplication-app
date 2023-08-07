@@ -1,7 +1,7 @@
 const { Router } = require("express")
 const DBMessagesManager = require("../dao/DBMessagesManager")
 const dbmessagesmanager = new DBMessagesManager()
-
+//import { mensajeObjeto } from "../public/js"
 
 
 const viewsRouterFn = (io) => {
@@ -32,14 +32,8 @@ const viewsRouterFn = (io) => {
 
 
     viewsRouter.get("/chat", (req, res) => {
-
-        
-
-        return res.render("index")
+        return res.render("chat")
     })
-
-
-    
 
     return viewsRouter
 }

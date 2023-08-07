@@ -78,10 +78,12 @@ io.on("connection", socket => {
             mensaje
         }
         console.log({Message: nuevoMensaje})
+
+        const message = JSON.stringify(nuevoMensaje)
         
         mensajesArray.push(nuevoMensaje)
 
-        io.emit('mensaje', JSON.stringify(nuevoMensaje))
+        io.emit('mensaje', message)
     })
 })
 

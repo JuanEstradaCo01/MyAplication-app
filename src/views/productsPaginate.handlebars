@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+</head>
+<body> 
+    <div class="h3Paginatediv">
+        <h3 class="h3Paginate">Pagina: {{page}} de {{totalPages}}</h3>
+    </div>
+
+    <div id="tablePaginate">
+        <table class="tablePag">
+            <tr>
+                <th>ID</th>
+                <th>Producto</th>
+                <th>Tamaño</th>
+                <th>Stock</th>
+                <th>Categoria</th>
+                <th>Precio</th>
+            </tr>
+            {{#each docs}}
+            <tr>
+                <td class="center">{{this._id}}</td>
+                <td class="center">{{this.tittle}}</td>
+                <td class="center">{{this.description}}</td>
+                <td class="center">{{this.stock}}</td>
+                <td class="center">{{this.category}}</td>
+                <td class="center">{{this.price}}</td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+
+    <div class="divBotonsPaginate">
+        {{#if hasPrevPage}}
+            <button class="buttonPaginate"><a class="enlace" href="/productspaginate?page={{prevPage}}">⬅ Anterior</a></button>
+        {{/if}}
+
+        {{#if hasNextPage}}
+            <button class="buttonPaginate"><a class="enlace" href="/productspaginate?page={{nextPage}}">Siguiente ➡</a></button>
+        {{/if}}
+    </div>
+</body>
+</html>

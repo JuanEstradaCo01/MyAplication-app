@@ -285,3 +285,57 @@ th{
     transform: scale(1.05);
     cursor: pointer;
 }
+
+#tablePaginate{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 4rem
+}
+
+.tablePag{
+    width: 40rem;
+}
+
+.center{
+    text-align: center;
+}
+
+.h3Paginate{
+    text-align: center;
+    color: whitesmoke;
+    font-size: 1.65rem;
+}
+
+.h3Paginatediv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.divBotonsPaginate{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.buttonPaginate{
+    background-color: black;
+    width: 8rem;
+    height: 2rem;
+    margin-left: 1rem;
+    border-color: black;
+}
+
+.buttonPaginate:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.enlace{
+    text-decoration: none;
+    color: white;
+}

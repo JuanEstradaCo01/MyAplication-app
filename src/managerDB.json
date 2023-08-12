@@ -2,7 +2,7 @@
   {
     "id": 1,
     "tittle": "papaya",
-    "description": "Caracteristicas modificadas",
+    "description": "mediano",
     "price": 10,
     "thumbnail": "Sin imagen",
     "code": "abc0001",
@@ -13,7 +13,7 @@
   {
     "id": 2,
     "tittle": "manzana",
-    "description": "Caracteristicas",
+    "description": "mediano",
     "price": 9,
     "thumbnail": "Sin imagen",
     "code": "abc0002",
@@ -24,7 +24,7 @@
   {
     "id": 3,
     "tittle": "sandia",
-    "description": "Caracteristicas modificadas",
+    "description": "grande",
     "price": 10,
     "thumbnail": "Sin imagen",
     "code": "abc0003",
@@ -35,7 +35,7 @@
   {
     "id": 4,
     "tittle": "papaya",
-    "description": "Caracteristicas",
+    "description": "pequeño",
     "price": 25,
     "thumbnail": "Sin imagen",
     "code": "abc0004",
@@ -46,7 +46,7 @@
   {
     "id": 5,
     "tittle": "banano",
-    "description": "Caracteristicas",
+    "description": "pequeño",
     "price": 5,
     "thumbnail": "Sin imagen",
     "code": "abc0005",
@@ -57,7 +57,7 @@
   {
     "id": 6,
     "tittle": "fresa",
-    "description": "Caracteristicas",
+    "description": "pequeño",
     "price": 3,
     "thumbnail": "Sin imagen",
     "code": "abc0006",
@@ -68,7 +68,7 @@
   {
     "id": 7,
     "tittle": "guanabana",
-    "description": "Caracteristicas",
+    "description": "mediano",
     "price": 14,
     "thumbnail": "Sin imagen",
     "code": "abc0007",
@@ -79,7 +79,7 @@
   {
     "id": 8,
     "tittle": "coco",
-    "description": "Caracteristicas",
+    "description": "grande",
     "price": 13,
     "thumbnail": "Sin imagen",
     "code": "abc0008",
@@ -90,7 +90,7 @@
   {
     "id": 9,
     "tittle": "lulo",
-    "description": "Caracteristicas",
+    "description": "pequeño",
     "price": 2.5,
     "thumbnail": "Sin imagen",
     "code": "abc0009",
@@ -101,7 +101,7 @@
   {
     "id": 10,
     "tittle": "ciruela",
-    "description": "Caracteristicas",
+    "description": "pequeño",
     "price": 5,
     "thumbnail": "Sin imagen",
     "code": "abc00010",
@@ -112,7 +112,7 @@
   {
     "id": 11,
     "tittle": "lenteja",
-    "description": "Caracteristicas modificadas",
+    "description": "pequeño",
     "price": 10,
     "thumbnail": "Sin imagen",
     "code": "abc00011",
@@ -123,7 +123,7 @@
   {
     "id": 12,
     "tittle": "mango",
-    "description": "Caracteristicas",
+    "description": "mediano",
     "price": 7,
     "thumbnail": "Sin imagen",
     "code": "abc00012",
@@ -134,7 +134,7 @@
   {
     "id": 13,
     "tittle": "uva",
-    "description": "Caracteristicas",
+    "description": "pequeño",
     "price": 2,
     "thumbnail": "Sin imagen",
     "code": "abc00013",
@@ -145,7 +145,7 @@
   {
     "id": 14,
     "tittle": "aguacate",
-    "description": "Caracteristicas",
+    "description": "mediano",
     "price": 15,
     "thumbnail": "Sin imagen",
     "code": "abc00014",
@@ -156,7 +156,7 @@
   {
     "id": 15,
     "tittle": "tomate",
-    "description": "Caracteristicas",
+    "description": "pequeño",
     "price": 1.5,
     "thumbnail": "Sin imagen",
     "code": "abc00015",
@@ -167,7 +167,7 @@
   {
     "id": 16,
     "tittle": "limon",
-    "description": "Caracteristicas",
+    "description": "pequeño",
     "price": 1,
     "thumbnail": "Sin imagen",
     "code": "abc00016",
@@ -178,7 +178,7 @@
   {
     "id": 17,
     "tittle": "piña",
-    "description": "Caracteristicas",
+    "description": "grande",
     "price": 10,
     "thumbnail": "Sin imagen",
     "code": "abc00017",
@@ -189,7 +189,7 @@
   {
     "id": 18,
     "tittle": "cebolla",
-    "description": "Caracteristicas",
+    "description": "mediano",
     "price": 2,
     "thumbnail": "Sin imagen",
     "code": "abc00018",
@@ -200,7 +200,7 @@
   {
     "id": 19,
     "tittle": "mandarina",
-    "description": "Caracteristicas",
+    "description": "pequeño",
     "price": 2.5,
     "thumbnail": "Sin imagen",
     "code": "abc00019",
@@ -211,7 +211,7 @@
   {
     "id": 20,
     "tittle": "zanahoria",
-    "description": "Caracteristicas",
+    "description": "mediano",
     "price": 4,
     "thumbnail": "Sin imagen",
     "code": "abc00020",

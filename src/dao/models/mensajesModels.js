@@ -1,11 +1,11 @@
 const mongoose = require("mongoose")
 
 const mensajesSchema = mongoose.Schema({
-    user: {
+    usuario: {
         type: String,
         require: true
     },
-    message: {
+    mensaje: {
         type: String,
         require: true}
 })

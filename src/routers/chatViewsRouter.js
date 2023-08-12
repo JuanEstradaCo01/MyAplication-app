@@ -35,6 +35,15 @@ const viewsRouterFn = (io) => {
         return res.render("chat")
     })
 
+    viewsRouter.post("/chat", async (req, res) => {
+        const body = req.body
+        console.log(body)
+
+        await dbmessagesmanager.getMessages(body)
+
+        return res.status(201).json(body)
+    })
+
     return viewsRouter
 }
 

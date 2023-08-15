@@ -184,18 +184,24 @@ label{
 table{
     border-radius: 1rem;
     padding: 1rem;
-    background-color: rgb(165, 165, 68);
+    background-color: rgb(107, 106, 106);
     border-style: solid;
     border-color: rgb(0, 0, 0);
 }
 
 td{
     border-bottom: double;
+    height: 2rem;
+    background-color: rgb(112, 112, 94);
 }
 
 th{
     border: solid;
     border-right: solid;
+    background-color: rgb(206, 4, 4);
+    border-color: rgb(206, 4, 4);
+    color: white;
+    height: 2rem;
 }
 
 
@@ -333,9 +339,27 @@ th{
 .buttonPaginate:hover{
     transform: scale(1.05);
     cursor: pointer;
+    background-color: rgb(22, 21, 21);
 }
 
 .enlace{
     text-decoration: none;
     color: white;
+}
+
+.none{
+    background-color: rgb(107, 106, 106);
+    border-color: rgb(107, 106, 106);
+}
+
+.detallebtn{
+    background-color: blue;
+    color: white;
+    padding: 0.5rem;
+}
+
+.detallebtn:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+    background-color: rgb(30, 54, 119);
 }

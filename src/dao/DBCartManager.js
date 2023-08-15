@@ -1,4 +1,6 @@
 const cartModel = require("./models/cartsModels");
+const DBProductManager = require("./DBProductManager")
+const dbproductManager = new DBProductManager()
 
 class DBCartManager {
     constructor() {
@@ -28,6 +30,19 @@ class DBCartManager {
                 quantity: body.quantity
             }]
         })
+    }
+
+    async deleteProductInCart(pid) {
+        const productoEliminadoDelCarrito = await dbproductManager.getProductById(pid)
+        console.log({productoEliminadoDelCarrito})
+
+        if (!productoEliminadoDelCarrito) {
+            throw new Error("El producto no existe")
+        }
+
+        await this.model.deleteOne({ product: pid})
+
+        return true
     }
 
 }

@@ -15,6 +15,7 @@ class DBProductManager {
 
     async addProduct(body) {
         return this.model.create({
+            id: body.id,
             tittle: body.tittle,
             description: body.description,
             price: body.price,
@@ -58,7 +59,7 @@ class DBProductManager {
             throw new Error("El producto no existe")
         }
 
-        await this.model.deleteOne({ _id: id})
+        await this.model.deleteOne({ _id: id}, product)
 
         return true
     }

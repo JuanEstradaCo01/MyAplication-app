@@ -9,6 +9,8 @@ const ProductManager = require("./dao/FS/FSProductManager")
 const managerDB = new ProductManager("./managerDB.json")
 const DBMessagesManager = require("./dao/DBMessagesManager")
 const dbmessagesmanager = new DBMessagesManager()
+const DbProductManager = require("./dao/DBProductManager")
+const dbproductManager = new DbProductManager()
 const mongoose = require("mongoose")
 const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi.mongodb.net/ecommerce?retryWrites=true&w=majority"
 
@@ -21,226 +23,39 @@ const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi
       .catch((e) => console.log(e))
 
     //Productos a agregar:
-    /*await productsmodels.insertMany([
-        {
-          tittle: "papaya",
-          description: "mediano",
-          price: 10,
-          thumbnail: "Sin imagen",
-          code: "abc0001",
-          status: true,
-          stock: 300,
-          category: "fruta"
-        },
-        {
-          tittle: "manzana",
-          description: "mediano",
-          price: 9,
-          thumbnail: "Sin imagen",
-          code: "abc0002",
-          status: true,
-          stock: 20,
-          category: "fruta"
-        },
-        {
-          tittle: "sandia",
-          description: "grande",
-          price: 10,
-          thumbnail: "Sin imagen",
-          code: "abc0003",
-          status: true,
-          stock: 300,
-          category: "fruta"
-        },
-        {
-          tittle: "papaya",
-          description: "pequeño",
-          price: 25,
-          thumbnail: "Sin imagen",
-          code: "abc0004",
-          status: true,
-          stock: 76,
-          category: "fruta"
-        },
-        {
-          tittle: "banano",
-          description: "pequeño",
-          price: 5,
-          thumbnail: "Sin imagen",
-          code: "abc0005",
-          status: true,
-          stock: 150,
-          category: "fruta"
-        },
-        {
-          tittle: "fresa",
-          description: "pequeño",
-          price: 3,
-          thumbnail: "Sin imagen",
-          code: "abc0006",
-          status: true,
-          stock: 250,
-          category: "fruta"
-        },
-        {
-          tittle: "guanabana",
-          description: "mediano",
-          price: 14,
-          thumbnail: "Sin imagen",
-          code: "abc0007",
-          status: true,
-          stock: 90,
-          category: "fruta"
-        },
-        {
-          tittle: "coco",
-          description: "grande",
-          price: 13,
-          thumbnail: "Sin imagen",
-          code: "abc0008",
-          status: true,
-          stock: 120,
-          category: "fruta"
-        },
-        {
-          tittle: "lulo",
-          description: "pequeño",
-          price: 2.5,
-          thumbnail: "Sin imagen",
-          code: "abc0009",
-          status: true,
-          stock: 500,
-          category: "fruta"
-        },
-        {
-          tittle: "ciruela",
-          description: "pequeño",
-          price: 5,
-          thumbnail: "Sin imagen",
-          code: "abc00010",
-          status: true,
-          stock: 300,
-          category: "fruta"
-        },
-        {
-          tittle: "lenteja",
-          description: "pequeño",
-          price: 10,
-          thumbnail: "Sin imagen",
-          code: "abc00011",
-          status: true,
-          stock: 500,
-          category: "grano"
-        },
-        {
-          tittle: "mango",
-          description: "mediano",
-          price: 7,
-          thumbnail: "Sin imagen",
-          code: "abc00012",
-          status: true,
-          stock: 90,
-          category: "fruta"
-        },
-        {
-          tittle: "uva",
-          description: "pequeño",
-          price: 2,
-          thumbnail: "Sin imagen",
-          code: "abc00013",
-          status: true,
-          stock: 200,
-          category: "fruta"
-        },
-        {
-          tittle: "aguacate",
-          description: "mediano",
-          price: 15,
-          thumbnail: "Sin imagen",
-          code: "abc00014",
-          status: true,
-          stock: 100,
-          category: "fruta"
-        },
-        {
-          tittle: "tomate",
-          description: "pequeño",
-          price: 1.5,
-          thumbnail: "Sin imagen",
-          code: "abc00015",
-          status: true,
-          stock: 500,
-          category: "fruta"
-        },
-        {
-          tittle: "limon",
-          description: "pequeño",
-          price: 1,
-          thumbnail: "Sin imagen",
-          code: "abc00016",
-          status: true,
-          stock: 500,
-          category: "fruta"
-        },
-        {
-          tittle: "piña",
-          description: "grande",
-          price: 10,
-          thumbnail: "Sin imagen",
-          code: "abc00017",
-          status: true,
-          stock: 100,
-          category: "fruta"
-        },
-        {
-          tittle: "cebolla",
-          description: "mediano",
-          price: 2,
-          thumbnail: "Sin imagen",
-          code: "abc00018",
-          status: true,
-          stock: 50,
-          category: "verdura"
-        },
-        {
-          tittle: "mandarina",
-          description: "pequeño",
-          price: 2.5,
-          thumbnail: "Sin imagen",
-          code: "abc00019",
-          status: true,
-          stock: 250,
-          category: "fruta"
-        },
-        {
-          tittle: "zanahoria",
-          description: "mediano",
-          price: 4,
-          thumbnail: "Sin imagen",
-          code: "abc00020",
-          status: true,
-          stock: 100,
-          category: "verdura"
-        }
-      ])*/
-      const prod = await productsmodels.aggregate([
-        {
-          $match: { description: "mediano" }
-        },{
-          $sort: { price: 1 }
-        }
-      ])
+    const productos = await managerDB.getProducts()
+
+
+    //Agregando los productos a mongo:(se comenta para que no agregue varias veces)
+    //await productsmodels.insertMany(productos)
+
+
 
       //Vista de los productos paginados
-      app.get("/productspaginate", async ( req, res) => {
-        const limit = 10
-        const page = req.query.page || 1
+      app.get("/products", async ( req, res) => {
 
-        const products = await productsmodels.paginate({ }, { limit, page})
+        const limit = req.query.limit || 10
+        const page = req.query.page || 1
+        const query = req.query.query
+      
+
+        //Traigo los productos que tengan la categoria especificada en query por params y los ordeno de manera ascendente(⬆) por su precio:
+        const prod = await productsmodels.aggregate([
+          {
+            $match: { category: query }
+          },{
+            $sort: { price: 1 }
+          }
+        ])
+        console.log(prod)
+
+
+        //Pagino los productos en la vista "/products"
+        const products = await productsmodels.paginate({  }, {limit, page})
 
         products.docs = products.docs.map(user => user.toObject())
 
-        return res.render("productsPaginate", products)
+        return res.render("products", products)
       })
 
 })()
@@ -248,6 +63,7 @@ const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi
 
 
 const socketServer = require("./utils/io")
+const DBProductManager = require("./dao/DBProductManager")
 
 const app = express()
 
@@ -319,6 +135,17 @@ io.on("connection", socket => {
 
         io.emit('mensaje', message)
     })
+})
+
+
+//Vista de detalles
+app.get("/detalles", async (req, res) => {
+  const pid = req.query.pid
+  const productos = await dbproductManager.getProducts()
+  const detalles = productos.find(el => el._id == pid)
+  console.log({detalles})
+
+  return res.json({detalles})
 })
 
 

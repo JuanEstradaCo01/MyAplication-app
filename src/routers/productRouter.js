@@ -119,9 +119,13 @@ productRouter.delete("/:pid", async(req, res) => {
     const pid = req.params.pid
 
     try {
-        const product = await dbproductManager.deleteProduct(pid)
 
-        return res.json({OK: "Se ha eliminado el producto"})
+        const products = await dbproductManager.getProducts()
+        const productToDelete = products.find(el => el._id == pid)
+        const name = productToDelete.tittle
+        await dbproductManager.deleteProduct(pid)
+
+        return res.json({OK: `Se ha eliminado el producto (${name})`})
     }catch (e) {
         return res.status(404).json({mensaje: "No existe el producto a eliminar"})
     }

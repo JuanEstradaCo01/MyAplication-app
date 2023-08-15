@@ -8,7 +8,7 @@ const products = require("../managerDB.json")
 
 
 
-viewsRouter.get("/products", (req, res) => {
+viewsRouter.get("/prod", (req, res) => {
 
     const params = {
         titulo: "Productos",

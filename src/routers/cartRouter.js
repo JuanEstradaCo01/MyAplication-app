@@ -116,4 +116,24 @@ cartRouter.post("/:cid/products/:pid", async(req, res) => {
 
 })
 
+cartRouter.delete("/:cid/products/:pid", async(req, res) => {
+    const pid = req.params.pid
+    console.log(pid)
+    
+
+    try {
+        //Busco el producto para mostrar el nombre del producto que se elimina del carrito
+        const products = await dbproductManager.getProducts()
+        const productToDelete = products.find(el => el._id == pid)
+        const name = productToDelete.tittle
+        console.log(name)
+        
+        const prod = await dbcartManager.deleteProductInCart(pid)
+
+        return res.status(200).json({OK: `Se ha eliminado el producto (${name}) del carrito`})
+    }catch (e) {
+        return res.status(404).json({mensaje: "No existe el producto en el carrito"})
+    }
+})
+
 module.exports = cartRouter

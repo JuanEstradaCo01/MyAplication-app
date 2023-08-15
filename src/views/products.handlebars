@@ -6,6 +6,7 @@
     <title>Products</title>
 </head>
 <body> 
+    <h1 style="color: rgb(99, 177, 11);">Lista de productos de la tienda:</h1>
     <div class="h3Paginatediv">
         <h3 class="h3Paginate">Pagina: {{page}} de {{totalPages}}</h3>
     </div>
@@ -13,21 +14,25 @@
     <div id="tablePaginate">
         <table class="tablePag">
             <tr>
+                <th>#</th>
                 <th>ID</th>
                 <th>Producto</th>
                 <th>Tamaño</th>
                 <th>Stock</th>
                 <th>Categoria</th>
                 <th>Precio</th>
+                <th class="none"></th>
             </tr>
             {{#each docs}}
             <tr>
+                <td class="center">{{this.id}}</td>
                 <td class="center">{{this._id}}</td>
                 <td class="center">{{this.tittle}}</td>
                 <td class="center">{{this.description}}</td>
                 <td class="center">{{this.stock}}</td>
                 <td class="center">{{this.category}}</td>
                 <td class="center">{{this.price}}</td>
+                <td class="none"><a href="./detalles?pid={{this._id}}"><button id={{this._id}} class="detallebtn" >Detalles</button></a></td>
             </tr>
             {{/each}}
         </table>
@@ -35,12 +40,13 @@
 
     <div class="divBotonsPaginate">
         {{#if hasPrevPage}}
-            <button class="buttonPaginate"><a class="enlace" href="/productspaginate?page={{prevPage}}">⬅ Anterior</a></button>
+            <button class="buttonPaginate"><a class="enlace" href="/products?page={{prevPage}}">⬅ Anterior</a></button>
         {{/if}}
 
         {{#if hasNextPage}}
-            <button class="buttonPaginate"><a class="enlace" href="/productspaginate?page={{nextPage}}">Siguiente ➡</a></button>
+            <button class="buttonPaginate"><a class="enlace" href="/products?page={{nextPage}}">Siguiente ➡</a></button>
         {{/if}}
     </div>
+
 </body>
 </html>

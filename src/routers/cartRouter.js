@@ -136,4 +136,39 @@ cartRouter.delete("/:cid/products/:pid", async(req, res) => {
     }
 })
 
+
+//Para modificar todo el carrito
+cartRouter.put("/:cid", async (req, res) => {
+    const body = req.body
+    const cid = req.params.cid
+
+    await dbcartManager.updateCart(cid, body)
+    return res.status(200).json(body)
+})
+
+
+//Para actualizar la quantity pasada desde req.body
+cartRouter.put("/:cid/products/:pid",  async(req, res) => {
+    const body = req.body
+    const cid = req.params.cid
+
+    await dbcartManager.updateQuantity(cid, body)
+    return res.status(200).json(body)
+})
+
+
+cartRouter.delete("/:cid", async (req, res) => {
+    const cid = req.params.cid
+
+    try{
+        const carts = await dbcartManager.getCarts()
+        const cartToDelete = carts.find(el => el._id == cid)
+        const name = cartToDelete.carrito
+        const cart = await dbcartManager.deleteCart(cid)
+
+        return res.status(200).json({OK: `Se ha eliminado el carrito (${name})`})
+    }catch (e) {
+        return res.status(404).json({error: "No existe el carrito"})
+    }
+})
 module.exports = cartRouter

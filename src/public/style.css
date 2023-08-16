@@ -363,3 +363,15 @@ th{
     cursor: pointer;
     background-color: rgb(30, 54, 119);
 }
+
+.agregarbtn{
+    background-color: rgb(160, 189, 0);
+    width: 6rem;
+    color: white;
+}
+
+.agregarbtn:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+    background-color: rgb(62, 165, 2);
+}

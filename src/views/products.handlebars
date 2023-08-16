@@ -22,6 +22,7 @@
                 <th>Categoria</th>
                 <th>Precio</th>
                 <th class="none"></th>
+                <th class="none"></th>
             </tr>
             {{#each docs}}
             <tr>
@@ -33,6 +34,7 @@
                 <td class="center">{{this.category}}</td>
                 <td class="center">{{this.price}}</td>
                 <td class="none"><a href="./detalles?pid={{this._id}}"><button id={{this._id}} class="detallebtn" >Detalles</button></a></td>
+                <td class="none"><a href="./detalles?pid={{this._id}}"><button id={{this._id}} class="agregarbtn" >Agregar al carrito</button></a></td>
             </tr>
             {{/each}}
         </table>

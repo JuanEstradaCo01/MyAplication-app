@@ -11,6 +11,8 @@ const DBMessagesManager = require("./dao/DBMessagesManager")
 const dbmessagesmanager = new DBMessagesManager()
 const DbProductManager = require("./dao/DBProductManager")
 const dbproductManager = new DbProductManager()
+const DBCartManager = require("./dao/DBCartManager")
+const dbcartManager = new DBCartManager()
 const mongoose = require("mongoose")
 const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi.mongodb.net/ecommerce?retryWrites=true&w=majority"
 
@@ -148,6 +150,17 @@ app.get("/detalles", async (req, res) => {
   return res.json({detalles})
 })
 
+//Vista del carrito:
+app.get("/carts/:cid", async (req, res) => {
+  const cid = req.params.cid
+  const guardar = await dbcartManager.getCarts()
+  const Carrito = guardar.find(el => el._id == cid)
+  const carritos = await dbcartManager.addProductToCart(Carrito)
+  
+  console.log({carritos})
+
+  return res.json({carritos})
+}) 
 
 app.get("/healthcheck", (req, res) => {
     return res.json({

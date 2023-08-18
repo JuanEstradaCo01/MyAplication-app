@@ -24,6 +24,7 @@ const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi
       .then(() => console.log("¡Conexion a MongoDB exitosa!"))
       .catch((e) => console.log(e))
 
+
     //Productos a agregar:
     const productos = await managerDB.getProducts()
 
@@ -60,12 +61,27 @@ const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi
         return res.render("products", products)
       })
 
+
+      //Populate:(se comenta ya que no hay carritos hechos, si existe un carrito descomentar para desglosar los productos dentro del carrito)
+
+      /*const cart = await cartsModels.findOne().populate(`products.product`)
+
+      const product =  await productsModels.findOne()
+
+
+      cart.products.push({product: product._id})
+
+      await cartsModels.updateOne({_id: cart._id}, cart)
+
+      console.log({cart: JSON.stringify(cart, null, 2)})*/
 })()
 
 
 
 const socketServer = require("./utils/io")
 const DBProductManager = require("./dao/DBProductManager")
+const cartsModels = require("./dao/models/cartsModels")
+const productsModels = require("./dao/models/productsModels")
 
 const app = express()
 

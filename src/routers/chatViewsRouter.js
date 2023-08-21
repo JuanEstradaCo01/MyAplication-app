@@ -11,12 +11,12 @@ const viewsRouterFn = (io) => {
     const users = []
 
 
-    viewsRouter.get("/login", (req, res) => {
-        return res.render("login")
+    viewsRouter.get("/chatLogin", (req, res) => {
+        return res.render("chatLogin")
     })
 
 
-    viewsRouter.post("/login", (req, res) => {
+    viewsRouter.post("/chatLogin", (req, res) => {
         const user = req.body
 
         const username = user.nombre

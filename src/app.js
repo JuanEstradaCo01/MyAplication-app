@@ -13,6 +13,11 @@ const DbProductManager = require("./dao/DBProductManager")
 const dbproductManager = new DbProductManager()
 const DBCartManager = require("./dao/DBCartManager")
 const dbcartManager = new DBCartManager()
+const cookieParser = require("cookie-parser")
+const session = require("express-session")
+const FileStore = require("session-file-store")
+const MongoStore = require("connect-mongo")
+const sessionRouter = require("./routers/sessionRouter")
 const mongoose = require("mongoose")
 const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi.mongodb.net/ecommerce?retryWrites=true&w=majority"
 
@@ -156,6 +161,133 @@ io.on("connection", socket => {
 })
 
 
+
+
+//Cookies:
+app.use(cookieParser("secretKey"))
+
+app.get("/setCookie", (req, res) => {
+  return res.cookie("CoderCookie", "Valor de la cookie", {maxAge: 50000}).send("Cookie")
+})
+
+app.get("/getCookie", (req, res) => {
+  return res.send({
+    cookies: req.cookies,
+    signedCookies: req.signedCookies //Cookies firmadas
+  })
+})
+
+app.get("/deleteCookie", (req, res) => {
+  return res.clearCookie("CoderCookie").send("Cookie eliminada")
+})
+
+app.get("/signedCookie", (req, res) => {
+  return res.cookie("SignedCoderCookie", "Esta es una cookie firmada y especial", {signed: true}).send("Cookie")
+})
+
+
+app.get("/cookiesForm", (req, res) => {
+  return res.render("cookies")
+})
+
+app.post("/cookiesForm", (req, res) => {
+  return res.cookie("User", req.body, {maxAge: 10000}).redirect("/cookiesForm")
+})
+
+
+
+
+
+const fileStorage = FileStore(session)
+
+app.use(session({
+  //Configuracion de fileStorage
+  /*store: new fileStorage({
+    path:"./sessions",
+    ttl: 100,
+    retries: 0
+  })*/
+
+  store: MongoStore.create({
+    mongoUrl: MONGODB_CONNECT,
+    ttl: 10
+  }),
+  secret: "secretSession",
+  resave: true,
+  saveUninitialized: true
+}))
+
+
+app.get("/logout", (req, res) => {
+  req.session.destroy(e => {
+    if (!e) {
+      return res.send("Saliste (ok)")
+    }
+
+    return res.status(500).json({ error: e})
+  })
+})
+
+
+const usuarios = [
+  {
+    username: "Pedro",
+    password: "1234",
+    admin: true
+  },
+  {
+    username: "Andrea",
+    password: "5678",
+    admin: false
+  }
+]
+ 
+/*
+app.get("/login", (req, res) => {
+  const { username, password } = req.query
+
+  const user = usuarios.find( ele => ele.username === username && ele.password === password)
+
+  if (!user) {
+    return res.status(404).json({
+      error: "User not found"
+    })
+  }
+
+  req.session.username = user.username
+  req.session.admin = user.admin
+
+  return res.json(user)
+})
+*/
+
+const authMidleware = (req, res, next) => {
+  if (!req.session.username) {
+    return res.status(401).send("Necesitas iniciar sesion para continuar")
+  }
+
+  return next()
+}
+
+app.get("/auth", authMidleware, (req, res) => {
+  return res.send(`Autenticacion correcta. Bienvenido ${req.session.username}`)
+})
+
+const adminMidleware = (req, res, next) => {
+  if (!req.session.admin)
+    return res.status(401).send("Acceso negado, no eres administrador")
+
+  return next()
+}
+
+app.get("/admin", authMidleware, adminMidleware,(req, res) => {
+  return res.send(`Cuenta de administrador. Hola ${req.session.username}`)
+})
+
+
+
+
+
 //Vista de detalles
 app.get("/detalles", async (req, res) => {
   const pid = req.query.pid
@@ -207,5 +339,6 @@ app.use("/api/products", productRouter)
 app.use("/api/carts", cartRouter)
 app.use("/", viewsRouter)
 app.use("/", chatViewsRouter)
+app.use("/api/sessions", sessionRouter)
 
 module.exports = io

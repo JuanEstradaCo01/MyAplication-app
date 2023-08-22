@@ -63,6 +63,9 @@ const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi
 
         products.docs = products.docs.map(user => user.toObject())
 
+        const user = req.session.usuario
+        console.log(user)
+    
         return res.render("products", products)
       })
 
@@ -216,31 +219,6 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }))
-
-
-app.get("/logout", (req, res) => {
-  req.session.destroy(e => {
-    if (!e) {
-      return res.send("Saliste (ok)")
-    }
-
-    return res.status(500).json({ error: e})
-  })
-})
-
-
-const usuarios = [
-  {
-    username: "Pedro",
-    password: "1234",
-    admin: true
-  },
-  {
-    username: "Andrea",
-    password: "5678",
-    admin: false
-  }
-]
  
 /*
 app.get("/login", (req, res) => {

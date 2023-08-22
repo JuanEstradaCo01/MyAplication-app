@@ -6,6 +6,15 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>loginn</h1>
+    <h1>Inicia sesion:</h1>
+
+    <div class="centrarForm">
+        <form action="/api/sessions/login" method="POST">
+            <label>Usuario</label><input type="text" name="email" placeholder="Correo electronico" required>
+            <label>Contraseña</label><input type="password" name="password" placeholder="Contraseña" required>
+
+            <button class="button" type="submit">Ingresar</button>
+        </form>
+    </div>
 </body>
 </html>

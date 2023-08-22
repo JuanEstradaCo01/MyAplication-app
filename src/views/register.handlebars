@@ -6,6 +6,21 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>registerr</h1>
+    <h1>Registrate:</h1>
+
+    <div class="centrarForm">
+        <form action="/api/sessions/register" method="POST">
+            <label>Nombre:</label> <input type="text" name="username" placeholder=" Nombres" required>
+            <label>Apellido:</label> <input type="text" name="lastname" placeholder=" Apellidos" required>
+            <label>Email: </label><input type="email" name="email" placeholder=" Correo electronico" required>
+            <label>Edad:</label> <input type="number" name="age" placeholder=" Edad" required>
+            <label>Contraseña:</label> <input type="password" name="password" placeholder=" Contraseña" required>
+            <label>Admin</label><input type="text" name="admin" placeholder=" True or false">
+
+
+
+            <button class="button" type="submit">Registrarse</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -22,8 +22,10 @@ sessionRouter.get("/", ( req, res) => {
 
 sessionRouter.post("/register", async (req, res) => {
     const user = await userModel.create(req.body)
-
-    return res.status(201).json(user)
+    const usuarioCreado = user
+    console.log({usuarioCreado})
+    return res.redirect("/login")
+    //return res.status(201).json(user)
   })
 
 module.exports = sessionRouter
@@ -49,5 +51,15 @@ sessionRouter.post("/login", async(req, res) => {
 
 
     req.session.usuario = user
-    return res.json(user)
+    return res.redirect("/profile")
+})
+
+sessionRouter.post("/logout", (req, res) => {
+  req.session.destroy(e => {
+    if (!e) {
+    return res.redirect("/login")
+    }
+  
+    return res.render("login")
+})
 })

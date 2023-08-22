@@ -375,3 +375,69 @@ th{
     cursor: pointer;
     background-color: rgb(62, 165, 2);
 }
+
+.button{
+    background-color: black;
+    color: white;
+    padding: 1rem;
+    border-color: black;
+    border-radius: 20%;
+    margin: 2rem;
+}
+
+.button:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+    background-color: rgb(27, 27, 27);
+}
+
+.centrarForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#divh1Profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(4, 170, 101);
+    height: 7.5rem;
+    margin-bottom: 3rem;
+}
+
+.headerPerfilh1{
+    margin: 0rem;
+}
+
+.datosUser{
+    background-color: grey;
+    padding: 1rem;
+}
+
+.titulo{
+    font-size: 1.5rem;
+}
+
+.parrafo{
+    margin-top: 1rem;
+    font-size: 1.2rem;
+}
+
+.btnClose{
+    background-color: red;
+    color: white;
+    margin: 1.5rem;
+    padding: .5rem;
+    border-radius: 10%;
+}
+
+.btnClose:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+    background-color: rgb(121, 3, 3);
+}
+
+.logout{
+    background-color: grey;
+}

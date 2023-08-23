@@ -441,3 +441,23 @@ th{
 .logout{
     background-color: grey;
 }
+
+.centrarFormRegister{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonRegister{
+    background-color: black;
+    color: white;
+    padding: 1rem;
+    border-color: black;
+    border-radius: 20%;
+}
+
+.buttonRegister:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+}

@@ -62,9 +62,6 @@ const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi
         const products = await productsmodels.paginate({  }, {limit, page})
 
         products.docs = products.docs.map(user => user.toObject())
-
-        const user = req.session.usuario
-        console.log(user)
     
         return res.render("products", products)
       })

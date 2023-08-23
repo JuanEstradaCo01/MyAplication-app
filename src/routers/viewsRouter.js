@@ -6,6 +6,8 @@ const viewsRouter = new Router()
 
 const products = require("../managerDB.json")
 
+const productsmodels = require("../dao/models/productsModels")
+
 const sessionMidleware = (req, res, next) => {
     if (req.session.usuario) {
         return res.redirect("/profile")
@@ -40,22 +42,37 @@ viewsRouter.get("/login", sessionMidleware, (req, res) => {
     return res.render("login")
 })
 
-viewsRouter.get("/profile", (req, res, next) => {
+viewsRouter.get("/products", (req, res, next) => {
     if (!req.session.usuario) {
         return res.redirect("/login")
     }
 
     return next()
-}, (req, res) => {
+}, async (req, res) => {
     const user = req.session.usuario
+    const limit = 50 //req.query.limit || 10
+    const page = req.query.page || 1
+
+
+    //Pagino los productos en la vista "/products"
+    const products = await productsmodels.paginate({  }, {limit, page})
+
+    products.docs = products.docs.map(user => user.toObject())
 
     //Valido el correo registrado para saber si es admin o no ya que el valor es unico
     if (user.email === "adminCoder@coder.com") {
         user.admin = true
     }else{
-        user.admin = "Rol (usuario)"
+        user.admin = "Rol: (Usuario)"
     }
-    return res.render("profile", {user})
+
+    //Valido si el usuario es admin le muestro la lista de productos y si no es admin no le muestro los productos
+    if (user.admin === true){
+        return res.render("products", {products, user})
+    }
+    
+    return res.render("profile", {user} )
+    
 })
 
 viewsRouter.get("/logout",  (req, res) => {

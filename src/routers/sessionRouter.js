@@ -28,8 +28,6 @@ sessionRouter.post("/register", async (req, res) => {
     //return res.status(201).json(user)
   })
 
-module.exports = sessionRouter
-
 sessionRouter.post("/login", async(req, res) => {
     let user = await userModel.findOne({email: req.body.email})
 
@@ -51,7 +49,7 @@ sessionRouter.post("/login", async(req, res) => {
 
 
     req.session.usuario = user
-    return res.redirect("/profile")
+    return res.redirect("/products")
 })
 
 sessionRouter.post("/logout", (req, res) => {
@@ -63,3 +61,5 @@ sessionRouter.post("/logout", (req, res) => {
     return res.render("login")
 })
 })
+
+module.exports = sessionRouter

@@ -7,10 +7,32 @@
 </head>
 <body> 
 
-    <h2 style="color: rgb(99, 177, 11);">Lista de productos de la tienda:</h2>
-    <div class="h3Paginatediv">
-        <h3 class="h3Paginate">Pagina: {{page}} de {{totalPages}}</h3>
+    <div id="divh1Profile">
+        <h1 class="headerPerfilh1">Perfil de usuario</h1>
     </div>
+    
+    <h2>Hola, {{user.username}}</h2>
+
+    <hr>
+    
+    <div class="datosUser">
+        <h4 class="titulo">Datos del usuario</h4>
+
+        <p class="parrafo">Nombre: {{user.username}}</p>
+        <p class="parrafo">Apellido: {{user.lastname}}</p>
+        <p class="parrafo">Email: {{user.email}}</p>
+        <p class="parrafo">Edad: {{user.age}}</p>
+        <p class="parrafo">Admin: {{user.admin}}</p>
+
+        <form class="logout" action="/api/sessions/logout" method="POST">
+            <button type="submit" class="btnClose">Cerrar sesion</button>
+        </form>
+    </div>
+
+    <h2 style="margin-top: 3rem;">Lista de productos de la tienda:</h2>
+    <!--<div class="h3Paginatediv">
+        <h3 class="h3Paginate">Pagina: {{page}} de {{totalPages}}</h3>
+    </div>-->
 
     <div id="tablePaginate">
         <table class="tablePag">
@@ -25,7 +47,7 @@
                 <th class="none"></th>
                 <th class="none"></th>
             </tr>
-            {{#each docs}}
+            {{#each products.docs}}
             <tr>
                 <td class="center">{{this.id}}</td>
                 <td class="center">{{this._id}}</td>

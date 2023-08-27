@@ -1,5 +1,8 @@
 const express = require("express")
+const passport = require("passport")
 const userModel = require("../dao/models/userModel")
+const {createHash, isValidPassword} = require("../utils/passwordHash")
+
 
 const sessionRouter = express.Router()
 
@@ -20,16 +23,38 @@ sessionRouter.get("/", ( req, res) => {
   })
 
 
-sessionRouter.post("/register", async (req, res) => {
-    const user = await userModel.create(req.body)
-    const usuarioCreado = user
-    console.log({usuarioCreado})
-    return res.redirect("/login")
-    //return res.status(201).json(user)
-  })
+sessionRouter.post("/register", 
+  passport.authenticate("register", {failureRedirect: "/failregister"}), 
+  async (req, res) => {
+    //Hasheo la contraseña
+    /*const body = req.body
+    body.password = createHash(body.password)
 
-sessionRouter.post("/login", async(req, res) => {
-    let user = await userModel.findOne({email: req.body.email})
+    const user = await userModel.create(body)
+    const usuarioCreado = user
+    console.log({usuarioCreado})*/
+
+    return res.redirect("/login") //Respuesta de redireccion
+    //return res.status(201).json(req.user) //Respuesta de api(JSON)
+}
+)
+
+sessionRouter.get("/failregister", (req, res) => {
+  return res.json({
+    error: "Error al registrarse"
+  })
+})
+
+sessionRouter.get("/faillogin", (req, res) => {
+  return res.json({
+    error: "Error al iniciar sesion"
+  })
+})
+
+sessionRouter.post("/login", 
+passport.authenticate("login",{failureRedirect: "/faillogin"}),
+  async(req, res) => {
+    /*let user = await userModel.findOne({email: req.body.email})
 
     if (!user) {
         return res.status(404).json({
@@ -37,7 +62,7 @@ sessionRouter.post("/login", async(req, res) => {
         })
     }
 
-    if (user.password !== req.body.password) {
+    if (!isValidPassword(req.body.password, user.password)) {
         return res.status(404).json({
             error: "(Datos incorrectos) Usuario y/o contraseña incorrecta"
         })
@@ -48,7 +73,14 @@ sessionRouter.post("/login", async(req, res) => {
     delete user.password
 
 
-    req.session.usuario = user
+    req.session.usuario = user*/
+    console.log({
+      user: req.user,
+      session: req.session
+    })
+    
+    //return res.redirect("/products")
+
     return res.redirect("/products")
 })
 
@@ -60,6 +92,21 @@ sessionRouter.post("/logout", (req, res) => {
   
     return res.render("login")
 })
+})
+
+sessionRouter.post("/recovery", async (req, res) => {
+  let verificar = await userModel.findOne({email: req.body.email})
+
+  if (!verificar) {
+    return res.status(404).json({
+        error: "No existe el usuario"
+    })
+  }
+
+  const nuevaPassword = createHash(req.body.password)
+  await userModel.updateOne({_id: verificar._id}, {password: nuevaPassword})
+
+  return res.redirect("/recoverysuccess")
 })
 
 module.exports = sessionRouter

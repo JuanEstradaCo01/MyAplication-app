@@ -42,6 +42,10 @@ viewsRouter.get("/login", sessionMidleware, (req, res) => {
     return res.render("login")
 })
 
+viewsRouter.get("/recovery", sessionMidleware, (req, res) => {
+    return res.render("recovery")
+})
+
 viewsRouter.get("/products", (req, res, next) => {
     if (!req.session.usuario) {
         return res.redirect("/login")
@@ -73,6 +77,10 @@ viewsRouter.get("/products", (req, res, next) => {
     
     return res.render("profile", {user} )
     
+})
+
+viewsRouter.get("/recoverysuccess", (req, res) => {
+    return res.render("recoverysuccess")
 })
 
 viewsRouter.get("/logout",  (req, res) => {

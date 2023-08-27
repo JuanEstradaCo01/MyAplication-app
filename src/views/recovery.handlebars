@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 style="color:  rgb(29, 201, 29);">Recuperar contraseña</h1>
+    <div class="centrarForm">
+        <form action="/api/sessions/recovery" method="POST">
+            <label>Usuario</label><input type="text" name="email" placeholder=" Correo electronico" required>
+            <label>Nueva contraseña</label><input type="password" name="password" placeholder=" Nueva contraseña" required>
+
+            <button class="button" type="submit">Cambiar</button>
+        </form>
+    </div>
+</body>
+</html>

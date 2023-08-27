@@ -18,6 +18,8 @@ const session = require("express-session")
 const FileStore = require("session-file-store")
 const MongoStore = require("connect-mongo")
 const sessionRouter = require("./routers/sessionRouter")
+const passport = require("passport")
+const initializePassport = require ("./config/passport.config")
 const mongoose = require("mongoose")
 const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi.mongodb.net/ecommerce?retryWrites=true&w=majority"
 
@@ -216,7 +218,11 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }))
- 
+
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
+
 /*
 app.get("/login", (req, res) => {
   const { username, password } = req.query

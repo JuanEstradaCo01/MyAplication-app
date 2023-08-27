@@ -461,3 +461,14 @@ th{
     transform: scale(1.05);
     cursor: pointer;
 }
+
+.centrar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.olvide{
+    text-decoration: underline;
+    color: rgb(25, 93, 194);
+}

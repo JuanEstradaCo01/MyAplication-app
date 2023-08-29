@@ -46,6 +46,7 @@ viewsRouter.get("/recovery", sessionMidleware, (req, res) => {
     return res.render("recovery")
 })
 
+//Vista de perfiles
 viewsRouter.get("/products", (req, res, next) => {
     if (!req.session.usuario) {
         return res.redirect("/login")
@@ -76,7 +77,6 @@ viewsRouter.get("/products", (req, res, next) => {
     }
     
     return res.render("profile", {user} )
-    
 })
 
 viewsRouter.get("/recoverysuccess", (req, res) => {
@@ -85,6 +85,10 @@ viewsRouter.get("/recoverysuccess", (req, res) => {
 
 viewsRouter.get("/logout",  (req, res) => {
     return res.redirect("login")
+})
+
+viewsRouter.get("/faillogin", (req, res) => {
+    return res.render("faillogin")
 })
 
 module.exports = viewsRouter

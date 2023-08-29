@@ -472,3 +472,32 @@ th{
     text-decoration: underline;
     color: rgb(25, 93, 194);
 }
+
+.botonGithub{
+    margin: 1.5rem 0rem 1.5rem 0rem
+}
+
+.btnGit{
+    border-radius: 2rem;
+    width: 8rem;
+    height: 3rem;
+    background-image: radial-gradient(rgb(216, 205, 205), rgb(0, 0, 0));
+    color: black;
+}
+
+.btnGit:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+    border-radius: .5rem;
+    background-image: radial-gradient(rgb(216, 205, 205), rgb(49, 49, 49));
+}
+
+.divGithub{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(39, 39, 39);
+    padding: 1rem;
+}

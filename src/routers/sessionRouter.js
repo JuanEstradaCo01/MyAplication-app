@@ -6,6 +6,14 @@ const {createHash, isValidPassword} = require("../utils/passwordHash")
 
 const sessionRouter = express.Router()
 
+sessionRouter.get("/github", passport.authenticate("github", {scope: ["username: login"]}), async (req, res) => {
+  return res.redirect("/products")
+})
+
+sessionRouter.get("/github-callback", passport.authenticate("github", {failureRedirect: "/login"}) , async (req, res) => {
+  return res.redirect("/products")
+})
+
 sessionRouter.get("/", ( req, res) => {
     return res.json(req.session)
 
@@ -54,7 +62,7 @@ sessionRouter.get("/faillogin", (req, res) => {
 sessionRouter.post("/login", 
 passport.authenticate("login",{failureRedirect: "/faillogin"}),
   async(req, res) => {
-    /*let user = await userModel.findOne({email: req.body.email})
+    let user = await userModel.findOne({username: req.body.login})
 
     if (!user) {
         return res.status(404).json({
@@ -73,15 +81,14 @@ passport.authenticate("login",{failureRedirect: "/faillogin"}),
     delete user.password
 
 
-    req.session.usuario = user*/
+    req.session.usuario = user
     console.log({
       user: req.user,
       session: req.session
     })
-    
-    //return res.redirect("/products")
-
     return res.redirect("/products")
+
+    //return res.render("products")
 })
 
 sessionRouter.post("/logout", (req, res) => {

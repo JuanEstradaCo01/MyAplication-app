@@ -9,7 +9,7 @@ const userSchema = Schema({
     },
     age: Number,
     password: String,
-    admin: String,
+    rol: String,
     provider: String
 })
 

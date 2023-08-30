@@ -90,13 +90,13 @@ sessionRouter.post("/login",
 
     //Valido el correo registrado para saber si es admin o no ya que el valor es unico
     if (user.email === "adminCoder@coder.com") {
-        user.admin = "true"
+        user.rol = "Admin"
     }else{
-        user.admin = "Rol: (Usuario)"
+        user.rol = "User"
     }
 
     //Valido si el usuario es admin le muestro la lista de productos y si no es admin no le muestro los productos
-    if (user.admin === "true"){
+    if (user.rol === "Admin"){
       return res.render("products", {products, user})
     }
 

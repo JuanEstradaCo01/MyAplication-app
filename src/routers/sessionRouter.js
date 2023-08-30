@@ -9,15 +9,10 @@ const sessionRouter = express.Router()
 
 sessionRouter.get("/github", passport.authenticate("github", {scope: ["email: email"]}), async (req, res) => { })
 
-sessionRouter.get("/github-callback", passport.authenticate("github", {failureRedirect: "/login"}), (req, res, next) => {
-  if (!req.user) {
-      return res.redirect("/login")
-  }
-
-  return next()
-}, async (req, res) => { 
+sessionRouter.get("/github-callback", passport.authenticate("github", {failureRedirect: "/login"}), async (req, res) => { 
   const user = req.user
-  
+  console.log({user})
+
   return res.render("profile", {user})
 })
 
@@ -36,7 +31,6 @@ sessionRouter.get("/", ( req, res) => {
       return res.json(`${req.session.username} has ingreado ${req.session.counter} veces`)
     }
   })
-
 
 sessionRouter.post("/register", 
   passport.authenticate("register", {failureRedirect: "/failregister"}), 

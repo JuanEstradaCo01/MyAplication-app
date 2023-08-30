@@ -83,7 +83,7 @@ viewsRouter.get("/products" /*(req, res, next) => {
 })
 
 viewsRouter.get("/profile", (req, res) => {
-    return res.render("profile")
+    return res.render("profile", user)
 })
 
 viewsRouter.get("/recoverysuccess", (req, res) => {

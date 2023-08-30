@@ -1,7 +1,6 @@
 const passport = require("passport")
 const passportLocal = require("passport-local")
 const userModel = require("../dao/models/userModel")
-const userGitHubSchema = require("../dao/models/userModelGitHub")
 const GitHubStrategy = require("passport-github2")
 const { createHash, isValidPassword } = require("../utils/passwordHash")
 
@@ -13,19 +12,26 @@ const initializePassport = () => {
         clientSecret: "8322bbd99aab84ce08f9e92bc88e1086fa7ebba9",
         callbackURL: "http://localhost:8080/api/sessions/github-callback"
     }, async (accessToken, refreshToken, profile, done) => {
+        console.log({profile})
 
         try{
-            const user = await userGitHubSchema.findOne({username: profile._json.login})
+            let user = await userModel.findOne({username: profile._json.login})
     
             if(user) {
                 console.log("El usuario ya existe")
                 return done(null, user)
             }
     
-            const newUser = await userGitHubSchema.create({
+            const newUser = await userModel.create({
                 username: profile._json.login,
-                admin: profile._json.type
+                lastname: profile.username,
+                email: profile._json.email,
+                age: profile._json.name,
+                password: " ",
+                admin: profile._json.type,
+                provider: profile.provider
             })
+
             console.log({newUser})
     
             return done(null, newUser)
@@ -60,7 +66,7 @@ const initializePassport = () => {
     ))
 
     passport.use("login", new LocalStrategy(
-        {usernameField: "login"},
+        {usernameField: "email"},
         async (email, password, done) => {
             try{
                 let user = await userModel.findOne({email: email})
@@ -71,10 +77,11 @@ const initializePassport = () => {
                 }
 
                 if(!isValidPassword(password, user.password)){
-                    console.log("Datos incorrectos")
+                    console.log("Contraseña incorrecta")
                     return done(null, false)
                 }
 
+                //Eliminar contraseña
                 user = user.toObject()
                 delete user.password
 
@@ -87,14 +94,13 @@ const initializePassport = () => {
     ))
 
     passport.serializeUser((user, done) => {
-        console.log({user})
         console.log("serializeUser")
         done(null, user._id)
     })
 
     passport.deserializeUser( async (id, done) => {
         console.log("deserializeUser")
-        const user = await userModel.findOne({_id: id})
+        let user = await userModel.findOne({_id: id})
         done(null, user)
     })
 }

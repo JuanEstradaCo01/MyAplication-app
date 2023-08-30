@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Profile</title>
 </head>
 <body>
     
@@ -23,6 +23,7 @@
         <p class="parrafo">Email: {{user.email}}</p>
         <p class="parrafo">Edad: {{user.age}}</p>
         <p class="parrafo">Admin: {{user.admin}}</p>
+        <p class="parrafo">Provider: {{user.provider}}</p>
 
         <form class="logout" action="/api/sessions/logout" method="POST">
             <button type="submit" class="btnClose">Cerrar sesion</button>

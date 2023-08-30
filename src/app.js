@@ -212,7 +212,7 @@ app.use(session({
 
   store: MongoStore.create({
     mongoUrl: MONGODB_CONNECT,
-    ttl: 10
+    //ttl: 10
   }),
   secret: "secretSession",
   resave: true,

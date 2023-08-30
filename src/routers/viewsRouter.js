@@ -47,17 +47,19 @@ viewsRouter.get("/recovery", sessionMidleware, (req, res) => {
 })
 
 //Vista de perfiles
-viewsRouter.get("/products", (req, res, next) => {
-    if (!req.session.usuario) {
+viewsRouter.get("/products" /*(req, res, next) => {
+    if (!req.user) {
         return res.redirect("/login")
     }
 
     return next()
-}, async (req, res) => {
-    const user = req.session.usuario
+}*/, async (req, res) => {
+    /*const user = req.user
+    console.log({user})
     const limit = 50 //req.query.limit || 10
     const page = req.query.page || 1
 
+    user.provider = "Local"
 
     //Pagino los productos en la vista "/products"
     const products = await productsmodels.paginate({  }, {limit, page})
@@ -66,17 +68,22 @@ viewsRouter.get("/products", (req, res, next) => {
 
     //Valido el correo registrado para saber si es admin o no ya que el valor es unico
     if (user.email === "adminCoder@coder.com") {
-        user.admin = true
+        user.admin = "true"
     }else{
         user.admin = "Rol: (Usuario)"
     }
 
     //Valido si el usuario es admin le muestro la lista de productos y si no es admin no le muestro los productos
-    if (user.admin === true){
+    if (user.admin === "true"){
         return res.render("products", {products, user})
     }
     
-    return res.render("profile", {user} )
+    return res.render("profile", {user} )*/
+    return res.render("products")
+})
+
+viewsRouter.get("/profile", (req, res) => {
+    return res.render("profile")
 })
 
 viewsRouter.get("/recoverysuccess", (req, res) => {
@@ -87,8 +94,9 @@ viewsRouter.get("/logout",  (req, res) => {
     return res.redirect("login")
 })
 
+
 viewsRouter.get("/faillogin", (req, res) => {
-    return res.render("faillogin")
+    return res.render("failLogin")
 })
 
 module.exports = viewsRouter

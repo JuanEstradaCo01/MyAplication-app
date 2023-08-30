@@ -9,7 +9,8 @@ const userSchema = Schema({
     },
     age: Number,
     password: String,
-    admin: Boolean
+    admin: String,
+    provider: String
 })
 
 module.exports = model("users", userSchema)

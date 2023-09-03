@@ -7,13 +7,23 @@ const {createHash, isValidPassword} = require("../utils/passwordHash")
 
 const sessionRouter = express.Router()
 
-sessionRouter.get("/github", passport.authenticate("github", {scope: ["email: email"]}), async (req, res) => { })
+sessionRouter.get("/github", passport.authenticate("github", {scope: ["user:email"]}), async (req, res) => { 
+
+
+})
 
 sessionRouter.get("/github-callback", passport.authenticate("github", {failureRedirect: "/login"}), async (req, res) => { 
-  const user = req.user
-  console.log({user})
 
-  return res.render("profile", {user})
+  const usuarioGit = req.user
+  console.log({usuarioGit})
+  const username = req.user.username
+  const lastname = req.user.lastname
+  const email = req.user.email
+  const age = req.user.age
+  const rol = req.user.rol
+  const provider = req.user.provider
+
+  return res.render("profileGitHub", {username, lastname, email, age, rol, provider})
 })
 
 sessionRouter.get("/", ( req, res) => {
@@ -49,7 +59,7 @@ sessionRouter.post("/register",
 )
 
 sessionRouter.post("/login", 
-  passport.authenticate("login",{failureRedirect: "/faillogin"}), (req, res, next) => {
+  passport.authenticate("login",{failureRedirect: "/faillogin"}) ,(req, res, next) => {
     if (!req.user) {
         return res.redirect("/login")
     }
@@ -90,9 +100,9 @@ sessionRouter.post("/login",
 
     //Valido el correo registrado para saber si es admin o no ya que el valor es unico
     if (user.email === "adminCoder@coder.com") {
-        user.rol = "Admin"
+      user.rol = "Admin"
     }else{
-        user.rol = "User"
+      user.rol = "User"
     }
 
     //Valido si el usuario es admin le muestro la lista de productos y si no es admin no le muestro los productos
@@ -100,8 +110,8 @@ sessionRouter.post("/login",
       return res.render("products", {products, user})
     }
 
-
     return res.render("profile",{user})
+
     console.log({
       user: req.user,
       session: req.session

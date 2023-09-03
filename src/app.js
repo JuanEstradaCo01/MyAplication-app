@@ -20,6 +20,7 @@ const MongoStore = require("connect-mongo")
 const sessionRouter = require("./routers/sessionRouter")
 const passport = require("passport")
 const initializePassport = require ("./config/passport.config")
+const {generateToken, verifyToken} = require("./utils/jwt")
 const mongoose = require("mongoose")
 const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi.mongodb.net/ecommerce?retryWrites=true&w=majority"
 

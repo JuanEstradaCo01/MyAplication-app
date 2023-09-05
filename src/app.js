@@ -21,6 +21,7 @@ const sessionRouter = require("./routers/sessionRouter")
 const passport = require("passport")
 const initializePassport = require ("./config/passport.config")
 const {generateToken, verifyToken} = require("./utils/jwt")
+const flash = require("connect-flash")
 const mongoose = require("mongoose")
 const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi.mongodb.net/ecommerce?retryWrites=true&w=majority"
 
@@ -104,6 +105,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static("public"))
 
 
+//Flash:
+app.use(flash())
 
 
 
@@ -220,9 +223,15 @@ app.use(session({
   saveUninitialized: true
 }))
 
+
+
+//Passport:
 initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
+
+
+
 
 /*
 app.get("/login", (req, res) => {

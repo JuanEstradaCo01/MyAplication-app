@@ -12,6 +12,10 @@
         <form action="/api/sessions/login" method="POST">
             <label>Usuario</label><input type="text" name="email" placeholder=" Correo electronico" required>
             <label>Contraseña</label><input type="password" name="password" placeholder=" Contraseña" required>
+            <br>
+            {{#if hasError}}
+                <p style="color: red;">⚠ {{error}}</p>
+            {{/if}}
 
             <button class="button" type="submit">Ingresar</button>
             <a class="olvide" style="margin-bottom: 1rem;" href="/recovery">Olvide mi contraseña</a>

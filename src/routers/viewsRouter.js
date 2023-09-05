@@ -37,7 +37,12 @@ viewsRouter.get("/register", sessionMidleware, (req, res) => {
 })
 
 viewsRouter.get("/login", sessionMidleware, (req, res) => {
-    return res.render("login")
+    const error = req.flash("error")[0]
+
+    return res.render("login", {
+        error,
+        hasError: error !== undefined
+    })
 })
 
 viewsRouter.get("/recovery", sessionMidleware, (req, res) => {

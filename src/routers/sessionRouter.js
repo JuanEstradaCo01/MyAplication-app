@@ -59,7 +59,7 @@ sessionRouter.post("/register",
 )
 
 sessionRouter.post("/login", 
-  passport.authenticate("login",{failureRedirect: "/faillogin"}) ,(req, res, next) => {
+  passport.authenticate("login",{failureRedirect: "/login", failureFlash: true}) ,(req, res, next) => {
     if (!req.user) {
         return res.redirect("/login")
     }

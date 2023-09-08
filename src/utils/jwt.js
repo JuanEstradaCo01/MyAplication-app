@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 const Private_key = "jwtsecret"
 
 const generateToken = (payload) => {
-    const token = jwt.sign({username: payload}, Private_key, {expiresIn: "24h"})
+    const token = jwt.sign({user: payload}, Private_key, {expiresIn: "24h"})
 
     return token
 }

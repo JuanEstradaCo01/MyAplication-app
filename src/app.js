@@ -326,6 +326,11 @@ app.post("/api/products", async(req, res) => {
 })*/
 
 
+//JWT:
+
+
+
+
 app.use("/api/products", productRouter)
 app.use("/api/carts", cartRouter)
 app.use("/", viewsRouter)

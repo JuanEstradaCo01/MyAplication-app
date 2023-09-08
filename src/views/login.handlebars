@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/eef39b1d3b.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 <body>
-    <h1  style="color: rgb(102, 218, 7);">Inicia sesion:</h1>
+    <header id="headerapp">
+        <h2>〽My aplication</h2>
+    </header>
 
     <div class="centrarForm">
+        
         <form action="/api/sessions/login" method="POST">
+            <h1  style="color: rgb(102, 218, 7);">Inicia sesion:</h1>
             <label>Usuario</label><input type="text" name="email" placeholder=" Correo electronico" required>
             <label>Contraseña</label><input type="password" name="password" placeholder=" Contraseña" required>
             <br>
+            
             {{#if hasError}}
                 <p style="color: red;">⚠ {{error}}</p>
             {{/if}}
@@ -20,21 +26,22 @@
             <button class="button" type="submit">Ingresar</button>
             <a class="olvide" style="margin-bottom: 1rem;" href="/recovery">Olvide mi contraseña</a>
         </form>
+
+        <h2 style="margin-left: 2rem;">O</h2>
+
+
+        <div class="centrarFormRegister">
+            <h2 style="margin-top: 1rem;">Si aun no estas registrado</h2>
+            <form action="/register">
+                <button style="background-color: rgb(107, 145, 3);" class="buttonRegister" type="submit">Registrate</button>
+            </form>
+        </div>
     </div>
 
     <div class="divGithub">
         <p style="color: white;">O ingresa con:</p>
             
-        <a href="/api/sessions/github" class="botonGithub"><button class="btnGit">Github</button></a>
-    </div>
-
-    <hr style="margin: 2rem;">
-
-    <div class="centrarFormRegister">
-        <h2 style="margin-top: 1rem;">¿Aun no estas registrado?</h2>
-        <form style="background-color: rgb(20, 20, 20);" action="/register">
-            <button style="background-color: rgb(107, 145, 3);" class="buttonRegister" type="submit">Registrate</button>
-        </form>
+        <a href="/api/sessions/github" class="botonGithub"><button class="btnGit"><i class="fa-brands fa-github"></i></button></a>
     </div>
 </body>
 </html>

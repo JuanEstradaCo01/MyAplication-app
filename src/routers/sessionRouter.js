@@ -3,7 +3,7 @@ const passport = require("passport")
 const userModel = require("../dao/models/userModel")
 const productsmodels = require("../dao/models/productsModels")
 const {createHash, isValidPassword} = require("../utils/passwordHash")
-
+const {generateToken} = require("../utils/jwt")
 
 const sessionRouter = express.Router()
 
@@ -43,7 +43,7 @@ sessionRouter.get("/", ( req, res) => {
   })
 
 sessionRouter.post("/register", 
-  passport.authenticate("register", {failureRedirect: "/failregister"}), 
+  passport.authenticate("register", {failureRedirect: "/register"}), 
   async (req, res) => {
     //Hasheo la contraseña
     /*const body = req.body
@@ -52,8 +52,18 @@ sessionRouter.post("/register",
     const user = await userModel.create(body)
     const usuarioCreado = user
     console.log({usuarioCreado})*/
+    
 
-    return res.status(201).redirect("/login") //Respuesta de redireccion
+    //JWT:
+    const nuevoUsuario = req.body
+
+    const token = generateToken({
+      username: nuevoUsuario.username,
+      email: nuevoUsuario.email
+    })
+
+    return res.status(201).json({ ...nuevoUsuario, access_token: token})
+    //return res.status(201).redirect("/login") //Respuesta de redireccion
     //return res.status(201).json(req.user) //Respuesta de api(JSON)
 }
 )

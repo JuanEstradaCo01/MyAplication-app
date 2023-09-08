@@ -6,6 +6,11 @@
     <title>Document</title>
 </head>
 <body>
+
+    <header id="headerapp">
+        <h2>〽My aplication</h2>
+    </header>
+
     <h1>Registrate:</h1>
 
     <div class="centrarForm">
@@ -16,7 +21,12 @@
             <label>Edad:</label> <input type="number" name="age" placeholder=" Edad" required>
             <label>Contraseña:</label> <input type="password" name="password" placeholder=" Contraseña" required>
 
+            {{#if hasError}}
+                <p style="color: red;">⚠ {{errors}}</p>
+            {{/if}}
+
             <button class="button" type="submit">Registrarse</button>
+
 
         </form>
     </div>

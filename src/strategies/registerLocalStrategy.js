@@ -11,7 +11,7 @@ const registerLocalStrategy = new LocalStrategy(
 
             if(user) {
                 console.log("Ya hay un usuario registrado con este correo electronico")
-                return done(null, false)
+                return done(null, false, { message: "Ya hay un usuario registrado con este correo electronico" })
             }
 
             const body = req.body
@@ -19,6 +19,8 @@ const registerLocalStrategy = new LocalStrategy(
 
             const newUser = await userModel.create(body)
             console.log({newUser})
+
+            const users = await userModel.find()
 
             return done(null, newUser)
 

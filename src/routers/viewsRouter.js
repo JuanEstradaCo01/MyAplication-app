@@ -15,7 +15,7 @@ const sessionMidleware = (req, res, next) => {
 }
 
 const authMidleware = async (req, res, next) => {
-    const token = req.headers.authorization && req.headers.authorization.replace("Bearer", "")
+    const token = req.headers.authorization.replace("Bearer ", "")
 
     if(!token) {
         return res.status(401).json({error: "Token invalido"})
@@ -45,7 +45,12 @@ viewsRouter.get("/realtimeproducts", (req, res) => {
 })
 
 viewsRouter.get("/register", sessionMidleware, async (req, res) => {
-    return res.render("register")
+    const error = req.flash("error")[0]
+
+    return res.render("register", {
+        error,
+        hasError: error !== undefined
+    })
 })
 
 viewsRouter.get("/login", sessionMidleware, (req, res) => {
@@ -67,8 +72,9 @@ viewsRouter.get("/products" , async (req, res) => {
 })
 
 viewsRouter.get("/profile", authMidleware, (req, res) => {
+    const user = req.user
     return res.json(req.user)
-    //return res.render("profile", user)
+    return res.render("profile", user)
 })
 
 viewsRouter.get("/recoverysuccess", (req, res) => {

@@ -14,15 +14,12 @@ sessionRouter.get("/github", passport.authenticate("github", {scope: ["user:emai
 
 sessionRouter.get("/github-callback", passport.authenticate("github", {failureRedirect: "/login"}), async (req, res) => { 
 
-  const usuarioGit = req.user
-  console.log({usuarioGit})
   const username = req.user.username
   const lastname = req.user.lastname
   const email = req.user.email
   const age = req.user.age
   const rol = req.user.rol
   const provider = req.user.provider
-
   return res.render("profileGitHub", {username, lastname, email, age, rol, provider})
 })
 
@@ -43,7 +40,7 @@ sessionRouter.get("/", ( req, res) => {
   })
 
 sessionRouter.post("/register", 
-  passport.authenticate("register", {failureRedirect: "/register"}), 
+  passport.authenticate("register", {failureRedirect: "/register", failureFlash: true}), 
   async (req, res) => {
     //Hasheo la contraseña
     /*const body = req.body
@@ -52,6 +49,8 @@ sessionRouter.post("/register",
     const user = await userModel.create(body)
     const usuarioCreado = user
     console.log({usuarioCreado})*/
+    
+     
     
 
     //JWT:
@@ -62,8 +61,12 @@ sessionRouter.post("/register",
       email: nuevoUsuario.email
     })
 
-    return res.status(201).json({ ...nuevoUsuario, access_token: token})
-    //return res.status(201).redirect("/login") //Respuesta de redireccion
+    nuevoUsuario.access_token = token
+
+    console.log({nuevoUsuario})
+
+    //return res.status(201).json({ ...nuevoUsuario, access_token: token})
+    return res.redirect("/login") //Respuesta de redireccion
     //return res.status(201).json(req.user) //Respuesta de api(JSON)
 }
 )
@@ -114,6 +117,11 @@ sessionRouter.post("/login",
     }else{
       user.rol = "User"
     }
+
+    const token = generateToken(user)
+    user.access_token = token
+    console.log({user})
+    
 
     //Valido si el usuario es admin le muestro la lista de productos y si no es admin no le muestro los productos
     if (user.rol === "Admin"){

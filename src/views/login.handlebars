@@ -15,15 +15,15 @@
         
         <form action="/api/sessions/login" method="POST">
             <h1  style="color: rgb(102, 218, 7);">Inicia sesion:</h1>
-            <label>Usuario</label><input type="text" name="email" placeholder=" Correo electronico" required>
-            <label>Contraseña</label><input type="password" name="password" placeholder=" Contraseña" required>
+            <label>Usuario</label><input type="text" name="email" placeholder=" Correo electronico" id="loginUser" required>
+            <label>Contraseña</label><input type="password" name="password" placeholder=" Contraseña" id="loginPassword" required>
             <br>
             
             {{#if hasError}}
                 <p style="color: red;">⚠ {{error}}</p>
             {{/if}}
 
-            <button class="button" type="submit">Ingresar</button>
+            <button class="button" type="submit" id="loginBtn">Ingresar</button>
             <a class="olvide" style="margin-bottom: 1rem;" href="/recovery">Olvide mi contraseña</a>
         </form>
 
@@ -43,5 +43,8 @@
             
         <a href="/api/sessions/github" class="botonGithub"><button class="btnGit"><i class="fa-brands fa-github"></i></button></a>
     </div>
+
+    <script src="./script.js"></script>
+    
 </body>
 </html>

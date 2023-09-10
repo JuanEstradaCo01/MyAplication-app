@@ -15,17 +15,19 @@
 
     <div class="centrarForm">
         <form action="/api/sessions/register" method="POST">
-            <label>Nombre:</label> <input type="text" name="username" placeholder=" Nombres" required>
-            <label>Apellido:</label> <input type="text" name="lastname" placeholder=" Apellidos" required>
-            <label>Email: </label><input type="email" name="email" placeholder=" Correo electronico" required>
+            <label>Nombre:</label> <input type="text" name="username" placeholder=" Nombres" id="nombre" required>
+            <label>Apellido:</label> <input type="text" name="lastname" placeholder=" Apellidos" id="apellido" required>
+            <label>Email: </label><input type="email" name="email" placeholder=" Correo electronico" id="email" required>
             <label>Edad:</label> <input type="number" name="age" placeholder=" Edad" required>
             <label>Contraseña:</label> <input type="password" name="password" placeholder=" Contraseña" required>
 
+        
             {{#if hasError}}
-                <p style="color: red;">⚠ {{errors}}</p>
+                <p style="color: red;">⚠ {{error}}</p>
             {{/if}}
+           
 
-            <button class="button" type="submit">Registrarse</button>
+            <button class="button" type="submit" id="registrarseBtn">Registrarse</button>
 
 
         </form>
@@ -36,6 +38,6 @@
         </div> 
     <hr style="margin-top: 1.5rem;">
 
-    
+    <script src="./script.js"></script>
 </body>
 </html>

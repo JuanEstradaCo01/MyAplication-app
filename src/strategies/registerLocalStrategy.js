@@ -11,7 +11,7 @@ const registerLocalStrategy = new LocalStrategy(
 
             if(user) {
                 console.log("Ya hay un usuario registrado con este correo electronico")
-                return done(null, false, { message: "Ya hay un usuario registrado con este correo electronico" })
+                return done(null, false, { message: "Ya existe un usuario registrado con este correo electronico" })
             }
 
             const body = req.body

@@ -24,7 +24,8 @@ const gitHubStrategy = new GitHubStrategy({
             age: 27, //profile._json.name,
             password: " ",
             rol: profile._json.type,
-            provider: profile.provider
+            provider: profile.provider,
+            acces_token: ""
         })
 
 

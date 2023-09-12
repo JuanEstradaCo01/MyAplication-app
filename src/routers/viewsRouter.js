@@ -1,9 +1,8 @@
 const express = require("express")
 const { Router } = express
 const viewsRouter = new Router()
-
 const products = require("../managerDB.json")
-const { verifyToken } = require("../utils/jwt")
+const { generateToken,verifyToken } = require("../utils/jwt")
 
 
 const sessionMidleware = (req, res, next) => {
@@ -15,7 +14,7 @@ const sessionMidleware = (req, res, next) => {
 }
 
 const authMidleware = async (req, res, next) => {
-    const token = req.headers.authorization.replace("Bearer ", "")
+    const token = req.user.access_token//.replace("Bearer ", "")
 
     if(!token) {
         return res.status(401).json({error: "Token invalido"})
@@ -46,7 +45,6 @@ viewsRouter.get("/realtimeproducts", (req, res) => {
 
 viewsRouter.get("/register", sessionMidleware, async (req, res) => {
     const error = req.flash("error")[0]
-
     return res.render("register", {
         error,
         hasError: error !== undefined
@@ -55,7 +53,6 @@ viewsRouter.get("/register", sessionMidleware, async (req, res) => {
 
 viewsRouter.get("/login", sessionMidleware, (req, res) => {
     const error = req.flash("error")[0]
-
     return res.render("login", {
         error,
         hasError: error !== undefined
@@ -67,14 +64,35 @@ viewsRouter.get("/recovery", sessionMidleware, (req, res) => {
 })
 
 //Vista de admin
-viewsRouter.get("/products" , async (req, res) => {
-    return res.render("products")
+viewsRouter.get("/products",//authMidleware , 
+async (req, res) => {
+    const user = req.user
+    console.log({user})
+
+    const username = req.user.username
+    const lastname = req.user.lastname
+    const email = req.user.email
+    const age = req.user.age
+    const rol = "Admin"
+    const provider = "Local"
+     return res.render("products", {user, username, lastname, email, age, rol, provider})
 })
 
-viewsRouter.get("/profile", authMidleware, (req, res) => {
+viewsRouter.get("/profile", //authMidleware,
+ (req, res) => {
     const user = req.user
-    return res.json(req.user)
-    return res.render("profile", user)
+    const token = generateToken(user)
+    user.access_token = token
+    
+    const username = req.user.first_name
+    const lastname = req.user.last_name
+    const email = req.user.email
+    const age = req.user.age
+    const rol = "User"
+    const provider = "Local"
+
+    //return res.json(user)
+    return res.render("profile", {user, username, lastname, email, age, rol, provider})
 })
 
 viewsRouter.get("/recoverysuccess", (req, res) => {

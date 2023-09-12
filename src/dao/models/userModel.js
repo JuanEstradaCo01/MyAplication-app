@@ -1,14 +1,18 @@
-const { Schema, model } = require("mongoose")
+const { Schema, model, default: mongoose } = require("mongoose")
 
 const userSchema = Schema({
-    username: String,
-    lastname: String,
+    first_name: String,
+    last_name: String,
     email: {
         type: String,
         unique: true
     },
     age: Number,
     password: String,
+    cart: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "carts"
+    },
     rol: String,
     provider: String,
     access_token: String

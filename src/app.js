@@ -94,6 +94,7 @@ const productsModels = require("./dao/models/productsModels")
 
 const app = express()
 
+app.use(cookieParser("secretCookie"))
 
 //NOTA: Para agregar productos ir a (/realtimeProducts) que nos muestra el formulario y la lista de productos la cual funciona en tiempo real al agregar un producto
 
@@ -208,13 +209,14 @@ app.post("/cookiesForm", (req, res) => {
 
 const fileStorage = FileStore(session)
 
+
 app.use(session({
   //Configuracion de fileStorage
-  /*store: new fileStorage({
-    path:"./sessions",
-    ttl: 100,
-    retries: 0
-  })*/
+  //store: new fileStorage({
+    //path:"./sessions",
+    //ttl: 100,
+    //retries: 0
+  //})
 
   store: MongoStore.create({
     mongoUrl: MONGODB_CONNECT,

@@ -11,19 +11,19 @@
         <h1 class="headerPerfilh1">Perfil de usuario</h1>
     </div>
     
-    <h2>Hola, {{user.username}}</h2>
+    <h2>Hola, {{username}}</h2>
 
     <hr>
     
     <div class="datosUser">
         <h4 class="titulo">Datos del usuario</h4>
 
-        <p class="parrafo">Nombre: {{user.username}}</p>
-        <p class="parrafo">Apellido: {{user.lastname}}</p>
-        <p class="parrafo">Email: {{user.email}}</p>
-        <p class="parrafo">Edad: {{user.age}}</p>
-        <p class="parrafo">Rol: {{user.rol}}</p>
-        <p class="parrafo">Provider: {{user.provider}}</p>      
+        <p class="parrafo">Nombre: {{username}}</p>
+        <p class="parrafo">Apellido: {{lastname}}</p>
+        <p class="parrafo">Email: {{email}}</p>
+        <p class="parrafo">Edad: {{age}}</p>
+        <p class="parrafo">Rol: {{rol}}</p>
+        <p class="parrafo">Provider: {{provider}}</p>      
 
         <form class="logout" action="/api/sessions/logout" method="POST">
             <button type="submit" class="btnClose">Cerrar sesion</button>

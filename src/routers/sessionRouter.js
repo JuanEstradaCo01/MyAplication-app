@@ -23,6 +23,26 @@ sessionRouter.get("/github-callback", passport.authenticate("github", {failureRe
   return res.render("profileGitHub", {username, lastname, email, age, rol, provider})
 })
 
+const passportCall = (strategy) => {
+  return (req, res, next) => {
+    passport.authenticate(strategy, (err, user, info) => {
+      if (err) {
+        return next(err)
+      }
+
+      if (!user) {
+        return res.status(401).json({
+          error: info.messages ? info.messages : info.toString()
+        })
+      }
+
+      req.user = user
+
+      return next()
+    })(req, res, next)
+  }
+}
+
 sessionRouter.get("/", ( req, res) => {
     return res.json(req.session)
 
@@ -51,8 +71,6 @@ sessionRouter.post("/register",
     console.log({usuarioCreado})*/
     
      
-    
-
     //JWT:
     const nuevoUsuario = req.body
 
@@ -72,7 +90,7 @@ sessionRouter.post("/register",
 )
 
 sessionRouter.post("/login", 
-  passport.authenticate("login",{failureRedirect: "/login", failureFlash: true}) ,(req, res, next) => {
+  passport.authenticate("login",{failureRedirect:"/login", failureFlash: true}) ,(req, res, next) => {
     if (!req.user) {
         return res.redirect("/login")
     }
@@ -118,26 +136,28 @@ sessionRouter.post("/login",
       user.rol = "User"
     }
 
-    const token = generateToken(user)
+    //Genero token:
+    const token = generateToken({
+      first_name: req.user.first_name,
+      email: req.user.email,
+      rol: req.user.rol,
+      cart: req.user.cart
+    })
     user.access_token = token
-    console.log({user})
-    
 
-    //Valido si el usuario es admin le muestro la lista de productos y si no es admin no le muestro los productos
+    //Valido si el usuario es admin:(Respuestas de Admin)
     if (user.rol === "Admin"){
-      return res.render("products", {products, user})
+      //return res.render("products", {products, user})//Renderizado a perfil de Admin
+      //return res.status(200).json(req.user)//Respuesta de JSON
+      return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).redirect("/api/sessions/current")//Redireccion a current
+      //return res.redirect("/products")//Redireccion a perfil de admin
     }
 
-    return res.render("profile",{user})
-
-    console.log({
-      user: req.user,
-      session: req.session
-    })
-
-    return res.redirect("/products")
-
-    //return res.json(req.user)
+    //(Respuestas de User):
+    return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).redirect("/api/sessions/current")//Redireccion a current
+    //return res.render("profile",{user})//Renderizado a perfil de User
+    //return res.redirect("/profile")//Redireccion a perfil de User
+    //return res.status(200).json(req.user)//Respuesta de JSON
 })
 
 sessionRouter.post("/logout", (req, res) => {
@@ -177,4 +197,10 @@ sessionRouter.get("/faillogin", (req, res) => {
   })
 })
 
+sessionRouter.get("/current", passportCall("jwt"), (req, res) => {
+  return res.json({
+    user: req.user,
+    //session: req.session
+  })
+})
 module.exports = sessionRouter

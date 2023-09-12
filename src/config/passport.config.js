@@ -4,9 +4,13 @@ const userModel = require("../dao/models/userModel")
 const gitHubStrategy = require("../strategies/gitHubStrategy")
 const registerLocalStrategy = require("../strategies/registerLocalStrategy")
 const loginLocalStrategy = require("../strategies/loginLocalStrategy")
+const JWTstrategy = require("../strategies/JWTStrategy")
 const { generateToken } = require("../utils/jwt")
 
 const initializePassport = () => {
+    
+    passport.use("jwt", JWTstrategy)
+
     passport.use("github", gitHubStrategy)
 
     passport.use("register", registerLocalStrategy)
@@ -20,14 +24,16 @@ const initializePassport = () => {
 
     passport.deserializeUser( async (id, done) => {
         console.log("deserializeUser")
-        let user = await userModel.findOne({_id: id})
+        const user = await userModel.findOne({_id: id}).populate("cart")
 
+        //let user = await userModel.findOne({_id: id})
+
+/*      //JWT:
         const token = generateToken(user)
         user = user.toObject()
-        user.acces_token = token
+        user.access_token = token
         console.log({user})
-
-
+*/
         done(null, user)
     })
 }

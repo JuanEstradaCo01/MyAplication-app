@@ -1,13 +1,14 @@
 const passportLocal = require("passport-local")
 const LocalStrategy = passportLocal.Strategy
+const passportJWT = require('passport-jwt')
 const userModel = require("../dao/models/userModel")
 const { createHash, isValidPassword } = require("../utils/passwordHash")
 
 const registerLocalStrategy = new LocalStrategy(
     {passReqToCallback: true, usernameField: "email"},
-    async (req, username, password, done) => {
+    async (req, first_name, password, done) => {
         try {
-            const user = await userModel.findOne({email: username})
+            const user = await userModel.findOne({email: first_name})
 
             if(user) {
                 console.log("Ya hay un usuario registrado con este correo electronico")
@@ -20,7 +21,6 @@ const registerLocalStrategy = new LocalStrategy(
             const newUser = await userModel.create(body)
             console.log({newUser})
 
-            const users = await userModel.find()
 
             return done(null, newUser)
 

@@ -25,9 +25,8 @@ const gitHubStrategy = new GitHubStrategy({
             password: " ",
             rol: profile._json.type,
             provider: profile.provider,
-            acces_token: ""
+            access_token: ""
         })
-
 
         return done(null, newUser)
     }catch(e){

@@ -1,7 +1,10 @@
 const express = require("express")
-const productRouter = require("./routers/productRouter")
-const cartRouter = require("./routers/cartRouter")
-const viewsRouter = require("./routers/viewsRouter")
+const ProductRouter = require("./routers/productRouter")
+const productRouter = new ProductRouter()
+const CartRouter = require("./routers/cartRouter")
+const cartRouter = new CartRouter()
+const ViewsRouter = require("./routers/viewsRouter")
+const viewsRouter = new ViewsRouter()
 const handlebars = require("express-handlebars")
 const productsmodels = require("./dao/models/productsModels")
 const viewsRouterFn = require("./routers/chatViewsRouter") //chat
@@ -17,7 +20,8 @@ const cookieParser = require("cookie-parser")
 const session = require("express-session")
 const FileStore = require("session-file-store")
 const MongoStore = require("connect-mongo")
-const sessionRouter = require("./routers/sessionRouter")
+const SessionRouter = require("./routers/sessionRouter")
+const sessionRouter = new SessionRouter()
 const passport = require("passport")
 const initializePassport = require ("./config/passport.config")
 const flash = require("connect-flash")
@@ -330,15 +334,16 @@ app.post("/api/products", async(req, res) => {
 })*/
 
 
-//JWT:
+//Expresion regular: donde se codifican como byte utf-8 (á,é,í,ó,ú)⬇                    
+app.get("/api/dictionary/:palabra([a-z%C3%A1%C3%A9%C3%AD%C3%B3%C3%BA%C3%BC]+)", (req, res) => {
+  return res.send(req.params.palabra)
+})
 
 
-
-
-app.use("/api/products", productRouter)
-app.use("/api/carts", cartRouter)
-app.use("/", viewsRouter)
+app.use("/api/products", productRouter.getRouter())
+app.use("/api/carts", cartRouter.getRouter())
+app.use("/", viewsRouter.getRouter())
 app.use("/", chatViewsRouter)
-app.use("/api/sessions", sessionRouter)
+app.use("/api/sessions", sessionRouter.getRouter())
 
 module.exports = io

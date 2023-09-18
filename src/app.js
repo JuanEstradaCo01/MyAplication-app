@@ -26,14 +26,37 @@ const passport = require("passport")
 const initializePassport = require ("./config/passport.config")
 const flash = require("connect-flash")
 const cors = require("cors")
+const dotenv = require("dotenv")
+const configFn = require("./config")
+const {Command} = require("commander")
 const mongoose = require("mongoose")
-const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi.mongodb.net/ecommerce?retryWrites=true&w=majority"
+
+//DOTENV: 
+const program = new Command()
+
+//Por default sera "local"
+program 
+  .option('--mode <mode>', 'Modo de trabajo', 'local')
+
+program.parse()
+
+const options = program.opts()
+dotenv.config({
+  path: `./.env.${options.mode}`
+})
+
+const mode = options.mode
+console.log({mode})
+
+const config = configFn()
 
 
+//Conexion a mongo:
+const MONGODB_CONNECT_LOCAL = `mongodb+srv://${config.DB_USER}:${config.DB_PASSWORD}@${config.DB_HOST}/${config.DB_NAME}?retryWrites=true&w=majority`
 
 //IIFE
 ;(async () => {
-    await mongoose.connect(MONGODB_CONNECT)
+    await mongoose.connect(MONGODB_CONNECT_LOCAL)
       .then(() => console.log("¡Conexion a MongoDB exitosa!"))
       .catch((e) => console.log(e))
 
@@ -88,7 +111,6 @@ const MONGODB_CONNECT = "mongodb+srv://jp010:pasnWqeVnYjKv10W@cluster001.lv2pfsi
 
       console.log({cart: JSON.stringify(cart, null, 2)})*/
 })()
-
 
 
 const socketServer = require("./utils/io")
@@ -223,7 +245,7 @@ app.use(session({
   //})
 
   store: MongoStore.create({
-    mongoUrl: MONGODB_CONNECT,
+    mongoUrl: MONGODB_CONNECT_LOCAL,
     //ttl: 10
   }),
   secret: "secretSession",
@@ -237,8 +259,6 @@ app.use(session({
 initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
-
-
 
 
 /*

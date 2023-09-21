@@ -24,9 +24,7 @@ class CartRouter extends BaseRouter {
         this.get("/:cid", cartsController.getCartById.bind(cartsController))
         this.post("/", cartsController.addCart.bind(cartsController))
         this.post("/:cid/products/:pid", cartsController.addProductToCart.bind(cartsController))
-        //Para modificar todo el carrito
         this.put("/:cid", cartsController.updateCart.bind(cartsController))
-        //Para actualizar la quantity pasada desde req.body
         this.put("/:cid/products/:pid",  cartsController.updateQuantity.bind(cartsController))
         this.delete("/:cid/products/:pid", cartsController.deleteProductInCart.bind(cartsController))
         this.delete("/:cid", cartsController.deleteCart.bind(cartsController))

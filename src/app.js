@@ -51,6 +51,7 @@ console.log({mode})
 const config = configFn()
 
 
+
 //Conexion a mongo:
 const MONGODB_CONNECT_LOCAL = `mongodb+srv://${config.DB_USER}:${config.DB_PASSWORD}@${config.DB_HOST}/${config.DB_NAME}?retryWrites=true&w=majority`
 

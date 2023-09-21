@@ -17,14 +17,14 @@ class DBCartManager {
 
     async addCart(body) {
         return this.model.create({
-            carrito: body.carrito,
+            name: body.name,
             products: []
         })
     }
 
     async addProductToCart(body) {
         return this.model.create([{
-            carrito: body.carrito,
+            name: body.name,
             products: [{
                 product: body.product,
                 quantity: body.quantity
@@ -53,7 +53,7 @@ class DBCartManager {
         }
 
         const update = {
-            carrito: cart.carrito,
+            name: cart.name,
             products: [{
                 product: cart.product,
                 quantity: cart.quantity
@@ -73,7 +73,7 @@ class DBCartManager {
         }
 
         const update = {
-            carrito: cart.carrito,
+            name: cart.name,
             products: [{
                 product: cart.product,
                 quantity: cart.quantity

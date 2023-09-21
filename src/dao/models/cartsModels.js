@@ -3,7 +3,7 @@ const Schema = require("mongoose")
 
 const cartsSchema = mongoose.Schema({
     name: String,
-    /*products: {
+    products: {
         type: [{
             product: {
                 type: Schema.Types.ObjectId,
@@ -13,7 +13,7 @@ const cartsSchema = mongoose.Schema({
         }],
         default: []
     }
-    */
+    
 })
 
 module.exports = mongoose.model("carts", cartsSchema)

@@ -12,158 +12,25 @@ const dbproductManager = new DBProductManager() //Para usar mongo
 const DBCartManager = require("../dao/DBCartManager")
 const BaseRouter = require("./BaseRouter")
 const dbcartManager = new DBCartManager()// Para usar mongo
+const CartsController = require("../controllers/cartsController")
+const cartsController = new CartsController()
 
 
 //NOTA: Descomentar todo lo que este comentado si se quiere usar FS
 
 class CartRouter extends BaseRouter {
     init () {
-        this.get("/", async(req, res) => {
-            try{
-                const products = await dbcartManager.getCarts()
-        
-                return res.json(products)
-            }catch (e) {
-                console.log("No existen carritos", e)
-            }
-            
-        })
-        this.get("/:cid", async(req, res) => {
-
-            const cid = req.params.cid //convertirlo con parseInt cuando se quiera usar FS
-        
-            const cartBuscar = await dbcartManager.getCartById(cid)
-          
-            if (!cartBuscar) {
-                return res.status(404).json({
-                    error: `No existe el carrito con el ID:${Id}`
-                })
-            }else {
-                return res.send(cartBuscar)
-            }
-        })
-        this.post("/", async(req, res) => {
-            /*const data = req.body
-        
-            const guardar = await carrito.getCarts()
-        
-            data.id = guardar.length + 1
-            
-            await carrito.addCart(data)*/
-            const body = req.body
-        
-            const guardar = await dbcartManager.getCarts()
-        
-            body.carrito = guardar.length + 1
-        
-            await dbcartManager.addCart(body)
-        
-            res.json(body)
-        })
-        this.post("/:cid/products/:pid", async(req, res) => {
-
-            const cid = req.params.cid //convertirlo con parseInt cuando se quiera usar FS
-            const pid = req.params.pid //convertirlo con parseInt cuando se quiera usar FS
-            
-            try{
-                const cartById = await dbcartManager.getCartById(cid)  
-        
-                if (!cartById) {
-                    return res.status(404).json({
-                        error: "No se encontro el carrito"
-                    })
-                }
-        
-                const productById = await dbproductManager.getProductById(pid)
-        
-        
-                if (!productById) {
-                    return res.status(404).json({
-                        error: "No se encontro el producto"
-                    })
-                }      
-               
-                if (cartById.products.length === 0 ){
-                    const newProduct = {
-                        product: pid,
-                        quantity: 1
-                    }
-                    cartById.products.push(newProduct)
-                }else{
-                    const encontrar = cartById.products.findIndex(item => item.product === pid)
-                    if (encontrar >= 0){
-                        cartById.products[encontrar].quantity = cartById.products[encontrar].quantity + 1
-                    }else{
-                        const newProduct = {
-                            product: pid,
-                            quantity: 1
-                        }
-                        cartById.products.push(newProduct)
-                    }
-                }
-                const products = []
-                products.push(cartById)   
-                console.log(cartById)   
-        
-                await dbcartManager.addProductToCart(cartById)
-                
-        
-                return res.status(201).json(cartById)
-                
-            }catch(error) {
-                console.log("Ha ocurrido un error", error)
-            }
-        
-        })
+        this.get("/", cartsController.getCarts.bind(cartsController))
+        this.get("/:cid", cartsController.getCartById.bind(cartsController))
+        this.post("/", cartsController.addCart.bind(cartsController))
+        this.post("/:cid/products/:pid", cartsController.addProductToCart.bind(cartsController))
         //Para modificar todo el carrito
-        this.put("/:cid", async (req, res) => {
-        const body = req.body
-        const cid = req.params.cid
-
-        await dbcartManager.updateCart(cid, body)
-        return res.status(200).json(body)
-        })
+        this.put("/:cid", cartsController.updateCart.bind(cartsController))
         //Para actualizar la quantity pasada desde req.body
-        this.put("/:cid/products/:pid",  async(req, res) => {
-        const body = req.body
-        const cid = req.params.cid
-
-        await dbcartManager.updateQuantity(cid, body)
-        return res.status(200).json(body)
-        })
-        this.delete("/:cid/products/:pid", async(req, res) => {
-            const pid = req.params.pid
-            console.log(pid)
-            
-        
-            try {
-                //Busco el producto para mostrar el nombre del producto que se elimina del carrito
-                const products = await dbproductManager.getProducts()
-                const productToDelete = products.find(el => el._id == pid)
-                const name = productToDelete.tittle
-                console.log(name)
-                
-                const prod = await dbcartManager.deleteProductInCart(pid)
-        
-                return res.status(200).json({OK: `Se ha eliminado el producto (${name}) del carrito`})
-            }catch (e) {
-                return res.status(404).json({mensaje: "No existe el producto en el carrito"})
-            }
-        })
-        this.delete("/:cid", async (req, res) => {
-            const cid = req.params.cid
-        
-            try{
-                const carts = await dbcartManager.getCarts()
-                const cartToDelete = carts.find(el => el._id == cid)
-                const name = cartToDelete.carrito
-                const cart = await dbcartManager.deleteCart(cid)
-        
-                return res.status(200).json({OK: `Se ha eliminado el carrito (${name})`})
-            }catch (e) {
-                return res.status(404).json({error: "No existe el carrito"})
-            }
-        })
+        this.put("/:cid/products/:pid",  cartsController.updateQuantity.bind(cartsController))
+        this.delete("/:cid/products/:pid", cartsController.deleteProductInCart.bind(cartsController))
+        this.delete("/:cid", cartsController.deleteCart.bind(cartsController))
     }
 }
+
 module.exports = CartRouter

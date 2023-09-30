@@ -16,8 +16,6 @@ const CartsController = require("../controllers/cartsController")
 const cartsController = new CartsController()
 
 
-//NOTA: Descomentar todo lo que este comentado si se quiere usar FS
-
 class CartRouter extends BaseRouter {
     init () {
         this.get("/", cartsController.getCarts.bind(cartsController))

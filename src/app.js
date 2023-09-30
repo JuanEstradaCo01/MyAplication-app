@@ -28,6 +28,7 @@ const flash = require("connect-flash")
 const cors = require("cors")
 const dotenv = require("dotenv")
 const configFn = require("./config")
+const DB = require("./config/singleton")
 const {Command} = require("commander")
 const mongoose = require("mongoose")
 
@@ -50,17 +51,11 @@ console.log({mode})
 
 const config = configFn()
 
-
-
-//Conexion a mongo:
-const MONGODB_CONNECT_LOCAL = `mongodb+srv://${config.DB_USER}:${config.DB_PASSWORD}@${config.DB_HOST}/${config.DB_NAME}?retryWrites=true&w=majority`
+//Conexion a la base de datos(MongoDB):
+const dbConnection = DB.getConnection(config)
 
 //IIFE
 ;(async () => {
-    await mongoose.connect(MONGODB_CONNECT_LOCAL)
-      .then(() => console.log("¡Conexion a MongoDB exitosa!"))
-      .catch((e) => console.log(e))
-
 
     //Productos a agregar:
     const productos = await managerDB.getProducts()
@@ -153,7 +148,7 @@ app.set("view engine", "handlebars")
 const puerto = 8080
 
 const httpServer = app.listen(puerto, () => {
-    console.log(`Servidor espress escuchando en el puerto ${puerto}`)
+    console.log(`Servidor express escuchando en el puerto ${puerto}`)
 })
 
 const io = socketServer(httpServer)
@@ -245,10 +240,10 @@ app.use(session({
     //retries: 0
   //})
 
-  store: MongoStore.create({
+  /*store: MongoStore.create({
     mongoUrl: MONGODB_CONNECT_LOCAL,
     //ttl: 10
-  }),
+  }),*/
   secret: "secretSession",
   resave: true,
   saveUninitialized: true

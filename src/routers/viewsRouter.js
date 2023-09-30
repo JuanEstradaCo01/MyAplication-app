@@ -72,13 +72,13 @@ class ViewsRouter extends BaseRouter {
             const user = req.user
             console.log({user})
         
-            const username = req.user.username
-            const lastname = req.user.lastname
+            const first_name = req.user.first_name
+            const last_name = req.user.last_name
             const email = req.user.email
             const age = req.user.age
             const rol = "Admin"
             const provider = "Local"
-             return res.render("products", {user, username, lastname, email, age, rol, provider})
+             return res.render("products", {user, first_name, last_name, email, age, rol, provider})
         })
         
         this.get("/profile", //authMidleware,
@@ -87,15 +87,15 @@ class ViewsRouter extends BaseRouter {
             const token = generateToken(user)
             user.access_token = token
             
-            const username = req.user.first_name
-            const lastname = req.user.last_name
+            const first_name = req.user.first_name
+            const last_name = req.user.last_name
             const email = req.user.email
             const age = req.user.age
             const rol = "User"
             const provider = "Local"
         
             //return res.json(user)
-            return res.render("profile", {user, username, lastname, email, age, rol, provider})
+            return res.render("profile", {user, first_name, last_name, email, age, rol, provider})
         })
         
         this.get("/recoverysuccess", (req, res) => {

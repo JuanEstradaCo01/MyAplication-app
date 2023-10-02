@@ -30,6 +30,7 @@ const dotenv = require("dotenv")
 const configFn = require("./config")
 const DB = require("./config/singleton")
 const {Command} = require("commander")
+const nodemailer = require("nodemailer")
 const mongoose = require("mongoose")
 
 //DOTENV: 
@@ -145,10 +146,10 @@ app.set("view engine", "handlebars")
 
 
 
-const puerto = 8080
+const PUERTO = process.env.PUERTO || 8080
 
-const httpServer = app.listen(puerto, () => {
-    console.log(`Servidor express escuchando en el puerto ${puerto}`)
+const httpServer = app.listen(PUERTO, () => {
+    console.log(`Servidor express escuchando en el puerto ${PUERTO}`)
 })
 
 const io = socketServer(httpServer)
@@ -355,6 +356,36 @@ app.get("/api/dictionary/:palabra([a-z%C3%A1%C3%A9%C3%AD%C3%B3%C3%BA%C3%BC]+)", 
   return res.send(req.params.palabra)
 })
 
+const transport = nodemailer.createTransport({
+  host: process.env.PUERTO,
+  service: "gmail",
+  port: 587,
+  auth: {
+    user: 'devjp.010@gmail.com',
+    pass: 'yxql uezw dwld qwvb'
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
+})
+
+app.get("/mail", async (req, res) => {
+  const result = await transport.sendMail({
+    from: "devjp.010@gmail.com",//Correo del emisor
+    to: "devjp.010@gmail.com",//Correo del receptor
+    subject: "",//Asunto del correo
+    html: `<div>
+    <h1>Hola</h1>
+    <img src="cid:Pera"/>
+    </div>`,//Cuerpo del mensaje
+    attachments: [{
+      filename: "",//Nombre del archivo(eje: pera.jpg)
+      path:"",//ruta de la imagen(eje:./imgs/Pera.jpg)
+      cid: ""//Nombre de la imagen(eje: Pera)
+    }]
+  })
+  res.send("Correo enviado")
+})
 
 app.use("/api/products", productRouter.getRouter())
 app.use("/api/carts", cartRouter.getRouter())

@@ -13,19 +13,19 @@
     </div>
     
     
-    <h2>Hola, {{first_name}}</h2>
+    <h2>Hola, {{user.first_name}}</h2>
 
     <hr>
     
     <div class="datosUser">
         <h4 class="titulo">Datos del usuario</h4>
 
-        <p class="parrafo">Nombre: {{first_name}}</p>
-        <p class="parrafo">Apellido: {{last_name}}</p>
-        <p class="parrafo">Email: {{email}}</p>
-        <p class="parrafo">Edad: {{age}}</p>
-        <p class="parrafo">Rol: {{rol}}</p>
-        <p class="parrafo">Provider: {{provider}}</p>
+        <p class="parrafo">Nombre: {{user.first_name}}</p>
+        <p class="parrafo">Apellido: {{user.last_name}}</p>
+        <p class="parrafo">Email: {{user.email}}</p>
+        <p class="parrafo">Edad: {{user.age}}</p>
+        <p class="parrafo">Rol: {{user.rol}}</p>
+        <p class="parrafo">Provider: {{user.provider}}</p>
 
         <form class="logout" action="/api/sessions/logout" method="POST">
             <button type="submit" class="btnClose">Cerrar sesion</button>
@@ -36,13 +36,36 @@
     <hr>
     
     <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <h2 style="margin-top: 3rem;">Lista de productos de la tienda:</h2>
 
-    <h2 style="color: red;">¡Lo sentimos, no tienes acceso a la lista de productos! 😓</h2>
+    <div id="tablePaginate">
+        <table class="tablePag">
+            <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>Producto</th>
+                <th>Tamaño</th>
+                <th>Stock</th>
+                <th>Categoria</th>
+                <th>Precio</th>
+                <th class="none"></th>
+                <th class="none"></th>
+            </tr>
+            {{#each products.docs}}
+            <tr>
+                <td class="center">{{this.id}}</td>
+                <td class="center">{{this._id}}</td>
+                <td class="center">{{this.tittle}}</td>
+                <td class="center">{{this.description}}</td>
+                <td class="center">{{this.stock}}</td>
+                <td class="center">{{this.category}}</td>
+                <td class="center">{{this.price}}</td>
+                <td class="none"><a href="./detalles?pid={{this._id}}"><button id={{this._id}} class="detallebtn" >Detalles</button></a></td>
+                <td class="none"><a href="./detalles?pid={{this._id}}"><button id={{this._id}} class="agregarbtn" >Agregar al carrito</button></a></td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
 
 
 </body>

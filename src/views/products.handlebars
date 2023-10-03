@@ -11,22 +11,22 @@
         <h1 class="headerPerfilh1">Perfil de usuario</h1>
     </div>
     
-    <h2>Hola, {{first_name}}</h2>
+    <h2>Hola, {{user.first_name}}</h2>
 
     <hr>
     
     <div class="datosUser">
         <h4 class="titulo">Datos del usuario</h4>
 
-        <p class="parrafo">Nombre: {{first_name}}</p>
-        <p class="parrafo">Apellido: {{last_name}}</p>
-        <p class="parrafo">Email: {{email}}</p>
-        <p class="parrafo">Edad: {{age}}</p>
-        <p class="parrafo">Rol: {{rol}}</p>
-        <p class="parrafo">Provider: {{provider}}</p>      
+        <p class="parrafo">Nombre: {{user.first_name}}</p>
+        <p class="parrafo">Apellido: {{user.last_name}}</p>
+        <p class="parrafo">Email: {{user.email}}</p>
+        <p class="parrafo">Edad: {{user.age}}</p>
+        <p class="parrafo">Rol: {{user.rol}}</p>
+        <p class="parrafo">Provider: {{user.provider}}</p>      
 
         <form class="logout" action="/api/sessions/logout" method="POST">
-            <button type="submit" class="btnClose">Cerrar sesion</button>
+            <button style="background-color: red;" type="submit" class="btnClose">Cerrar sesion</button>
         </form>
     </div>
 
@@ -36,6 +36,9 @@
     <!--<div class="h3Paginatediv">
         <h3 class="h3Paginate">Pagina: {{page}} de {{totalPages}}</h3>
     </div>-->
+
+
+    <a href="/realTimeProducts"><button style="background-color: rgb(16, 146, 27);">Crear producto</button></a>
 
     <div id="tablePaginate">
         <table class="tablePag">
@@ -59,8 +62,12 @@
                 <td class="center">{{this.stock}}</td>
                 <td class="center">{{this.category}}</td>
                 <td class="center">{{this.price}}</td>
-                <td class="none"><a href="./detalles?pid={{this._id}}"><button id={{this._id}} class="detallebtn" >Detalles</button></a></td>
-                <td class="none"><a href="./detalles?pid={{this._id}}"><button id={{this._id}} class="agregarbtn" >Agregar al carrito</button></a></td>
+                
+                <td class="none"><a href="/actualizar"><button style="background-color: aqua;" id={{this._id}} class="detallebtn" >Actualizar</button></a></td>
+                <td class="none"><a href="/api/products/{{this._id}}"><button style="background-color: red;" id={{this._id}} class="detallebtn" >Eliminar</button></a></td>
+                
+                        
+
             </tr>
             {{/each}}
         </table>

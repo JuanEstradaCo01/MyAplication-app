@@ -109,6 +109,14 @@ class ViewsRouter extends BaseRouter {
         this.get("/faillogin", (req, res) => {
             return res.json({error: "failLogin"})
         })
+
+        this.get("/current", (req, res) => {
+            return res.redirect("/api/sessions/current")
+        })
+        
+        this.get("/actualizar", (req, res) => {
+            return res.render("actualizar")
+        })
     }
 }
 

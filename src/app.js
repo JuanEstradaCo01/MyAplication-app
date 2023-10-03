@@ -356,6 +356,8 @@ app.get("/api/dictionary/:palabra([a-z%C3%A1%C3%A9%C3%AD%C3%B3%C3%BA%C3%BC]+)", 
   return res.send(req.params.palabra)
 })
 
+
+//Mailing:
 const transport = nodemailer.createTransport({
   host: process.env.PUERTO,
   service: "gmail",

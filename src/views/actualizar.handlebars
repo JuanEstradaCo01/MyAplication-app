@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
-<body id="body">
-
+<body>
     <div id="formulario">
-        <h1>Agregar producto:</h1>
+        <h1>Actualizar producto:</h1>
 
-        <form id="formu" action="/api/products" method="POST">
+        <form id="formu" action="/api/products/{{this._id}}" method="PUT">
             <label for="tittle">Tittle: </label><input type="text" name="tittle" placeholder="Nombre del producto" required>
             <label for="description">Description: </label><input type="text" id="description" placeholder="Descripcion del producto" required>
             <label for="price">Price: </label><input type="number" name="price" placeholder="Precio" required>
@@ -24,42 +22,5 @@
             <input class="inputEnviar" type="submit" value="Agregar" id="formButton">
         </form>
     </div>
-
-    <a href="api/sessions/login"><button>Volver al perfil</button></a>
-<!--
-    <div id="tabla">
-        <div class="h2">
-        <h2>Lista de productos:</h2>
-        </div>
-
-    <div class="tableContainer">
-        
-        <table id="productos">
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Stock</th>
-                <th>Categoria</th>
-            </tr>
-
-            {{#each products}}
-            <tr>
-                <td>{{this.id}}</td>
-                <td>{{this.tittle}}</td>
-                <td>{{this.price}}</td>
-                <td>{{this.stock}}</td>
-                <td>{{this.category}}</td>
-                <td><button class="butn" id="deleteButton{{this.id}}" onclick="deleteProduct({{this.id}})">X</button></td>       
-            </tr>
-            {{/each}}
-        </table>
-    </div>
-    </div>
-    -->
 </body>
 </html>
-
-
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/products.js"></script>

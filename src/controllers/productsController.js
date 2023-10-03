@@ -1,4 +1,7 @@
 const ProductsService = require("../services/productsService")
+const ProductDto = require("../dao/DTOs/productDto")
+const productRepository = require("../services/index")
+
 
 class ProductsController {
     constructor() {
@@ -8,7 +11,7 @@ class ProductsController {
     async getProducts(req, res) {
 
         try {
-            const productos = await this.service.getProducts()
+            const productos = await productRepository.getProducts()
             
             const limite = parseInt(req.query.limit)
     
@@ -40,20 +43,22 @@ class ProductsController {
 
     async addProduct(req, res) {
 
-        const data = req.body
+        let {id,tittle,description,price,thumbnail,code,status,stock,category} = req.body
         
-        const guardar = await this.service.getProducts()
+        const guardar = await productRepository.getProducts()
         
-        data.code = guardar.length + 1 
-        data.id = guardar.length + 1 
+        code = guardar.length + 1 
+        id = guardar.length + 1 
         
-        const newProduct = await this.service.addProduct(data)
+        const product = new ProductDto({id,tittle,description,price,thumbnail,code,status,stock,category})
 
-       if(!newProduct) {
+        const productoCreado = await productRepository.addProduct(product)
+
+       if(!productoCreado) {
          return res.status(500).json({error: "No se pudo crear el producto"})
         }
 
-        return res.json(data)
+        return res.json({productoCreado})
     }
 
     async updateProduct(req, res) {

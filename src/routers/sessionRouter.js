@@ -4,6 +4,9 @@ const userModel = require("../dao/models/userModel")
 const productsmodels = require("../dao/models/productsModels")
 const {createHash, isValidPassword} = require("../utils/passwordHash")
 const {generateToken} = require("../utils/jwt")
+const DBProductManager = require("../dao/DBProductManager")
+const dbproductManager = new DBProductManager() //Para usar mongo
+
 const BaseRouter = require("./BaseRouter")
 
 const sessionRouter = express.Router()
@@ -126,7 +129,8 @@ class SessionRouter extends BaseRouter {
     
         user.provider = "Local"
     
-        //Pagino los productos en la vista "/products"
+
+        //Pagino los productos
         const products = await productsmodels.paginate({  }, {limit, page})
     
         products.docs = products.docs.map(user => user.toObject())
@@ -149,15 +153,15 @@ class SessionRouter extends BaseRouter {
     
         //Valido si el usuario es admin:(Respuestas de Admin)
         if (user.rol === "Admin"){
-          //return res.render("products", {products, user})//Renderizado a perfil de Admin
+          return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("products", {products, user})//Renderizado a perfil de Admin
           //return res.status(200).json(req.user)//Respuesta de JSON
-          return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).redirect("/api/sessions/current")//Redireccion a current
+          //return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).redirect("/api/sessions/current")//Redireccion a current
           //return res.redirect("/products")//Redireccion a perfil de admin
         }
     
         //(Respuestas de User):
-        return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).redirect("/api/sessions/current")//Redireccion a current
-        //return res.render("profile",{user})//Renderizado a perfil de User
+        //return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).redirect("/api/sessions/current")//Redireccion a current
+        return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("profile",{products, user})//Renderizado a perfil de User
         //return res.redirect("/profile")//Redireccion a perfil de User
         //return res.status(200).json(req.user)//Respuesta de JSON
     })
@@ -200,10 +204,16 @@ class SessionRouter extends BaseRouter {
     })
     
     this.get("/current", passportCall("jwt"), (req, res) => {
-      return res.json({
-        user: req.user,
-        //session: req.session
-      })
+      const user = req.user
+
+      //Usuario solo con los datos que quiero mostrar
+      const userToSend = {
+        name: user.first_name,
+        email: user.email,
+        rol: user.rol
+      }
+
+      return res.send(userToSend)
     })
   }
 }

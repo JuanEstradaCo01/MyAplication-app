@@ -34,10 +34,6 @@ class CartsController {
     async addCart(req, res) {
         const data = req.body
         
-        const guardar = await this.service.getCarts()
-        
-        data.name = guardar.length + 1
-        
         await this.service.addCart(data)
         
         return res.json(data)

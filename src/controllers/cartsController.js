@@ -21,13 +21,15 @@ class CartsController {
         const cid = req.params.cid
         
         const cartBuscar = await this.service.getCartById(cid)
+        const user = cartBuscar.name
+        const products = cartBuscar.products
           
         if (!cartBuscar) {
             return res.status(404).json({
-                error: `No existe el carrito con el ID:${id}`
+                error: `No existe el carrito con el ID:${cid}`
             })
         }else {
-            return res.send(cartBuscar)
+            return res.json(cartBuscar)
         }
     }
 
@@ -42,51 +44,45 @@ class CartsController {
     async addProductToCart(req, res) {
         const cid = req.params.cid 
         const pid = req.params.pid 
-            
+
         try{
-            const cartById = await this.service.getCartById(cid)  
-        
-            if (!cartById) {
+            const product = await dbproductManager.getProductById(pid)
+
+            if (!product) {
+                return res.status(404).json({
+                    error: "No se encontro el producto"
+                })
+            }   
+    
+            const productToAgregate = {
+                id: product._id,
+                name: product.tittle,
+                quantity: 1
+            }
+            const cart = await this.service.getCartById(cid)
+    
+            if (!cart) {
                 return res.status(404).json({
                     error: "No se encontro el carrito"
                 })
             }
-        
-            const productById = await dbproductManager.getProductById(pid)
-        
-        
-            if (!productById) {
-                return res.status(404).json({
-                    error: "No se encontro el producto"
-                })
-            }      
-               
-            if (cartById.products.length === 0 ){
-                const newProduct = {
-                    product: pid,
-                    quantity: 1
-                }
-                cartById.products.push(newProduct)
+    
+            
+            if (cart.products.length === 0 ){
+                cart.products.push(productToAgregate)
             }else{
-                const encontrar = cartById.products.findIndex(item => item.product === pid)
+                const encontrar = cart.products.findIndex(item => item.id === pid)
+                console.log({encontrar})
                 if (encontrar >= 0){
-                    cartById.products[encontrar].quantity = cartById.produc    [encontrar].quantity + 1
+                    cart.products[encontrar].quantity = cart.products[encontrar].quantity + 1
                 }else{
-                    const newProduct = {
-                        product: pid,
-                        quantity: 1
-                    }
-                    cartById.products.push(newProduct)
+                    cart.products.push(productToAgregate)
                 }
             }
-            const products = []
-            products.push(cartById)   
-            console.log(cartById)   
-        
-            await this.service.addProductToCart(cartById)
-                
-            return res.status(201).json(cartById)
-                
+    
+            await this.service.addProductToCart(cid, cart)
+            return res.status(201).json(cart)
+            //res.send({status: "success", result:"Product Added"})
         }catch(error) {
             console.log("Ha ocurrido un error", error)
         }

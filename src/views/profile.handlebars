@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <script src="https://kit.fontawesome.com/eef39b1d3b.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 <body>
@@ -28,14 +29,20 @@
         <p class="parrafo">Provider: {{user.provider}}</p>
 
         <form class="logout" action="/api/sessions/logout" method="POST">
-            <button type="submit" class="btnClose">Cerrar sesion</button>
+            <button style="background-color: red;" type="submit" class="btnClose">Cerrar sesion</button>
         </form>
     </div>
     
 
     <hr>
+
+    <a href="/api/carts/{{cartId}}"><button style="font-size: 2rem;" id="{{cartId}}"><i class="fa-solid fa-cart-shopping"></i></button></a>
+
+    <hr>
     
     <br>
+
+    <a href="/chatLogin"><button style="background-color: green;" id={{this._id}} class="agregarbtn" >Chat</button></a></body>
     <h2 style="margin-top: 3rem;">Lista de productos de la tienda:</h2>
 
     <div id="tablePaginate">
@@ -60,10 +67,11 @@
                 <td class="center">{{this.stock}}</td>
                 <td class="center">{{this.category}}</td>
                 <td class="center">{{this.price}}</td>
-                <td class="none"><a href="./detalles?pid={{this._id}}"><button id={{this._id}} class="detallebtn" >Detalles</button></a></td>
-                <td class="none"><a href="./detalles?pid={{this._id}}"><button id={{this._id}} class="agregarbtn" >Agregar al carrito</button></a></td>
+
+                <td class="none"><form action="/api/carts/{{cartId}}/products/{{this._id}}" method="POST"><button style="background-color: yellow;" id="{{this._id}}" class="agregarbtn" >Agregar al carrito</button></form></td>
             </tr>
             {{/each}}
+
         </table>
     </div>
 

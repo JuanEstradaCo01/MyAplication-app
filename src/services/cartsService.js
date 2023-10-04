@@ -18,8 +18,8 @@ class CartsService {
         return this.storage.addCart(body)
     }
 
-    addProductToCart(body) {
-        return this.storage.addProductToCart(body)
+    addProductToCart(cid, body) {
+        return this.storage.addProductToCart(cid, body)
     }
 
     deleteProductInCart(pid) {

@@ -6,6 +6,8 @@ const {createHash, isValidPassword} = require("../utils/passwordHash")
 const {generateToken} = require("../utils/jwt")
 const DBProductManager = require("../dao/DBProductManager")
 const dbproductManager = new DBProductManager() //Para usar mongo
+const DBCartManager = require("../dao/DBCartManager")
+const dbcartManager = new DBCartManager()
 
 const BaseRouter = require("./BaseRouter")
 
@@ -150,6 +152,12 @@ class SessionRouter extends BaseRouter {
           cart: req.user.cart
         })
         user.access_token = token
+
+        
+        const id = user.cart._id
+        const cart = await dbcartManager.getCartById(id)
+        const cartId = cart._id
+       
     
         //Valido si el usuario es admin:(Respuestas de Admin)
         if (user.rol === "Admin"){
@@ -161,7 +169,7 @@ class SessionRouter extends BaseRouter {
     
         //(Respuestas de User):
         //return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).redirect("/api/sessions/current")//Redireccion a current
-        return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("profile",{products, user})//Renderizado a perfil de User
+        return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("profile",{products, user, cartId})//Renderizado a perfil de User
         //return res.redirect("/profile")//Redireccion a perfil de User
         //return res.status(200).json(req.user)//Respuesta de JSON
     })

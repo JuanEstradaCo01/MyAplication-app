@@ -22,14 +22,8 @@ class DBCartManager {
         })
     }
 
-    async addProductToCart(body) {
-        return this.model.create([{
-            name: body.name,
-            products: [{
-                product: body.product,
-                quantity: body.quantity
-            }]
-        }])
+    async addProductToCart(cid, cart) {
+        return this.model.updateOne({_id: cid}, cart)
     }
 
     async deleteProductInCart(pid) {
@@ -45,24 +39,23 @@ class DBCartManager {
         return true
     }
 
-    async updateCart(cid, body) {
-        const cart = await this.getCartById(cid)
+    async updateCart(cid, cart) {
+        const carrito = await this.getCartById(cid)
+        console.log({cart})
 
-        if (!cart) {
+        if (!carrito) {
             throw new Error("El carrito no existe")
         }
 
-        const update = {
-            name: cart.name,
-            products: [{
-                product: cart.product,
-                quantity: cart.quantity
-            }]
+        try{
+            const update = await this.model.updateOne({ _id: cid}, {cart})
+            const updated = {cart}
+            return update
+        }catch(e){
+            console.log(e)
+            return null
         }
-
-        await this.model.updateOne({ _id: cid}, update)
-
-        return update
+        
     }
 
     async updateQuantity(cid) {

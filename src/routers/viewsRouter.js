@@ -117,6 +117,10 @@ class ViewsRouter extends BaseRouter {
         this.get("/actualizar", (req, res) => {
             return res.render("actualizar")
         })
+        
+        this.get("/cart", (req, res) => {
+            return res.render("cart")
+        })
     }
 }
 

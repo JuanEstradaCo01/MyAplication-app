@@ -29,9 +29,8 @@ const cors = require("cors")
 const dotenv = require("dotenv")
 const configFn = require("./config")
 const DB = require("./config/singleton")
+const nodemailer = require("nodemailer")  
 const {Command} = require("commander")
-const nodemailer = require("nodemailer")
-const mongoose = require("mongoose")
 
 //DOTENV: 
 const program = new Command()
@@ -356,15 +355,15 @@ app.get("/api/dictionary/:palabra([a-z%C3%A1%C3%A9%C3%AD%C3%B3%C3%BA%C3%BC]+)", 
   return res.send(req.params.palabra)
 })
 
-
+//----------------------------------------------------------------------------
 //Mailing:
 const transport = nodemailer.createTransport({
   host: process.env.PUERTO,
   service: "gmail",
   port: 587,
   auth: {
-    user: 'devjp.010@gmail.com',
-    pass: 'yxql uezw dwld qwvb'
+    user: 'mail@gmail.com',
+    pass: process.env.PASS
   },
   tls: {
     rejectUnauthorized: false
@@ -372,22 +371,23 @@ const transport = nodemailer.createTransport({
 })
 
 app.get("/mail", async (req, res) => {
-  const result = await transport.sendMail({
-    from: "devjp.010@gmail.com",//Correo del emisor
-    to: "devjp.010@gmail.com",//Correo del receptor
-    subject: "",//Asunto del correo
+  const correo = await transport.sendMail({
+    from: "mail@gmail.com",//Correo del emisor
+    to: "mail@gmail.com",//Correo del receptor
+    subject: "saludo",//Asunto del correo
     html: `<div>
     <h1>Hola</h1>
-    <img src="cid:Pera"/>
-    </div>`,//Cuerpo del mensaje
+    </div>`,//Cuerpo del mensaje(ejemplo imagen:<img src="cid:Pera"/>)
     attachments: [{
       filename: "",//Nombre del archivo(eje: pera.jpg)
       path:"",//ruta de la imagen(eje:./imgs/Pera.jpg)
       cid: ""//Nombre de la imagen(eje: Pera)
     }]
   })
-  res.send("Correo enviado")
+  return res.send("Correo enviado")
 })
+//-------------------------------------------------------------------------
+
 
 app.use("/api/products", productRouter.getRouter())
 app.use("/api/carts", cartRouter.getRouter())

@@ -121,7 +121,6 @@ class ViewsRouter extends BaseRouter {
         this.get("/cart", (req, res) => {
             return res.render("cart")
         })
-    }
-}
+}}
 
 module.exports = ViewsRouter

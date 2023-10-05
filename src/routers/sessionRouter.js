@@ -158,7 +158,6 @@ class SessionRouter extends BaseRouter {
         const cart = await dbcartManager.getCartById(id)
         const cartId = cart._id
        
-    
         //Valido si el usuario es admin:(Respuestas de Admin)
         if (user.rol === "Admin"){
           return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("products", {products, user})//Renderizado a perfil de Admin

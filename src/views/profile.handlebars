@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="../public/style.css">
     <script src="https://kit.fontawesome.com/eef39b1d3b.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 <body>
+
+    <header style="background-color: rgb(2, 136, 80);
+                   font-size: 2rem;
+                   height: 6rem;">
+        <h2>〽My aplication</h2>
+    </header>
     
     <div id="divh1Profile">
         <h1 class="headerPerfilh1">Perfil de usuario</h1>
@@ -68,10 +74,10 @@
                 <td class="center">{{this.category}}</td>
                 <td class="center">{{this.price}}</td>
 
-                <td class="none"><form action="/api/carts/{{cartId}}/products/{{this._id}}" method="POST"><button style="background-color: yellow;" id="{{this._id}}" class="agregarbtn" >Agregar al carrito</button></form></td>
+                <!--User-MARIA-->
+                <td class="none"><form action="/api/carts/651d00dbfa2f42c27084aa1b/products/{{this._id}}" method="POST"><button style="background-color: yellow;" id="{{this._id}}" class="agregarbtn" >Agregar al carrito</button></form></td>
             </tr>
             {{/each}}
-
         </table>
     </div>
 

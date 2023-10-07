@@ -1,6 +1,7 @@
 const CartsService = require("../services/cartsService")
 const DBProductManager = require("../dao/DBProductManager")
 const dbproductManager = new DBProductManager()
+const productsModels = require("../dao/models/productsModels")
 
 class CartsController {
     constructor() {
@@ -21,15 +22,15 @@ class CartsController {
         const cid = req.params.cid
         
         const cartBuscar = await this.service.getCartById(cid)
-        const user = cartBuscar.name
-        const products = cartBuscar.products
+        const cartUser = cartBuscar.name
+        const cartProducts = cartBuscar.products
           
         if (!cartBuscar) {
             return res.status(404).json({
                 error: `No existe el carrito con el ID:${cid}`
             })
         }else {
-            return res.json(cartBuscar)
+            return res.send(cartBuscar)
         }
     }
 
@@ -48,6 +49,7 @@ class CartsController {
         try{
             const product = await dbproductManager.getProductById(pid)
 
+            console.log({product})
             if (!product) {
                 return res.status(404).json({
                     error: "No se encontro el producto"
@@ -57,7 +59,9 @@ class CartsController {
             const productToAgregate = {
                 id: product._id,
                 name: product.tittle,
-                quantity: 1
+                size: product.description,
+                quantity: 1,
+                price: product.price
             }
             const cart = await this.service.getCartById(cid)
     
@@ -72,16 +76,22 @@ class CartsController {
                 cart.products.push(productToAgregate)
             }else{
                 const encontrar = cart.products.findIndex(item => item.id === pid)
-                console.log({encontrar})
                 if (encontrar >= 0){
                     cart.products[encontrar].quantity = cart.products[encontrar].quantity + 1
                 }else{
                     cart.products.push(productToAgregate)
                 }
             }
+
+            const nombre = product.tittle
+            const tamaño = product.description
+            const code = product.code
+            const precio = product.price
+            const cartId = cart._id
+            
     
             await this.service.addProductToCart(cid, cart)
-            return res.status(201).json(cart)
+            return res.render("addProduct", {nombre, tamaño, code, precio, cartId})
             //res.send({status: "success", result:"Product Added"})
         }catch(error) {
             console.log("Ha ocurrido un error", error)

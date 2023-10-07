@@ -11,7 +11,9 @@ const cartsSchema = mongoose.Schema({
             },
             id: String,
             name: String,
-            quantity: Number
+            size: String,
+            quantity: Number,
+            price: Number
         }],
         default: []
     }

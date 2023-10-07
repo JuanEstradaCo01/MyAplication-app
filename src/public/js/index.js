@@ -21,6 +21,7 @@ socket.on("notificacion", notification => {
 })
 
 mensajeEnviar.addEventListener("click", (e) => {
+  e.preventDefault()
   const mensaje = mensajeInput.value
   if (mensaje) {
     socket.emit('nuevoMensaje', mensaje)

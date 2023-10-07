@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/eef39b1d3b.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body style="background-color: beige">
+
+    <header style="background-color: rgb(2, 136, 80);
+                   font-size: 2rem;
+                   height: 6rem;">
+        <h2>〽My aplication</h2>
+    </header>
+    
+    <div>
+        <div style="text-align: center;">
+                <h1 style="color: rgb(3, 197, 3);">Producto agregado exitosamente ✔</h1>
+        </div>
+
+        <div style="border: double;
+                    border-color: rgb(48, 110, 76)" 
+                    id="tablePaginate">
+            <table style="width: 100%;"  class="tablePag">
+                <tr>
+                    <th style="font-size: 1.5rem;
+                               border-bottom: double;
+                               padding: .8rem;
+                               color: green">Producto</th>
+                    <th style="font-size: 1.5rem;
+                               border-bottom: double;
+                               padding: .8rem;
+                               color: green;">Tamaño</th>
+                    <th style="font-size: 1.5rem;
+                               border-bottom: double;
+                               padding: .8rem;
+                               color: green;">Code</th>
+                    <th style="font-size: 1.5rem;
+                               border-bottom: double;
+                               padding: .8rem;
+                               color: green;">Precio $</th>
+                </tr>
+            
+                <tr>
+                    <td style="text-align: center;
+                               font-size: 1.25rem;
+                               font-weight: bolder" class="center">{{nombre}}</td>
+                    <td style="text-align: center;
+                               font-size: 1.25rem;
+                               font-weight: bolder" class="center">{{tamaño}}</td>
+                    <td style="text-align: center;
+                               font-size: 1.25rem;
+                               font-weight: bolder" class="center">{{code}}</td>
+                    <td style="text-align: center;
+                               font-size: 1.25rem;
+                               font-weight: bolder" class="center">{{precio}}</td>
+                </tr>
+            
+            </table>
+        </div>
+
+        <div style="display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-top: 2rem">
+            <a href="/api/carts/{{cartId}}"><button  style="color: green;
+                    heigth: 1rem;
+                    width: 6rem;
+                    font-size: 2rem;
+                    color: white;
+                    background-color: green" id="{{cartId}}"><i class="fa-solid fa-cart-shopping"></i></button></a>
+        </div>
+    </div>
+</body>
+</html>

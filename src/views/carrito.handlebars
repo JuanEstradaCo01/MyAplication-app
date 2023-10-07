@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: rgb(56, 63, 56);">
+
+    <header style="background-color: rgb(2, 136, 80);
+                   font-size: 2rem;
+                   height: 6rem;">
+        <h2>〽My aplication</h2>
+    </header>
+    
+    <h1>{{cartUser}}</h1>
+
+    <div id="tablePaginate">
+        <table class="tablePag">
+            <tr>
+                <th>Producto</th>
+                <th>Tamaño</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+            </tr>
+            {{#each cartProducts}}
+            <tr>
+                <td class="center">{{this.name}}</td>
+                <td class="center">{{this.size}}</td>
+                <td class="center">{{this.quantity}}</td>
+                <td class="center">{{this.price}}</td>
+            </tr>
+            {{/each}}
+            
+        </table>
+    </div>
+</body>
+</html>

@@ -137,6 +137,10 @@ class SessionRouter extends BaseRouter {
     
         products.docs = products.docs.map(user => user.toObject())
     
+        products.docs.forEach(function (item) {
+          item.cartId = user.cart._id
+        })
+
         //Valido el correo registrado para saber si es admin o no ya que el valor es unico
         if (user.email === "adminCoder@coder.com") {
           user.rol = "Admin"

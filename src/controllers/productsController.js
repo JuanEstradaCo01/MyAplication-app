@@ -1,6 +1,8 @@
 const ProductsService = require("../services/productsService")
 const ProductDto = require("../dao/DTOs/productDto")
 const productRepository = require("../services/index")
+const DBCartManager = require("../dao/DBCartManager")
+const cartmanager = new DBCartManager()
 
 
 class ProductsController {

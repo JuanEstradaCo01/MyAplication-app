@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const collection = "tickets"
 const ticketsSchema = mongoose.Schema({
-    code: String,  //codigo autogenerable
+    code: Number,  //codigo autogenerable
     purchase_datetime: {
         type: Date,
         default: Date.now

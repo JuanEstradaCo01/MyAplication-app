@@ -49,7 +49,6 @@ class CartsController {
         try{
             const product = await dbproductManager.getProductById(pid)
 
-            console.log({product})
             if (!product) {
                 return res.status(404).json({
                     error: "No se encontro el producto"
@@ -61,7 +60,8 @@ class CartsController {
                 name: product.tittle,
                 size: product.description,
                 quantity: 1,
-                price: product.price
+                price: product.price,
+                cartId: cid
             }
             const cart = await this.service.getCartById(cid)
     

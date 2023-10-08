@@ -19,8 +19,6 @@ class TicketsController {
         const tid = req.params.cid
         
         const ticketBuscar = await this.service.getTicketById(tid)
-        //const cartUser = cartBuscar.name
-        //const cartProducts = cartBuscar.products
           
         if (!ticketBuscar) {
             return res.status(404).json({
@@ -29,6 +27,16 @@ class TicketsController {
         }else {
             return res.send({ticketBuscar})
         }
+    }
+
+    async generateTicket(req, res) {
+        const data = req.body
+
+        data.code = data.length + 1
+        
+        await this.service.generateTicket(data)
+        
+        return res.json(data)
     }
 }
 

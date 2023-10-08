@@ -17,7 +17,8 @@ const productsSchema = mongoose.Schema({
     },
     status: Boolean,
     stock: Number,
-    category: String
+    category: String,
+    cartId: String
 })
 
 productsSchema.plugin(mongoosePaginate)

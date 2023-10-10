@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^8.1.0",
     "bcrypt": "^5.1.1",
     "commander": "^11.0.0",
     "connect-flash": "^0.1.1",

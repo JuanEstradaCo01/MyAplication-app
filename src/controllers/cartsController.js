@@ -60,8 +60,7 @@ class CartsController {
                 name: product.tittle,
                 size: product.description,
                 quantity: 1,
-                price: product.price,
-                cartId: cid
+                price: product.price
             }
             const cart = await this.service.getCartById(cid)
     

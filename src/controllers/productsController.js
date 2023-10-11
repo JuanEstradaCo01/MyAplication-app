@@ -3,6 +3,9 @@ const ProductDto = require("../dao/DTOs/productDto")
 const productRepository = require("../services/index")
 const DBCartManager = require("../dao/DBCartManager")
 const cartmanager = new DBCartManager()
+const CustomError = require("../services/errors/CustomError")
+const generateProductErrorInfo = require("../services/errors/info")
+const EErrors = require("../services/errors/enums")
 
 
 class ProductsController {
@@ -47,6 +50,17 @@ class ProductsController {
 
         let {id,tittle,description,price,thumbnail,code,status,stock,category} = req.body
         
+
+        //Valido si las propiedades del producto llegan invalidas segun su "TYPE" y genero un CustomError:
+        if(!id || !tittle || !description || !price || !thumbnail || !code || !status || !stock || !category) {
+            CustomError.generateError({
+                name: "Error en la creacion del producto",
+                cause: generateProductErrorInfo({id,tittle,description,price,thumbnail,code,status,stock,category}),
+                message: "Error al tratar de agregar el producto",
+                code: EErrors.INVALID_TYPES_ERROR
+            })
+        }
+
         const guardar = await productRepository.getProducts()
         
         code = guardar.length + 1 

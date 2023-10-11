@@ -33,6 +33,7 @@ const dotenv = require("dotenv")
 const configFn = require("./config")
 const DB = require("./config/singleton")
 const nodemailer = require("nodemailer")  
+const ErrorMiddleware = require("./services/middlewares")
 const {Command} = require("commander")
 
 //DOTENV: 
@@ -135,7 +136,6 @@ app.use(express.static("public"))
 
 //Flash:
 app.use(flash())
-
 
 
 //app.use("/static", express.static("public"))
@@ -399,5 +399,7 @@ app.use("/", chatViewsRouter)
 app.use("/api/sessions", sessionRouter.getRouter())
 app.use("/api/tickets", ticketRouter.getRouter())
 app.use("/", mockingRouter)
+
+app.use(ErrorMiddleware)
 
 module.exports = io

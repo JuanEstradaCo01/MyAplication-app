@@ -6,7 +6,7 @@ class TicketRouter extends BaseRouter {
     init () {
         this.get("/", ticketsController.getTickets.bind(ticketsController))
         this.get("/:tid", ticketsController.getTicketById.bind(ticketsController))
-        this.get("/", ticketsController.generateTicket.bind(ticketsController))
+        this.post("/", ticketsController.generateTicket.bind(ticketsController))
     }
 }
 

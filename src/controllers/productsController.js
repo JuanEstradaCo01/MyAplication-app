@@ -46,19 +46,20 @@ class ProductsController {
 
     }
 
-    async addProduct(req, res) {
+    async addProduct(req, res, next) {
 
         let {id,tittle,description,price,thumbnail,code,status,stock,category} = req.body
         
 
         //Valido si las propiedades del producto llegan invalidas segun su "TYPE" y genero un CustomError:
         if(!id || !tittle || !description || !price || !thumbnail || !code || !status || !stock || !category) {
-            CustomError.generateError({
+            const error = CustomError.generateError({
                 name: "Error en la creacion del producto",
                 cause: generateProductErrorInfo({id,tittle,description,price,thumbnail,code,status,stock,category}),
                 message: "Error al tratar de agregar el producto",
                 code: EErrors.INVALID_TYPES_ERROR
             })
+            return next(error)
         }
 
         const guardar = await productRepository.getProducts()

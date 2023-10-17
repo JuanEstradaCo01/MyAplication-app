@@ -5,9 +5,9 @@ class MongoSingleton {
 
     constructor(config) {
 
-        const MONGODB_CONNECT_LOCAL = `mongodb+srv://${config.DB_USER}:${config.DB_PASSWORD}@${config.DB_HOST}/${config.DB_NAME}?retryWrites=true&w=majority`
+        const MONGODB_CONNECT = `mongodb+srv://${config.DB_USER}:${config.DB_PASSWORD}@${config.DB_HOST}/${config.DB_NAME}?retryWrites=true&w=majority`
 
-        mongoose.connect(MONGODB_CONNECT_LOCAL)
+        mongoose.connect(MONGODB_CONNECT)
           .then(() => console.log(`✔ CONECTADO A LA BASE DE DATOS(${config.DB_NAME})`))
           .catch((e) => console.log(e))
     }

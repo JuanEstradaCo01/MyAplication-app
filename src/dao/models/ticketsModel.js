@@ -5,7 +5,7 @@ const ticketsSchema = mongoose.Schema({
     code: Number,  //codigo autogenerable
     purchase_datetime: {
         type: Date,
-        default: Date.now
+        default: new Date().toLocaleTimeString()
     },  //fecha y hora
     amount: Number,  //total compra
     purchaser: String  //correo del usuario

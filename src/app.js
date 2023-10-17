@@ -34,24 +34,25 @@ const configFn = require("./config")
 const DB = require("./config/singleton")
 const nodemailer = require("nodemailer")  
 const ErrorMiddleware = require("./services/middlewares")
+const addLogger = require("./utils/loggers")
 const {Command} = require("commander")
 
 //DOTENV: 
 const program = new Command()
 
-//Por default sera "local"
+//Por default sera "dev"
 program 
-  .option('--mode <mode>', 'Modo de trabajo', 'local')
-
+  .option('--mode <mode>', 'Modo de trabajo', 'dev',
+          '--mode <mode>', 'Modo de trabajo', 'prod')
 program.parse()
 
 const options = program.opts()
+
 dotenv.config({
   path: `./.env.${options.mode}`
 })
 
 const mode = options.mode
-console.log({mode})
 
 const config = configFn()
 
@@ -112,7 +113,6 @@ const dbConnection = DB.getConnection(config)
       console.log({cart: JSON.stringify(cart, null, 2)})*/
 })()
 
-
 const socketServer = require("./utils/io")
 const DBProductManager = require("./dao/DBProductManager")
 const cartsModels = require("./dao/models/cartsModels")
@@ -127,7 +127,6 @@ app.use(cookieParser("secretCookie"))
 //CORS
 app.use(cors())
 
-
 //Configuracion basica
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -136,6 +135,7 @@ app.use(express.static("public"))
 
 //Flash:
 app.use(flash())
+
 
 
 //app.use("/static", express.static("public"))
@@ -147,11 +147,11 @@ app.set("views", "./views")
 app.set("view engine", "handlebars")
 
 
+//Levanto el servidor:
+const PORT = process.env.PORT || 8080
 
-const PUERTO = process.env.PUERTO || 8080
-
-const httpServer = app.listen(PUERTO, () => {
-    console.log(`Servidor express escuchando en el puerto ${PUERTO}`)
+const httpServer = app.listen(PORT, () => {
+    //console.log(`Servidor express escuchando en el puerto ${PORT}`)
 })
 
 const io = socketServer(httpServer)
@@ -390,7 +390,19 @@ app.get("/mail", async (req, res) => {
   return res.send("Correo enviado")
 })
 //-------------------------------------------------------------------------
+//Winston-Logger: 
+app.use(addLogger)
 
+app.get("/loggerTest", (req, res) => {
+  if(mode === "dev"){
+    req.logger.debug("❗Debug")
+  }
+  if(mode === "prod"){
+    req.logger.info("🛑 Info")
+    req.logger.error("❌ Error")
+  }
+  res.send({message:"Winston-logger"})
+})
 
 app.use("/api/products", productRouter.getRouter())
 app.use("/api/carts", cartRouter.getRouter())

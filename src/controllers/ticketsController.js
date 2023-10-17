@@ -1,4 +1,9 @@
+const TicketDto = require("../dao/DTOs/ticketDto")
+const TicketRepository = require("../dao/repository/ticketRepository")
 const TicketService = require("../services/ticketsService")
+const DBTicketManager = require("../dao/DBTicketManager")
+const ticketManager = new DBTicketManager()
+const ticketRepository = new TicketRepository()
 
 class TicketsController {
     constructor() {
@@ -32,11 +37,13 @@ class TicketsController {
     async generateTicket(req, res) {
         const data = req.body
 
-        data.code = data.length + 1
+        const ticketsGenerados = await ticketManager.getTickets()
+
+        data.code = ticketsGenerados.length + 1
         
-        await this.service.generateTicket(data)
+        const ticketGenerated = await this.service.generateTicket(data)
         
-        return res.json(data)
+        return res.send({ticketGenerated})
     }
 }
 

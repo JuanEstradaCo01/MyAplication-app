@@ -19,8 +19,6 @@ const registerLocalStrategy = new LocalStrategy(
             body.password = createHash(body.password)
 
             const newUser = await userModel.create(body)
-            console.log({newUser})
-
 
             return done(null, newUser)
 

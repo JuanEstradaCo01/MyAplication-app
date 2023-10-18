@@ -5,7 +5,6 @@ const extractJWT = passportJWT.ExtractJwt
 
 const cookieExtractor = (req) => {
     const TokenEnCookie = req.cookies
-    console.log({TokenEnCookie})
     return req.cookies && req.cookies.Token
     // return req.headers && req.headers['authorization'] && req.headers['authorization'].replace('Bearer ', '')
   }

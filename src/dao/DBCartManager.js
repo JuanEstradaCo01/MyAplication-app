@@ -26,15 +26,15 @@ class DBCartManager {
         return this.model.updateOne({_id: cid}, cart)
     }
 
-    async deleteProductInCart(pid) {
+    async deleteProductInCart(pid, cartProducts) {
         const productoEliminadoDelCarrito = await dbproductManager.getProductById(pid)
-        console.log({productoEliminadoDelCarrito})
+
 
         if (!productoEliminadoDelCarrito) {
-            throw new Error("El producto no existe")
+            throw new Error("El producto no existe en el carrito")
         }
 
-        await this.model.deleteOne({ product: pid})
+        await this.model.deleteOne({ _id: pid}, cartProducts)
 
         return true
     }
@@ -80,7 +80,6 @@ class DBCartManager {
     
     async deleteCart (cid) {
         const carritoEliminado = await this.getCartById(cid)
-        console.log({carritoEliminado})
 
         if (!carritoEliminado) {
             throw new Error("El producto no existe")

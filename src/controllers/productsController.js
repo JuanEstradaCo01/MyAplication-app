@@ -27,9 +27,8 @@ class ProductsController {
             }
     
         }catch (err){
-            console.log("No existen productos", err)
+            return res.status(404).json({error: "No existen productos en la base de datos"}).req.logger.error("No existen productos en la base de datos")
         }
-
     }
 
     async getProductById(req, res) {
@@ -40,42 +39,42 @@ class ProductsController {
             const productBuscar = await this.service.getProductById(pid)
             return res.json(productBuscar)
 
-        }catch{
-            return res.status(404).json({error: "El producto no existe"})
+        }catch(e){
+            return res.status(404).json({error: "El producto no existe en la base de datos"}).req.logger.error("El producto no existe en la base de datos")
         }
-
     }
 
     async addProduct(req, res, next) {
 
-        let {id,tittle,description,price,thumbnail,code,status,stock,category} = req.body
+        try{
+            let {id,tittle,description,price,thumbnail,code,status,stock,category} = req.body
         
 
-        //Valido si las propiedades del producto llegan invalidas segun su "TYPE" y genero un CustomError:
-        if(!id || !tittle || !description || !price || !thumbnail || !code || !status || !stock || !category) {
-            const error = CustomError.generateError({
-                name: "Error en la creacion del producto",
-                cause: generateProductErrorInfo({id,tittle,description,price,thumbnail,code,status,stock,category}),
-                message: "Error al tratar de agregar el producto",
-                code: EErrors.INVALID_TYPES_ERROR
-            })
-            return next(error)
+            //Valido si las propiedades del producto llegan invalidas segun su "TYPE" y genero un CustomError:
+            if(!id || !tittle || !description || !price || !thumbnail || !code || !status || !stock || !category) {
+                const error = CustomError.generateError({
+                    name: "Error en la creacion del producto",
+                    cause: generateProductErrorInfo({id,tittle,description,price,thumbnail,code,status,stock,category}),
+                    message: "Error al tratar de agregar el producto",
+                    code: EErrors.INVALID_TYPES_ERROR
+                })
+                return next(error)
+            }
+ 
+            const guardar = await productRepository.getProducts()
+        
+            code = guardar.length + 1 
+            id = guardar.length + 1 
+        
+            const product = new ProductDto({id,tittle,description,price,thumbnail,code,status,stock,category})
+
+            const productoCreado = await productRepository.addProduct(product)
+ 
+            return res.json({productoCreado}).req.logger.info(`✔ ¡Producto agregado exitosamente!(${productoCreado.tittle})`)
+        }catch(e){
+            return res.status(500).json({error: "No se pudo crear el producto"}).req.logger.error("No se pudo crear el producto")
         }
 
-        const guardar = await productRepository.getProducts()
-        
-        code = guardar.length + 1 
-        id = guardar.length + 1 
-        
-        const product = new ProductDto({id,tittle,description,price,thumbnail,code,status,stock,category})
-
-        const productoCreado = await productRepository.addProduct(product)
-
-       if(!productoCreado) {
-         return res.status(500).json({error: "No se pudo crear el producto"})
-        }
-
-        return res.json({productoCreado})
     }
 
     async updateProduct(req, res) {
@@ -91,7 +90,7 @@ class ProductsController {
         const update = await this.service.updateProduct(pid, body)
 
         if(!update) {
-            return res.status(500).json({error: "No se pudo actualizar el producto"})
+            return res.status(500).json({error: "No se pudo actualizar el producto"}).req.logger.warning("No se pudo actualizar el producto")
         }
 
         return res.json(update)
@@ -107,9 +106,9 @@ class ProductsController {
             const name = productToDelete.tittle
             await this.service.deleteProduct(pid)
             
-            return res.json({OK: `Se ha eliminado el producto (${name})`})
+            return res.json({OK: `Se ha eliminado el producto (${name})`}).req.logger.info(`Se ha eliminado el producto (${name})`)
         }catch (e) {
-            return res.status(404).json({mensaje: "No existe el producto a eliminar"})
+            return res.status(404).json({message: "No existe el producto a eliminar"}).req.logger.warning("No existe el producto a eliminar")
         }   
     }
 }

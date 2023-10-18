@@ -25,8 +25,6 @@ const viewsRouterFn = (io) => {
 
         //io.emit("newUser", username)
 
-        console.log(users)
-
         return res.redirect(`/chat?username=${username}`)
     })
 
@@ -37,7 +35,6 @@ const viewsRouterFn = (io) => {
 
     viewsRouter.post("/chat", async (req, res) => {
         const body = req.body
-        console.log(body)
 
         await dbmessagesmanager.getMessages(body)
 
@@ -46,7 +43,5 @@ const viewsRouterFn = (io) => {
 
     return viewsRouter
 }
-
-
 
 module.exports = viewsRouterFn

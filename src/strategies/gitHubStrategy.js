@@ -7,7 +7,6 @@ const gitHubStrategy = new GitHubStrategy({
     clientSecret: "8322bbd99aab84ce08f9e92bc88e1086fa7ebba9",
     callbackURL: "http://localhost:8080/api/sessions/github-callback"
 }, async (accessToken, refreshToken, profile, done) => {
-    console.log({profile})
 
     try{
         let user = await userModel.findOne({username: profile._json.login})

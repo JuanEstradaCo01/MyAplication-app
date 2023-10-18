@@ -70,7 +70,6 @@ class ViewsRouter extends BaseRouter {
         this.get("/products",//authMidleware , 
         async (req, res) => {
             const user = req.user
-            console.log({user})
         
             const first_name = req.user.first_name
             const last_name = req.user.last_name

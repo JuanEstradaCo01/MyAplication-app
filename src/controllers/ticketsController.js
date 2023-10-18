@@ -16,21 +16,18 @@ class TicketsController {
     
             return res.json(tickets)
         }catch (e) {
-            console.log("No existen tickets", e)
+            return res.status(500).json({message: "No existen tickets"}).req.logger.warning("No existen ticke")
         }
     }
 
     async getTicketById(req, res) {
-        const tid = req.params.cid
-        
-        const ticketBuscar = await this.service.getTicketById(tid)
-          
-        if (!ticketBuscar) {
-            return res.status(404).json({
-                error: `No existe ticket con el ID:${cid}`
-            })
-        }else {
-            return res.send({ticketBuscar})
+        const tid = req.params.tid
+        try{
+            const ticket = await this.service.getTicketById(tid)
+
+            return res.send({ticket})
+        }catch(e){
+            return res.status(404).json({error: `No existe ticket con el ID:${tid}`}).req.logger.error(`No existe ticket con el ID:${tid}`)
         }
     }
 
@@ -43,8 +40,8 @@ class TicketsController {
         
         const ticketGenerated = await this.service.generateTicket(data)
         
-        return res.send({ticketGenerated})
+        return res.send({ticketGenerated}).req.logger.info("¡Ticket generado exitosamente!")
     }
 }
-
+ 
 module.exports = TicketsController

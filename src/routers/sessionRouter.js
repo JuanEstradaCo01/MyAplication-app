@@ -89,7 +89,7 @@ class SessionRouter extends BaseRouter {
     
         nuevoUsuario.access_token = token
     
-        console.log({nuevoUsuario})
+        req.logger.info("¡Se registro un nuevo usuario!")
     
         //return res.status(201).json({ ...nuevoUsuario, access_token: token})
         return res.redirect("/login") //Respuesta de redireccion
@@ -198,6 +198,8 @@ class SessionRouter extends BaseRouter {
     
       const nuevaPassword = createHash(req.body.password)
       await userModel.updateOne({_id: verificar._id}, {password: nuevaPassword})
+
+      req.logger.info("¡Se recupero correctamente la contraseña!")
     
       return res.redirect("/recoverysuccess")
     })

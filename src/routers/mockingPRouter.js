@@ -15,9 +15,8 @@ mockingRouter.get("/mockingproducts", (req, res) => {
     }
 
     const cantidadProductos = products.length
-    console.log({cantidadProductos})
 
-    return res.send(products)
+    return res.send(products).req.logger.info(`Cantidad de productos: ${cantidadProductos}`)
 })
-
+ 
 module.exports = mockingRouter

@@ -63,11 +63,7 @@
                 <td class="center">{{this.category}}</td>
                 <td class="center">{{this.price}}</td>
                 
-                <td class="none"><a href="/actualizar?id={{this._id}}"><button style="background-color: aqua;" id={{this._id}} class="detallebtn" >Actualizar</button></a></td>
-                <td class="none"><a href="/api/products/{{this._id}}"><button style="background-color: red;" id={{this._id}} class="detallebtn" >Eliminar</button></a></td>
-                
-                        
-
+                <td class="none"><a href="/api/products/{{this._id}}"><button style="background-color: aqua;" id={{this._id}} class="detallebtn">Detalle</button></a></td>
             </tr>
             {{/each}}
         </table>

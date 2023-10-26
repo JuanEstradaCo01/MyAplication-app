@@ -2,6 +2,7 @@ const socket = io()
 
 console.log(socket)
 
+const id = 50
 const tittleInput = document.getElementById("tittle")
 const descriptionIpunt = document.getElementById("description")
 const thumbnailInput = document.getElementById("thumbnail")
@@ -15,20 +16,19 @@ const formButton = document.getElementById("formButton")
 formButton.addEventListener("submit", (evt) => {
     evt.preventDefault()
 
-    const nombre = tittleInput.value
-    const descripcion = descriptionIpunt.value
-    const imagen = thumbnailInput.value
-    const precio = priceInput.value
-    const codigo = codeInput.value
-    const estado = statusInput.value
+    const id = id.value
+    const tittle = tittleInput.value
+    const description = descriptionIpunt.value
+    const thumbnail = thumbnailInput.value
+    const price = priceInput.value
+    const code = codeInput.value
+    const status = statusInput.value
     const stock = stockInput.value
-    const categoria = categoryInput.value
+    const category = categoryInput.value
 
-    console.log({nombre,precio,codigo,stock,categoria})
-
-    fetch("/realtimeproducts", {
+    fetch("/api/products", {
         method: "POST",
-        body: {nombre,precio,stock,categoria}
+        body: {id,tittle,description,price,thumbnail,code,status,stock,category}
     })
 })
 

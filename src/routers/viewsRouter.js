@@ -26,6 +26,14 @@ const authMidleware = async (req, res, next) => {
     return next()
 }
 
+const authProducts = async (req, res, next) => {
+    const user = req.user
+    if(user === undefined) {
+        return res.redirect("/login")
+    }
+    return next()
+}
+
 class ViewsRouter extends BaseRouter {
     init () {
         this.get("/prod", (req, res) => {
@@ -67,7 +75,7 @@ class ViewsRouter extends BaseRouter {
         })
         
         //Vista de admin
-        this.get("/products",//authMidleware , 
+        this.get("/products",authProducts,//authMidleware , 
         async (req, res) => {
             const user = req.user
         
@@ -114,7 +122,8 @@ class ViewsRouter extends BaseRouter {
         })
         
         this.get("/actualizar", (req, res) => {
-            return res.render("actualizar")
+            const pid = req.query.id
+            return res.render("actualizar", {pid})
         })
         
         this.get("/cart", (req, res) => {

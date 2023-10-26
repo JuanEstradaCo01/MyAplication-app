@@ -144,6 +144,8 @@ class SessionRouter extends BaseRouter {
         //Valido el correo registrado para saber si es admin o no ya que el valor es unico
         if (user.email === "adminCoder@coder.com") {
           user.rol = "Admin"
+        }else if(user.email === "premium@mail.com"){
+          user.rol = "Premium"
         }else{
           user.rol = "User"
         }
@@ -157,7 +159,6 @@ class SessionRouter extends BaseRouter {
         })
         user.access_token = token
 
-        
         const id = user.cart._id
         const cart = await dbcartManager.getCartById(id)
         const cartId = cart._id
@@ -169,12 +170,18 @@ class SessionRouter extends BaseRouter {
           //return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).redirect("/api/sessions/current")//Redireccion a current
           //return res.redirect("/products")//Redireccion a perfil de admin
         }
+
+        if(user.rol === "Premium"){
+          return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("profilePremium", {products, user, cartId})
+        }
     
         //(Respuestas de User):
-        //return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).redirect("/api/sessions/current")//Redireccion a current
-        return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("profile",{products, user, cartId})//Renderizado a perfil de User
-        //return res.redirect("/profile")//Redireccion a perfil de User
-        //return res.status(200).json(req.user)//Respuesta de JSON
+        if(user.rol === "User"){
+          //return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).redirect("/api/sessions/current")//Redireccion a current
+          return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("profile",{products, user, cartId})//Renderizado a perfil de User
+          //return res.redirect("/profile")//Redireccion a perfil de User
+          //return res.status(200).json(req.user)//Respuesta de JSON
+        }
     })
     
     this.post("/logout", (req, res) => {

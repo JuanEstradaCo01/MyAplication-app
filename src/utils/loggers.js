@@ -75,7 +75,7 @@ if(mod === "prod") {
 
     const addLogger = (req, res, next) => {
         req.logger = logger
-        req.logger.http(`${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
+        req.logger.http(`${req.method} en ${req.url} a las ${new Date().toLocaleTimeString()}`)
         next() 
     }
     

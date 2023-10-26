@@ -23,7 +23,8 @@ class DBProductManager {
             code: body.code,
             status: body.status,
             stock: body.stock,
-            category: body.category
+            category: body.category,
+            owner: body.owner
         })
     }
 

@@ -1,8 +1,10 @@
 const ProductDto = require("../DTOs/productDto")
+const DBProductManager = require("../DBProductManager")
+const productsDAOFactory = require("../../factories/productsDAOFactory")
 
 class ProductRepository {
-    constructor(dao) {
-        this.dao = dao
+    constructor() {
+        this.dao = productsDAOFactory(process.env.STORAGE)
     }
 
     getProducts = async () => {

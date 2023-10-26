@@ -11,13 +11,14 @@
     <div id="formulario">
         <h1>Agregar producto:</h1>
 
-        <form id="formu" action="/api/products" method="POST">
+        <form action="/api/products" method="post">          
+            <label for="id">ID</label><input name="id" type="number" placeholder="ID autogenerable" value="0">
             <label for="tittle">Tittle: </label><input type="text" name="tittle" placeholder="Nombre del producto" required>
-            <label for="description">Description: </label><input type="text" id="description" placeholder="Descripcion del producto" required>
+            <label for="description">Description: </label><input name="description" value="mediano" type="text" id="description" placeholder="Descripcion del producto" required>
             <label for="price">Price: </label><input type="number" name="price" placeholder="Precio" required>
-            <label for="thumbnail">Imagen: </label><input type="text" id="thumbnail" placeholder="sin imagen">
-            <!--<label for="code">Code: </label><input type="number" name="code" placeholder="Codigo autogenerable" required>-->
-            <label for="status">Status: </label><input type="text" id="status" placeholder="True o false" required>
+            <label for="thumbnail">Imagen: </label><input name="thumbnail" type="text" id="thumbnail" placeholder="sin imagen">
+            <label for="code">Code: </label><input type="number" name="code" placeholder="Codigo autogenerable" required>
+            <label for="status">Status: </label><input name="status" type="text" id="status" placeholder="True o false" required>
             <label for="stock">Stock: </label><input type="number" name="stock" placeholder="Cantidad disponible" required>
             <label for="category">Category: </label><input type="text" name="category" placeholder="Tipo de producto" required>
     
@@ -25,7 +26,7 @@
         </form>
     </div>
 
-    <a href="api/sessions/login"><button>Volver al perfil</button></a>
+
 <!--
     <div id="tabla">
         <div class="h2">

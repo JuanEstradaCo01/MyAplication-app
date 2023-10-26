@@ -65,11 +65,8 @@ const dbConnection = DB.getConnection(config)
     //Productos a agregar:
     const productos = await managerDB.getProducts()
 
-
     //Agregando los productos a mongo:(se comenta para que no agregue varias veces)
     //await productsmodels.insertMany(productos)
-
-
 
       //Vista de los productos paginados
       app.get("/products", async ( req, res) => {

@@ -74,8 +74,7 @@
                 <td class="center">{{this.category}}</td>
                 <td class="center">{{this.price}}</td>
 
-                <!--User-MARIA-->
-                <td class="none"><form action="/api/carts/{{this.cartId}}/products/{{this._id}}" method="POST"><button style="background-color: yellow;" id="{{this._id}}" class="agregarbtn" >Agregar al carritos</button></form></td>
+                <td class="none"><form action="/api/carts/{{this.cartId}}/products/{{this._id}}" method="POST"><button style="background-color: yellow;" id="{{this._id}}" class="agregarbtn" >Agregar al carrito</button></form></td>
             </tr>
             {{/each}}
         </table>

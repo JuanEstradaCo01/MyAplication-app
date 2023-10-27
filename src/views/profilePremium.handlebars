@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/eef39b1d3b.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 <body> 
@@ -30,7 +31,11 @@
         </form>
     </div>
 
-    
+     <hr>
+
+    <a href="/api/carts/{{cartId}}"><button style="font-size: 2rem;" id="{{cartId}}"><i class="fa-solid fa-cart-shopping"></i></button></a>
+
+    <hr>
 
     <h2 style="margin-top: 3rem;">Lista de productos de la tienda:</h2>
     <!--<div class="h3Paginatediv">
@@ -64,6 +69,8 @@
                 <td class="center">{{this.price}}</td>
                 
                 <td class="none"><a href="/api/products/{{this._id}}"><button style="background-color: aqua;" id={{this._id}} class="detallebtn">Detalle</button></a></td>
+
+                <td class="none"><form action="/api/carts/{{this.cartId}}/products/{{this._id}}" method="POST"><button style="background-color: yellow;" id="{{this._id}}" class="agregarbtn" >Agregar al carrito</button></form></td>
             </tr>
             {{/each}}
         </table>

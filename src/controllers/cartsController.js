@@ -2,6 +2,8 @@ const CartsService = require("../services/cartsService")
 const DBProductManager = require("../dao/DBProductManager")
 const dbproductManager = new DBProductManager()
 const productsModels = require("../dao/models/productsModels")
+const UserManager = require("../dao/DBUserManager")
+const usermanager = new UserManager()
 
 class CartsController {
     constructor() {
@@ -44,6 +46,14 @@ class CartsController {
 
         try{
             const product = await dbproductManager.getProductById(pid)
+
+            //Valido si el producto que se quiere agregar es del usuario actual y si él lo creo, en ese caso no se permite agregar:
+            const users = await usermanager.getUsers()
+            const user = users.find(item=>item.cart._id == cid)
+            if(user.typeCount === "Premium" && product.owner === user.email){
+                return res.status(500).json({error: "No puedes agregar un producto que creaste"}).req.logger.error("No puedes agregar un producto que creaste")
+            }
+
 
             if (!product) {
                 return res.status(404).json({error: "No se encontro el producto a agregar al carrito"}).req.logger.error("No se encontro el producto a agregar al carrito")

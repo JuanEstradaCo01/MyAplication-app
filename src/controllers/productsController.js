@@ -132,8 +132,11 @@ class ProductsController {
     async deleteProduct(req, res) {
 
         const pid = req.params.pid
+        //passportCall("jwt")
+        //console.log(user)
         
         try {
+            
             const products = await this.service.getProducts()
             const productToDelete = products.find(el => el._id == pid)
             //?????

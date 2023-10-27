@@ -133,7 +133,11 @@ class SessionRouter extends BaseRouter {
     
 
         //Pagino los productos
+        const prods = await dbproductManager.getProducts()
+        
         const products = await productsmodels.paginate({  }, {limit, page})
+
+        products.docs = prods
     
         products.docs = products.docs.map(user => user.toObject())
     
@@ -209,7 +213,7 @@ class SessionRouter extends BaseRouter {
       const nuevaPassword = createHash(req.body.password)
       await userModel.updateOne({_id: verificar._id}, {password: nuevaPassword})
 
-      req.logger.info("¡Se recupero correctamente la contraseña!")
+      req.logger.info("¡Se restableció correctamente la contraseña!")
     
       return res.redirect("/recoverysuccess")
     })
@@ -240,4 +244,5 @@ class SessionRouter extends BaseRouter {
     })
   }
 }
+
 module.exports = SessionRouter

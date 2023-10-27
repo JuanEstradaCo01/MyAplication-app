@@ -517,3 +517,9 @@ th{
     height: 6rem;
     margin-bottom: 2rem;
 }
+
+.selec{
+    margin-top: .5rem;
+    font-size: 1rem;
+    border-radius: .5rem;
+}

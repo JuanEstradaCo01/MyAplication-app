@@ -81,9 +81,9 @@ class SessionRouter extends BaseRouter {
          
         //JWT:
         const nuevoUsuario = req.body
-    
+        
         const token = generateToken({
-          username: nuevoUsuario.username,
+          username: nuevoUsuario.first_name,
           email: nuevoUsuario.email
         })
     
@@ -141,12 +141,14 @@ class SessionRouter extends BaseRouter {
           item.cartId = user.cart._id
         })
 
-        //Valido el correo registrado para saber si es admin o no ya que el valor es unico
+        //Valido el tipo de cuenta y modifico el rol (el admin se evalua por el correo)
         if (user.email === "adminCoder@coder.com") {
           user.rol = "Admin"
-        }else if(user.email === "premium@mail.com"){
+        }
+        if(user.typeCount === "Premium"){
           user.rol = "Premium"
-        }else{
+        }
+        if(user.typeCount === "User"){
           user.rol = "User"
         }
     
@@ -171,6 +173,7 @@ class SessionRouter extends BaseRouter {
           //return res.redirect("/products")//Redireccion a perfil de admin
         }
 
+        //Respuesta usuario Premium
         if(user.rol === "Premium"){
           return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("profilePremium", {products, user, cartId})
         }

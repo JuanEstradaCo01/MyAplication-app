@@ -11,12 +11,18 @@ const registerLocalStrategy = new LocalStrategy(
             const user = await userModel.findOne({email: first_name})
 
             if(user) {
-                console.log("Ya hay un usuario registrado con este correo electronico")
+                req.logger.error("Ya existe un usuario registrado con este correo electronico")
                 return done(null, false, { message: "Ya existe un usuario registrado con este correo electronico" })
             }
 
             const body = req.body
             body.password = createHash(body.password)
+
+            //Autorizo si alguien no autorizado intenta crear una cuenta de admin:
+            if(body.email != "adminCoder@coder.com" && body.typeCount === "Admin"){
+                req.logger.error("No estas autorizado para crear una cuenta de Admin")
+                return done(null, false, { message: "No estas autorizado para crear una cuenta de Admin"})
+            }
 
             const newUser = await userModel.create(body)
 

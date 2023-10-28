@@ -10,6 +10,8 @@ const userSchema = Schema({
     age: Number,
     password: String,
     typeCount: String,
+    date: String,
+    expiratedLink: String,
     cart: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "carts"

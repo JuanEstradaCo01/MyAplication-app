@@ -16,6 +16,8 @@ const registerLocalStrategy = new LocalStrategy(
             }
 
             const body = req.body
+            body.date = new Date()
+            body.expiratedLink = ""
             body.password = createHash(body.password)
 
             //Autorizo si alguien no autorizado intenta crear una cuenta de admin:

@@ -1,6 +1,7 @@
 const express = require("express")
 const passport = require("passport")
 const userModel = require("../dao/models/userModel")
+const notifier = require('node-notifier')
 const productsmodels = require("../dao/models/productsModels")
 const {createHash, isValidPassword} = require("../utils/passwordHash")
 const {generateToken} = require("../utils/jwt")
@@ -207,7 +208,27 @@ class SessionRouter extends BaseRouter {
     
     this.post("/recovery", async (req, res) => {
       let verificar = await userModel.findOne({email: req.body.email})
-    
+
+      //timeZone: especifica la hora de la zona actual
+      const dateNow = Date({timeZone:"COL"})
+      
+      const expirated = verificar.expiratedLink
+
+      //Valido si el link ya expiro, en caso tal redirijo para generarlo nuevamente y notifico:
+      const comparar = dateNow > expirated
+      
+      if(comparar === true) {
+        req.logger.warning("Ha expirado el link de recuperacion, por favor genera uno nuevamente")
+        notifier.notify({
+          title: '¡Link expirated!',
+          message: 'Ha expirado el link de recuperacion, por favor genera uno nuevamente',
+          icon: "",
+          sound: true,
+          wait: true
+        })
+        return res.redirect("/recovering")
+      }
+
       if (!verificar) {
         return res.status(404).json({
             error: "No existe el usuario"
@@ -228,7 +249,7 @@ class SessionRouter extends BaseRouter {
 
         await userModel.updateOne({_id: verificar._id}, {password: nuevaPassword})
 
-        req.logger.info("¡Se restableció correctamente la contraseña!")
+        req.logger.info("¡Se restableció correctamente la contraseña! ✔")
     
         return res.redirect("/recoverysuccess")
       })
@@ -240,11 +261,26 @@ class SessionRouter extends BaseRouter {
       
       //Valido si el correo que me llego esta en la base de datos
       const users = await usermanager.getUsers()
-      const verificar = users.find(item=>item.email === email)
+      const user = users.find(item=>item.email === email)
 
-      if(!verificar){
+      if(!user){
         return res.status(400).json({error: "El correo ingresado no se encuentra registrado"}).req.logger.error("El correo ingresado no se encuentra registrado")
       }
+
+      const verificar =  new Date()
+
+      user.date = verificar
+
+      //Actualizo para que el link expire en 1 hora
+      let today = new Date()
+      today.setHours(today.getHours() + 1)
+
+      user.expiratedLink = today
+
+      const body = user
+      const id = user._id
+
+      const update = await usermanager.updateUser(id, body)
 
       //Mailling con Gmail:
       const transport = nodemailer.createTransport({

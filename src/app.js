@@ -31,8 +31,7 @@ const flash = require("connect-flash")
 const cors = require("cors")
 const dotenv = require("dotenv")
 const configFn = require("./config")
-const DB = require("./config/singleton")
-const nodemailer = require("nodemailer")  
+const DB = require("./config/singleton") 
 const ErrorMiddleware = require("./services/middlewares")
 const addLogger = require("./utils/loggers")
 const {Command} = require("commander")
@@ -355,38 +354,6 @@ app.get("/api/dictionary/:palabra([a-z%C3%A1%C3%A9%C3%AD%C3%B3%C3%BA%C3%BC]+)", 
   return res.send(req.params.palabra)
 })
 
-//----------------------------------------------------------------------------
-//Mailing:
-const transport = nodemailer.createTransport({
-  host: process.env.PUERTO,
-  service: "gmail",
-  port: 587,
-  auth: {
-    user: 'mail@gmail.com',
-    pass: process.env.PASS
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-})
-
-app.get("/mail", async (req, res) => {
-  const correo = await transport.sendMail({
-    from: "mail@gmail.com",//Correo del emisor
-    to: "mail@gmail.com",//Correo del receptor
-    subject: "saludo",//Asunto del correo
-    html: `<div>
-    <h1>Hola</h1>
-    </div>`,//Cuerpo del mensaje(ejemplo imagen:<img src="cid:Pera"/>)
-    attachments: [{
-      filename: "",//Nombre del archivo(eje: pera.jpg)
-      path:"",//ruta de la imagen(eje:./imgs/Pera.jpg)
-      cid: ""//Nombre de la imagen(eje: Pera)
-    }]
-  })
-  return res.send("Correo enviado")
-})
-//-------------------------------------------------------------------------
 //Winston-Logger: 
 app.use(addLogger)
 

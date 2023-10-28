@@ -133,6 +133,14 @@ class ViewsRouter extends BaseRouter {
         this.get("/addProduct", (req, res) => {
             return res.render("addProduct")
         })
+
+        this.get("/recovering", (req, res) => {
+            return res.render("recovering")
+        })
+
+        this.get("/sendEmail", (req, res) => {
+            return res.render("sendEmail")
+        })
 }}
 
 module.exports = ViewsRouter

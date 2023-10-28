@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <header id="headerapp">
+        <h2>〽My aplication</h2>
+    </header>
+
+    <div class="centrarForm">
+         <form action="/api/sessions/recovering" method="POST">
+            <h1  style="color: rgb(102, 218, 7);
+                        text-align: center;">Recuperar contraseña</h1>
+
+            <h3 style="color: rgb(3, 97, 34);">Correo electronico:</h3>
+
+            <label for="email"></label><input type="email" name="email" placeholder=" Correo electronico" required>
+
+            <p style="text-align: center;
+                      margin-top: 1.5rem;">Se enviara un correo con las indicaciones para restablecer la contraseña</p>
+
+            <button class="button" type="submit">Enviar</button>
+        </form>
+    </div>
+
+</body>
+</html>

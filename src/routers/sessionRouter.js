@@ -8,6 +8,10 @@ const DBProductManager = require("../dao/DBProductManager")
 const dbproductManager = new DBProductManager() //Para usar mongo
 const DBCartManager = require("../dao/DBCartManager")
 const dbcartManager = new DBCartManager()
+const UserManager = require("../dao/DBUserManager")
+const usermanager = new UserManager()
+const bcrypt = require("bcrypt")
+const nodemailer = require("nodemailer")  
 
 const BaseRouter = require("./BaseRouter")
 
@@ -209,13 +213,69 @@ class SessionRouter extends BaseRouter {
             error: "No existe el usuario"
         })
       }
-    
-      const nuevaPassword = createHash(req.body.password)
-      await userModel.updateOne({_id: verificar._id}, {password: nuevaPassword})
 
-      req.logger.info("¡Se restableció correctamente la contraseña!")
+      const password = verificar.password
+      const newP = req.body.password
+
+      //Comparo y valido si la contraseña de la base de datos es igual a la que me llega por el body:
+      bcrypt.compare(newP, password, async (error, result) => {
+        if(error) throw error
+        if(result){
+          return res.status(500).json({message: "No puedes actualizar con la contraseña que tienes actualmente"}).req.logger.warning("No puedes actualizar con la contraseña que tienes actualmente")
+        }
+
+        const nuevaPassword = createHash(req.body.password)
+
+        await userModel.updateOne({_id: verificar._id}, {password: nuevaPassword})
+
+        req.logger.info("¡Se restableció correctamente la contraseña!")
     
-      return res.redirect("/recoverysuccess")
+        return res.redirect("/recoverysuccess")
+      })
+
+    })
+
+    this.post("/recovering", async (req, res) => {
+      const email = req.body.email
+      
+      //Valido si el correo que me llego esta en la base de datos
+      const users = await usermanager.getUsers()
+      const verificar = users.find(item=>item.email === email)
+
+      if(!verificar){
+        return res.status(400).json({error: "El correo ingresado no se encuentra registrado"}).req.logger.error("El correo ingresado no se encuentra registrado")
+      }
+
+      //Mailling con Gmail:
+      const transport = nodemailer.createTransport({
+        host: 'smtp.ethereal.email', // (para ethereal-pruebas)
+        //host: process.env.PORT, (para Gmail)
+        //service: "gmail", (para Gmail)
+        port: 587,
+        auth: {
+          user: process.env.USER,
+          pass: process.env.PASS
+        },
+        tls: {
+          rejectUnauthorized: false
+        }
+      })
+      const correo = await transport.sendMail({
+          from: process.env.USER,//Correo del emisor
+          to: `${email}`,//Correo del receptor
+          subject: "prueba",//Asunto del correo
+          html: `<div>
+          <h1>Restablecer contraseña</h1>
+          <h3>Hola, ${verificar.first_name}</h3>
+          <p>Da click <a href="http://localhost:${process.env.PORT}/recovery">AQUI</a> para restablecer contraseña</p>
+          </div>`,//Cuerpo del mensaje
+          /*attachments: [{
+            filename: "",//Nombre del archivo(eje: pera.jpg)
+            path:"",//ruta de la imagen(eje:./imgs/Pera.jpg)
+            cid: ""//Nombre de la imagen(eje: Pera)
+          }]*/
+        })
+        return res.redirect("/sendEmail")
     })
     
     this.get("/failregister", (req, res) => {

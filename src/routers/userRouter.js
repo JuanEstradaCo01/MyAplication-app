@@ -6,6 +6,11 @@ const {generateToken} = require("../utils/jwt")
 
 const userRouter = express()
 
+userRouter.get("/", async (req, res) => {
+    const users = await usermanager.getUsers()
+    return res.status(200).json(users)
+})
+
 //Endpoint para cambiar dinamicamente el rol por params:
 userRouter.get("/:rol/:uid", async (req, res) => {
     try{

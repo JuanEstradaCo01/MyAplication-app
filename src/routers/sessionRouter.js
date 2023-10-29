@@ -299,10 +299,10 @@ class SessionRouter extends BaseRouter {
       const correo = await transport.sendMail({
           from: process.env.USER,//Correo del emisor
           to: `${email}`,//Correo del receptor
-          subject: "prueba",//Asunto del correo
+          subject: "Recovery Password",//Asunto del correo
           html: `<div>
           <h1>Restablecer contraseña</h1>
-          <h3>Hola, ${verificar.first_name}</h3>
+          <h3>Hola, ${user.first_name}</h3>
           <p>Da click <a href="http://localhost:${process.env.PORT}/recovery">AQUI</a> para restablecer contraseña</p>
           </div>`,//Cuerpo del mensaje
           /*attachments: [{

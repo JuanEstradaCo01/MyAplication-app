@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="divh1Profile">
+        <h1 class="headerPerfilh1">Perfil de usuario</h1>
+    </div>
+    
+    <h2>Hola, {{first_name}}</h2>
+
+    <hr>
+    
+    <div class="datosUser">
+        <h4 class="titulo">Datos del usuario</h4>
+
+        <p class="parrafo">Nombre: {{first_name}}</p>
+        <p class="parrafo">Apellido: {{last_name}}</p>
+        <p class="parrafo">Email: {{email}}</p>
+        <p class="parrafo">Edad: {{age}}</p>
+        <p class="parrafo">Rol: {{rol}}</p>    
+
+        <form class="logout" action="/api/sessions/logout" method="POST">
+            <button style="background-color: red;" type="submit" class="btnClose">Cerrar sesion</button>
+        </form>
+    </div>
+</body>
+</html>

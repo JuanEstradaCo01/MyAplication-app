@@ -3,6 +3,8 @@ const ProductDto = require("../dao/DTOs/productDto")
 const productRepository = require("../services/index")
 const DBCartManager = require("../dao/DBCartManager")
 const cartmanager = new DBCartManager()
+const UserManager = require("../dao/DBUserManager")
+const usermanager = new UserManager()
 const CustomError = require("../services/errors/CustomError")
 const generateProductErrorInfo = require("../services/errors/info")
 const EErrors = require("../services/errors/enums")
@@ -131,25 +133,47 @@ class ProductsController {
 
     async deleteProduct(req, res) {
 
-        const pid = req.params.pid
-        //passportCall("jwt")
-        //console.log(user)
-        
+        //NOTA: para eliminar productos se debe especificar el id del producto y el id del usuario validando si esta autorizado para eliminar (/api/products/:pid/api/users/:uid)
+
+        const pid = req.params.pid  
+        const uid = req.params.uid
+    
         try {
+            const user = await usermanager.getUserById(uid)
             
-            const products = await this.service.getProducts()
-            const productToDelete = products.find(el => el._id == pid)
-            //?????
-            if(productToDelete.owner != "premium@mail.com"){
-                return res.status(500).json({error: "No puedes eliminar este producto"}).req.logger.error("No puedes eliminar este producto")
-            }else if(productToDelete.owner == undefined || "premium@mail.com" || "adminCoder@coder.com"){
-                const name = productToDelete.tittle
-               await this.service.deleteProduct(pid)
-            
-               return res.json({OK: `Se ha eliminado el producto (${name})`}).req.logger.info(`Se ha eliminado el producto (${name})`)
+            if(!user){
+                return res.status(404).json({error: "No existe el usuario en la base de datos"}).req.logger.error("No existe el usuario en la base de datos")
             }
+            
+            const productToDelete = await this.service.getProductById(pid)
+
+            if(!productToDelete){
+                return res.status(404).json({error: "No existe el producto a eliminar"}).req.logger.error("No existe el producto a eliminar")
+            }
+
+            const userRol = user.typeCount
+            const validar = userRol === "Premium"
+            
+            if(validar){
+                const validate = productToDelete.owner === user.email
+            
+                if(!validate){
+                    return res.status(500).json({error: "No estas autorizado para eliminar este producto"}).req.logger.error("No estas autorizado para eliminar este producto")
+                }
+
+                const name = productToDelete.tittle
+                await this.service.deleteProduct(pid)
+            
+                return res.json({OK: `Se ha eliminado el producto (${name})`}).req.logger.info(`Se ha eliminado el producto (${name})`)
+            }
+    
+            const name = productToDelete.tittle
+            await this.service.deleteProduct(pid)
+            
+            return res.json({OK: `Se ha eliminado el producto (${name})`}).req.logger.info(`Se ha eliminado el producto (${name})`)
+
         }catch (e) {
-            return res.status(404).json({message: "No existe el producto a eliminar"}).req.logger.warning("No existe el producto a eliminar")
+            return res.status(500).json({message: "Ha ocurrido un error"}).req.logger.warning("Ha ocurrido un error")
         }   
     }
 }

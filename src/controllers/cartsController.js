@@ -51,7 +51,7 @@ class CartsController {
             const users = await usermanager.getUsers()
             const user = users.find(item=>item.cart._id == cid)
             if(user.typeCount === "Premium" && product.owner === user.email){
-                return res.status(500).json({error: "No puedes agregar un producto que creaste"}).req.logger.error("No puedes agregar un producto que creaste")
+                return res.status(500).json({error: "No puedes agregar un producto que te pertenece"}).req.logger.error("No puedes agregar un producto que te pertenece")
             }
 
 

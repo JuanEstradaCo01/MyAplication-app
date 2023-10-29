@@ -267,7 +267,7 @@ class SessionRouter extends BaseRouter {
         return res.status(400).json({error: "El correo ingresado no se encuentra registrado"}).req.logger.error("El correo ingresado no se encuentra registrado")
       }
 
-      const verificar =  new Date()
+      const verificar =  Date({timeZone:"COL"})
 
       user.date = verificar
 

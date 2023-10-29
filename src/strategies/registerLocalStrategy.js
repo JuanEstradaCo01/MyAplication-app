@@ -16,7 +16,7 @@ const registerLocalStrategy = new LocalStrategy(
             }
 
             const body = req.body
-            body.date = new Date()
+            body.date = Date({timeZone:"COL"})
             body.expiratedLink = ""
             body.password = createHash(body.password)
 

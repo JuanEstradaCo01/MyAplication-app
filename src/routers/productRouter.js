@@ -22,7 +22,7 @@ class ProductRouter extends BaseRouter {
         
         this.put("/:pid", productsController.updateProduct.bind(productsController))
         
-        this.delete("/:pid", productsController.deleteProduct.bind(productsController))
+        this.delete("/:pid/api/users/:uid", productsController.deleteProduct.bind(productsController))
     }
 }
 

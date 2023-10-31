@@ -36,6 +36,8 @@ const DB = require("./config/singleton")
 const ErrorMiddleware = require("./services/middlewares")
 const addLogger = require("./utils/loggers")
 const {Command} = require("commander")
+const swaggerDocs = require("swagger-jsdoc")
+const swaggerUiExpress = require("swagger-ui-express")
 
 //DOTENV: 
 const program = new Command()
@@ -114,6 +116,7 @@ const socketServer = require("./utils/io")
 const DBProductManager = require("./dao/DBProductManager")
 const cartsModels = require("./dao/models/cartsModels")
 const productsModels = require("./dao/models/productsModels")
+const swaggerJSDoc = require("swagger-jsdoc")
 
 const app = express()
 
@@ -368,6 +371,22 @@ app.get("/loggerTest", (req, res) => {
   }
   res.send({message:"Winston-logger"})
 })
+
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.1",
+    info: {
+      title: "Documentacion  🌫My aplication",
+      description: "API para gestion de ecommerce"
+    }
+  },
+  apis: [`${__dirname}/docs/**/*.yaml`]
+}
+
+const specs = swaggerDocs(swaggerOptions)
+//Ruta para la documentacion del proyecto en swagger (/apidocs):
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
+
 
 app.use("/api/products", productRouter.getRouter())
 app.use("/api/carts", cartRouter.getRouter())

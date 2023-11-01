@@ -1,0 +1,247 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtiene todos los productos
+      tags:
+        - Products CRUD
+      responses:
+        "200":
+          description: Los productos se muestran correctamente
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#components/schemas/Product'
+        "404":
+          description: No se encontro el requerimiento
+        "500":
+          description: Ocurrio un error en el servidor
+    post:
+      summary: Agrega un producto a la base de datos (Se debe de logear por cuestion de autorizaciones para crear productos)
+      tags: 
+        - Products CRUD
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/addProduct'
+      responses:
+        "200":
+          description: ¡Producto creado exitosamente!
+        "500":
+          description: Ocurrio un error en el servidor
+
+  /api/products/{pid}:
+    get:
+      summary: Obtiene un producto por su ID
+      tags:
+        - Products CRUD
+      parameters: 
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto que se busca
+          schema: 
+            $type: String
+      responses:
+        "200":
+          description: Producto encontrado
+          content: 
+            application/json: 
+              schema:
+                $ref: '#components/schemas/Product'
+        "404":
+          description: No se encontro el producto buscado
+        "500":
+          description: Ocurrio un error en el servidor
+      
+    put: 
+      summary: Actualiza un producto especificado por el ID
+      tags:
+        - Products CRUD
+      parameters: 
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto que se busca
+          schema: 
+            $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateProduct'
+      responses:
+        "200":
+          description: ¡Producto Actualizado exitosamente!
+          content: 
+            application/json: 
+              schema:
+                $ref: '#components/schemas/Product'
+        "404":
+          description: No se encontro el producto buscado
+        "500":
+          description: Ocurrio un error en el servidor
+
+  /api/products/{pid}/api/users/{uid}:
+    delete:
+      summary: Elimina un producto de la base de datos (se debe especificar el ID del usuario para validar si esta autorizado para eliminar el producto)
+      tags:
+        - Products CRUD
+      parameters: 
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto que se busca eliminar
+          schema: 
+            $type: String
+        - name: uid
+          in: path
+          required: true
+          description: ID del usuario que va a eliminar el producto
+          schema: 
+            $type: String
+      responses:
+        "200":
+          description: ¡Producto eliminado exitosamente!
+        "404":
+          description: No se encontro el requerimiento
+        "500":
+          description: No estas autorizado para eliminar este producto
+    
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID generado por mongo
+        id:
+          type: Number
+          description: ID unico autogenerado segun la cantidad de productos
+        tittle:
+          type: String
+          description: Nombre del producto
+        description: 
+          type: String
+          description: Tamaño del producto (pequeño, mediano, grande)
+        price: 
+          type: Number
+          description: Precio del producto
+        thumbnail:
+          type: String
+          description: Imagen del producto
+        code:
+          type: String
+          description: Codigo unico para identificacion del producto
+        status: 
+          type: Boolean
+          description: Disponibilidad del producto (true o false)
+        stock: 
+          type: Number
+          description: Cantidad de unidades disponibles
+        category:
+          type: String
+          description: Categoria del producto
+        owner: 
+          type: String
+          description: Firma quien creo el producto, si un admin o un usuario Premium (en caso de un usuario Premium firmaria con el correo del mismo)
+      example:
+        id: 1
+        tittle: Manzana
+        description: mediano
+        price: 15
+        thumbnail: Sin imagen
+        code: abc001
+        status: true
+        stock: 500
+        category: Fruta
+        owner: Admin o algun usuario `Premium`
+  requestBodies:
+    updateProduct:
+      type: object
+      properties: 
+        id:
+          type: Number
+          description: ID unico autogenerado segun la cantidad de productos
+        tittle:
+          type: String
+          description: Nombre del producto
+        description: 
+          type: String
+          description: Tamaño del producto (pequeño, mediano, grande)
+        price: 
+          type: Number
+          description: Precio del producto
+        thumbnail:
+          type: String
+          description: Imagen del producto
+        code:
+          type: String
+          description: Codigo unico para identificacion del producto
+        status: 
+          type: Boolean
+          description: Disponibilidad del producto (true o false)
+        stock: 
+          type: Number
+          description: Cantidad de unidades disponibles
+        category:
+          type: String
+          description: Categoria del producto
+        owner: 
+          type: String
+          description: Firma quien creo el producto, si un admin o un usuario Premium (en caso de un usuario Premium firmaria con el correo del mismo)
+      example:
+        id: 1
+        tittle: Manzana
+        description: mediano
+        price: 15
+        thumbnail: Sin imagen
+        code: abc001
+        status: true
+        stock: 500
+        category: Fruta
+        owner: Admin o algun usuario "Premium"
+    addProduct: 
+      type: object
+      properties:
+        id:
+          type: Number
+          description: ID unico autogenerado segun la cantidad de productos
+        tittle:
+          type: String
+          description: Nombre del producto
+        description: 
+          type: String
+          description: Tamaño del producto (pequeño, mediano, grande)
+        price: 
+          type: Number
+          description: Precio del producto
+        thumbnail:
+          type: String
+          description: Imagen del producto
+        code:
+          type: String
+          description: Codigo unico para identificacion del producto
+        status: 
+          type: Boolean
+          description: Disponibilidad del producto (true o false)
+        stock: 
+          type: Number
+          description: Cantidad de unidades disponibles
+        category:
+          type: String
+          description: Categoria del producto
+      example: 
+        id: 1
+        tittle: Manzana
+        description: mediano
+        price: 15
+        thumbnail: Sin imagen
+        code: abc001
+        status: true
+        stock: 500
+        category: Fruta

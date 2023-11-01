@@ -25,6 +25,9 @@ class CartsController {
 
         try{
             const cartBuscar = await this.service.getCartById(cid)
+            if(!cartBuscar){
+                return res.status(404).json({error: `No existe el carrito`}).req.logger.error(`No existe el carrito`)
+            }
         
             return res.send(cartBuscar)
         }catch(e){

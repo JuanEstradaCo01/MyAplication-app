@@ -1,0 +1,159 @@
+paths:
+  /api/carts/:
+    get: 
+      summary: Obtiene todos los carritos
+      tags: 
+        - Carts CRUD
+      responses: 
+        "200":
+          description: Los carritos se muestran correctamente
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#components/schemas/Cart'
+        "404":
+          description: No se encontro el requerimiento
+        "500":
+          description: Ocurrio un error en el servidor
+    post:
+      summary: Agrega un carrito a la base de datos
+      tags: 
+        - Carts CRUD
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/addCart'
+      responses: 
+        "200":
+          description: ¡Carrito creado exitosamente!
+        "500": 
+          description: Ocurrio un error en el servidor
+            
+  /api/carts/{cid}:
+    get:
+      summary: Obtiene un carrito por su ID
+      tags:
+        - Carts CRUD
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito que se busca
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: ¡Carrito encontrado!
+          content:
+            application/json:
+              schema: 
+                $ref: '#components/schemas/Cart'
+        "404":
+          description: No se encontro el carrito buscado
+        "500":
+          description: Ocurrio un error en el servidor
+    delete: 
+      summary: Elimina un carrito 
+      tags:
+       - Carts CRUD
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito a eliminar
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: ¡Carrito eliminado correctamente!
+        "404":
+          description: No se encontro el carrito a eliminar
+        "500":
+          description: Ocurrio un error en el servidor
+
+  /api/carts/{cid}/products/{pid}:
+    post:
+      summary: Agrega un producto al carrito (Si el usuario dueño del carrito no esta registrado no se permitira agregar al carrito productos, se debe estar registrado y automaticamente se construye el carrito respectivo del usuario)
+      tags:
+        - Carts CRUD
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            $type: String
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto a agregar al carrito
+          schema: 
+            $type: String
+      responses:
+        "200":
+          description: ¡Producto agregado al carrito!
+        "404":
+          description: No se encontro el carrito o el producto
+        "500":
+          description: Ocurrio un error en el servidor
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID generado por mongo
+        name: 
+          type: String
+          description: Nombre del carrito
+        products: 
+          type: Array
+          properties: 
+              type: object
+              properties: 
+                name: Nombre del producto dentro del carrito
+                size: Tamaño o descripcion del producto
+                quantity: Cantidad de unidades del producto
+                price: Precio del producto
+      example:
+        name: Carrito de Felipe
+        products: [{
+            name: Manzana,
+            size: pequeño,
+            quantity: 3,
+            price: 7
+          }
+        ]
+
+  requestBodies:
+    addCart:
+      type: object
+      properties: 
+        name: 
+          type: String
+          description: Nombre del carrito
+        products:
+          type: Array
+          description: Array donde se almacenan los productos del carrito
+      example:
+        name: Carrito de Felipe
+        products: [] 
+    addProductToCart:
+      type: object
+      properties:
+        name: Nombre del producto 
+        size: Tamaño o descripcion
+        quantity: Cantidad de unidades 
+        price: Precio
+      example:
+        name: manzana
+        size: pequeño
+        quantity: 2
+        price: 5
+        
+  

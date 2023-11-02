@@ -73,6 +73,30 @@ paths:
           description: No se encontro el carrito a eliminar
         "500":
           description: Ocurrio un error en el servidor
+    put:
+      summary: Actualiza todo el carrito, incluido sus productos a partir del body que se envie
+      tags:
+       - Carts CRUD
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito a modificar
+          schema:
+            $type: String
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateCart'
+      responses:
+        "200":
+          description: ¡Se ha actualizado el carrito!
+        "404":
+          description: No se encontro el requerimiento
+        "500":
+          description: Ha ocurrido un error
 
   /api/carts/{cid}/products/{pid}:
     post:
@@ -99,6 +123,30 @@ paths:
           description: No se encontro el carrito o el producto
         "500":
           description: Ocurrio un error en el servidor
+    delete:
+      summary: Elimina un producto del carrito
+      tags:
+        - Carts CRUD
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            $type: String
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto a eliminar del carrito
+          schema: 
+            $type: String
+      responses: 
+        "200":
+          description: ¡Se elimino el producto del carrito!
+        "404":
+          description: No se encontro el requerimiento
+        "500":
+          description: Ocurrio un error
 
 components:
   schemas:
@@ -143,17 +191,28 @@ components:
       example:
         name: Carrito de Felipe
         products: [] 
-    addProductToCart:
+    updateCart:
       type: object
       properties:
-        name: Nombre del producto 
-        size: Tamaño o descripcion
-        quantity: Cantidad de unidades 
-        price: Precio
+        name: 
+          type: String
+          description: Nombre del carrito
+        products:
+          type: Array
+          properties:
+            type: object
+            properties: 
+              name: Nombre del producto 
+              size: Tamaño o descripcion
+              quantity: Cantidad de unidades 
+              price: Precio
       example:
-        name: manzana
-        size: pequeño
-        quantity: 2
-        price: 5
+        name: Carrito de David
+        products: [{
+          name: Manzana,
+          size: pequeño,
+          quantity: 3,
+          price: 4
+        }]
         
   

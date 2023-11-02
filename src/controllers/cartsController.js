@@ -107,19 +107,23 @@ class CartsController {
         const pid = req.params.pid
         const cid = req.params.cid
         try {
-            const products = await dbproductManager.getProducts()
-            const product = products.find(el => el._id == pid)
-            const carts = await this.service.getCarts()
-            const cart = carts.find(el => el._id == cid)
-            const cartProducts = cart.products
-            //const productToDelete = cart.products.find(el => el._id == pid)
+            const product = await dbproductManager.getProductById(pid)
 
-                
-            await this.service.deleteProductInCart(pid, cartProducts)
+            if(!product){
+                return res.status(404).json({error: "No se encontro el producto"}).req.logger.error("No se encontro el producto")
+            }
+
+            const cart = await this.service.getCartById(cid)
+
+            if(!cart){
+                return res.status(404).json({error: "No se encontro el carrito"}).req.logger.error("No se encontro el carrito")
+            }
+
+            await this.service.deleteProductInCart(pid, cart)
         
             return res.status(200).json({OK: `Se ha eliminado el producto ${product.tittle} del carrito`}).req.logger.info(`Se ha eliminado el producto ${product.tittle} del carrito`)
         }catch (e) {
-            return res.status(404).json({message: "No existe el producto en el carrito"}).req.logger.warning("No existe el producto en el carrito")
+            return res.status(500).json({message: "Ha ocurrido un error"}).req.logger.warning("Ha ocurrido un error")
         }
     }
 

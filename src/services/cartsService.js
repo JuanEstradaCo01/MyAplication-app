@@ -22,8 +22,8 @@ class CartsService {
         return this.storage.addProductToCart(cid, body)
     }
 
-    deleteProductInCart(pid) {
-        return this.storage.deleteProductInCart(pid)
+    deleteProductInCart(pid, cart) {
+        return this.storage.deleteProductInCart(pid, cart)
     }
 
     updateCart(cid, body) {

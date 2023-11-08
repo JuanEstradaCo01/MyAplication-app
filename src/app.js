@@ -194,44 +194,6 @@ io.on("connection", socket => {
     })
 })
 
-
-
-
-//Cookies:
-app.use(cookieParser("secretKey"))
-
-app.get("/setCookie", (req, res) => {
-  return res.cookie("CoderCookie", "Valor de la cookie", {maxAge: 50000}).send("Cookie")
-})
-
-app.get("/getCookie", (req, res) => {
-  return res.send({
-    cookies: req.cookies,
-    signedCookies: req.signedCookies //Cookies firmadas
-  })
-})
-
-app.get("/deleteCookie", (req, res) => {
-  return res.clearCookie("CoderCookie").send("Cookie eliminada")
-})
-
-app.get("/signedCookie", (req, res) => {
-  return res.cookie("SignedCoderCookie", "Esta es una cookie firmada y especial", {signed: true}).send("Cookie")
-})
-
-
-app.get("/cookiesForm", (req, res) => {
-  return res.render("cookies")
-})
-
-app.post("/cookiesForm", (req, res) => {
-  return res.cookie("User", req.body, {maxAge: 10000}).redirect("/cookiesForm")
-})
-
-
-
-
-
 const fileStorage = FileStore(session)
 
 
@@ -302,36 +264,10 @@ app.get("/admin", authMidleware, adminMidleware,(req, res) => {
   return res.send(`Cuenta de administrador. Hola ${req.session.username}`)
 })
 
-
-
-
-
-//Vista de detalles
-app.get("/detalles", async (req, res) => {
-  const pid = req.query.pid
-  const productos = await dbproductManager.getProducts()
-  const detalles = productos.find(el => el._id == pid)
-  console.log({detalles})
-
-  return res.json({detalles})
-})
-
-//Vista del carrito:
-app.get("/carts/:cid", async (req, res) => {
-  const cid = req.params.cid
-  const guardar = await dbcartManager.getCarts()
-  const Carrito = guardar.find(el => el._id == cid)
-  const carritos = await dbcartManager.addProductToCart(Carrito)
-  
-  console.log({carritos})
-
-  return res.json({carritos})
-}) 
-
 app.get("/healthcheck", (req, res) => {
     return res.json({
         status: "Corriendo",
-        date: new Date()
+        date: new Date().toLocaleString()
     })
 })
 

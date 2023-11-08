@@ -209,8 +209,8 @@ class SessionRouter extends BaseRouter {
     this.post("/recovery", async (req, res) => {
       let verificar = await userModel.findOne({email: req.body.email})
 
-      //timeZone: especifica la hora de la zona actual
-      const dateNow = Date({timeZone:"COL"})
+      //Especifico la hora actual en la que se va a restablecer la contraseña 
+      const dateNow = new Date().toLocaleString()
       
       const expirated = verificar.expiratedLink
 
@@ -267,15 +267,16 @@ class SessionRouter extends BaseRouter {
         return res.status(400).json({error: "El correo ingresado no se encuentra registrado"}).req.logger.error("El correo ingresado no se encuentra registrado")
       }
 
-      const verificar =  Date({timeZone:"COL"})
+      const verificar = new Date().toLocaleString()
 
       user.date = verificar
 
       //Actualizo para que el link expire en 1 hora
-      let today = new Date()
-      today.setHours(today.getHours() + 1)
+      const now = new Date().getTime()
+      const add = 60 * 60000
+      const addedHour = new Date(now + add).toLocaleString()
 
-      user.expiratedLink = today
+      user.expiratedLink = addedHour
 
       const body = user
       const id = user._id

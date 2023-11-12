@@ -19,7 +19,7 @@ const productsSchema = mongoose.Schema({
     stock: Number,
     category: String,
     cartId: String,
-    owner: String
+    owner: String //Persona que creó el producto
 })
 
 productsSchema.plugin(mongoosePaginate)

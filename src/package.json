@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "ProductManager.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "dev": "nodemon app.js --mode dev",
-    "prod": "nodemon app.js --mode prod"
+    "prod": "nodemon app.js --mode prod",
+    "test": "mocha test/*"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +25,7 @@
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
+    "mongodb": "^6.2.0",
     "mongoose": "^7.4.1",
     "mongoose-paginate-v2": "^1.7.4",
     "multer": "^1.4.5-lts.1",
@@ -42,5 +43,9 @@
     "winston": "^3.11.0"
   },
   "keywords": [],
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0"
+  }
 }

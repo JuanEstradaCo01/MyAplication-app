@@ -17,7 +17,7 @@ class DBUserManager {
         const user = await this.getUserById(id)
 
         if (!user) {
-            throw new Error("El producto no existe")
+            throw new Error("El usuario no existe")
         }
         
         const update = {

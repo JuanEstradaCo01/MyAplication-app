@@ -1,7 +1,7 @@
 const Assert = require("assert")
 const {createHash, isValidPassword} = require("../utils/passwordHash")
 
-//RUN: ./node_modules/.bin/mocha test/utils.test.js
+//RUN: ./node_modules/.bin/mocha test/bcrypt.test.js
 
 describe("Testing de Hasheo con bcrypt", function () {
     it("El test debe verificar que la funcion 'createHash' funciona correctamente, devolviendo la contraseña hasheada y se verifica que la contraseña sin hashear no sea igual a la hasheada", function () {

@@ -113,10 +113,6 @@ const dbConnection = DB.getConnection(config)
 })()
 
 const socketServer = require("./utils/io")
-const DBProductManager = require("./dao/DBProductManager")
-const cartsModels = require("./dao/models/cartsModels")
-const productsModels = require("./dao/models/productsModels")
-const swaggerJSDoc = require("swagger-jsdoc")
 
 const app = express()
 
@@ -193,9 +189,6 @@ io.on("connection", socket => {
         io.emit('mensaje', message)
     })
 })
-
-const fileStorage = FileStore(session)
-
 
 app.use(session({
   //Configuracion de fileStorage

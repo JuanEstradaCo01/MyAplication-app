@@ -70,8 +70,6 @@ class ProductsController {
 
     async addProduct(req, res, next){
         try{
-            
-
             let {id,tittle,description,price,thumbnail,code,status,stock,category} = req.body
                   
             //Valido si las propiedades del producto llegan invalidas segun su "TYPE" y genero un CustomError:
@@ -127,6 +125,8 @@ class ProductsController {
         if(!update) {
             return res.status(500).json({error: "No se pudo actualizar el producto"}).req.logger.warning("No se pudo actualizar el producto")
         }
+
+        req.logger.info("Se actualizó correctamente el producto")
 
         return res.json(update)
     }

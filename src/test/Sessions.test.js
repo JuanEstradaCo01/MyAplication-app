@@ -26,14 +26,12 @@ describe("Testing session", function () {
         typeCount: "User"
     }
 
-    let cookieToken 
-
-    it("En el endpoint POST /api/sessions/register se debe registrar correctamente un usuario", async function () {
+    it("En el endpoint POST '/api/sessions/register' se debe registrar correctamente un usuario", async function () {
         const newUser = await requester.post("/api/sessions/register").send(user)
         expect(newUser).to.be.ok
     })
 
-    it("En el endpoint POST /api/sessions/login se debe poder hacer login con un usuario registrado", async function () {
+    it("En el endpoint POST '/api/sessions/login' se debe hacer login con un usuario registrado", async function () {
        const login = await requester.post("/api/sessions/login").send({
         email: user.email,
         password: user.password
@@ -43,11 +41,16 @@ describe("Testing session", function () {
        const cookie = login.headers["set-cookie"][0]  
 
        //Uso el metodo split para separar llave-valor a partir del '=' y uso replace para dejar el valor del JWT puro:
-       cookieToken = {
+       const cookieToken = {
         name: cookie.split("=")[0],
         Token: cookie.split("=")[1].replace("; Max-Age", "")
        }  
        expect(cookieToken.name).to.be.equal("Token")
        expect(cookieToken.Token).to.be.ok
+    })
+
+    it("En el endpoint POST '/api/sessions/logout' se debe cerrar sesion", async function () {
+        const logout = await requester.post("/api/sessions/logout")
+        expect(logout).to.be.ok
     })
 })

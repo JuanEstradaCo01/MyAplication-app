@@ -1,5 +1,7 @@
 const DBProductManager = require("../dao/DBProductManager")
 const productsDao = new DBProductManager()
+const DBUserManager = require("../dao/DBUserManager")
+const userDao = new DBUserManager()
 const Chai = require("chai")
 const expect = Chai.expect
 const dotenv = require("dotenv")
@@ -27,27 +29,26 @@ describe("Testing Products router", () => {
         this.timeout(6000)
     })
 
-    it("El endpoint GET '/api/products' debe obtener todos los productos, se valida que la cantidad de productos sea igual a la especificada", async function (){
-        const result = await productsDao.getProducts()
+    //Producto existente para los tests:
+    const pid = "655263a15a9debdd88112727"
+
+    it("El endpoint GET '/api/products' obtendrá todos los productos, se valida que la cantidad de productos sea igual a la especificada", async function (){
+        const products = await productsDao.getProducts()
         const productsAmount = 49
-        expect(result.length).to.be.equal(productsAmount)
+        expect(products.length).to.be.equal(productsAmount)
     })
 
-    it("El endpoint GET '/api/products' debe devolver un formato Array con todos los productos", async function () {
-        const result = await productsDao.getProducts()
-        assert.strictEqual(Array.isArray(result), true)
+    it("El endpoint GET '/api/products' devolvera un formato Array con todos los productos", async function () {
+        const products = await productsDao.getProducts()
+        assert.strictEqual(Array.isArray(products), true)
     })
 
-    it(`El endpoint GET '/api/products/:pid' debe devolver el producto especificado por su ID`, async function () {
-        const id = "6539fa895cba9c5b67807cbe"
-        const product = await productsDao.getProductById(id)
-        if(!product){
-            return console.log("No se encontró el producto en la base de datos")
-        }
+    it(`El endpoint GET '/api/products/:pid' devolvera el producto especificado por su ID`, async function () {
+        const product = await productsDao.getProductById(pid)
         assert.ok(product)
     })
 
-    it("El endpoint POST '/api/products' debe de agregar un producto a la base de datos, devolvera un status 500 y no dejara crear el producto porque se debe de loguear ya que solo el 'Admin' o un usuario 'Premium' pueden crear productos", async function () {
+    it("El endpoint POST '/api/products' agrega un producto a la base de datos, devolvera un status 500 y no dejara crear el producto porque se debe de loguear ya que solo el 'Admin' o un usuario 'Premium' pueden crear productos", async function () {
         const productToAgregate = {
             id: 50,
             tittle: "Pera",
@@ -63,5 +64,44 @@ describe("Testing Products router", () => {
         expect(statusCode).to.be.equal(500)
         expect(ok).to.be.equal(false)
         expect(_body).to.be.have.property("error")
+    })
+
+    it("El endpoint PUT '/api/products/:pid' modifica un producto ya existente", async function () {
+        const findProduct = await productsDao.getProductById(pid)
+        const body = {
+            _id: findProduct._id,
+            id: findProduct.id,
+            tittle: 'producto modificado TEST',
+            description: 'grande',
+            price: 10,
+            thumbnail: findProduct.thumbnail,
+            code: findProduct.code,
+            status: findProduct.status,
+            stock: findProduct.stock,
+            category: findProduct.category
+        }
+
+        const update = await productsDao.updateProduct(pid, body)
+        expect(update).to.be.ok
+    })
+
+    it("El endpoint DELETE '/api/products/:pid/api/users/:uid' elimina un producto de la base de datos", async function () {
+        //NOTA: Se debe especificar el ID del usuario que lo va a eliminar(uid) para saber el usuario está autorizado para eliminar ese producto
+
+        //Busco el usuario segun el 'owner' del producto:
+        const find = await productsDao.getProductById(pid)
+        if(find.owner === "Admin") {
+            const users = await userDao.getUsers()
+            const findUser = users.find(item=>item.typeCount === find.owner)
+            const uid = findUser._id
+            const product = await requester.delete(`/api/products/${pid}/api/users/${uid}`)
+            return expect(product).to.be.ok
+        }
+
+        const users = await userDao.getUsers()
+        const findUser = users.find(item=>item.email === find.owner)
+        const uid = findUser._id
+        const product = await requester.delete(`/api/products/${pid}/api/users/${uid}`)
+        expect(product).to.be.ok
     })
 }) 

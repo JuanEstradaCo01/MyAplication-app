@@ -173,9 +173,10 @@ class SessionRouter extends BaseRouter {
         const id = user.cart._id
         const cart = await dbcartManager.getCartById(id)
         const cartId = cart._id
-       
+        
         //Valido si el usuario es admin:(Respuestas de Admin)
         if (user.rol === "Admin"){
+          req.logger.info("✔ ¡Sesion iniciada!")
           return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("products", {products, user})//Renderizado a perfil de Admin
           //return res.status(200).json(req.user)//Respuesta de JSON
           //return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).redirect("/api/sessions/current")//Redireccion a current
@@ -184,12 +185,14 @@ class SessionRouter extends BaseRouter {
 
         //Respuesta usuario Premium
         if(user.rol === "Premium"){
+          req.logger.info("✔ ¡Sesion iniciada!")
           return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("profilePremium", {products, user, cartId})
         }
     
         //(Respuestas de User):
         if(user.rol === "User"){
           //return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).redirect("/api/sessions/current")//Redireccion a current
+          req.logger.info("✔ ¡Sesion iniciada!")
           return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("profile",{products, user, cartId})//Renderizado a perfil de User
           //return res.redirect("/profile")//Redireccion a perfil de User
           //return res.status(200).json(req.user)//Respuesta de JSON
@@ -199,9 +202,9 @@ class SessionRouter extends BaseRouter {
     this.post("/logout", (req, res) => {
       req.session.destroy(e => {
         if (!e) {
-        return res.redirect("/login")
+          req.logger.info("⛔ ¡Sesion cerrada!")
+          return res.redirect("/login")
         }
-      
         return res.render("login")
     })
     })

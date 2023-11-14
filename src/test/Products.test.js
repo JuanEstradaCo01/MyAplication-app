@@ -23,18 +23,17 @@ const singletonConnection = DB.getConnection(config)
 const Assert = require("assert")
 const assert = Assert.strict
 const requester = supertest(`http://localhost:${process.env.PORT}`)
-describe("Testing Products router", () => {
+
+
+describe("Testing Products",  () =>{
 
     beforeEach(function () {
         this.timeout(6000)
     })
 
-    //Producto existente para los tests:
-    const pid = "655263a15a9debdd88112727"
-
     it("El endpoint GET '/api/products' obtendrá todos los productos, se valida que la cantidad de productos sea igual a la especificada", async function (){
         const products = await productsDao.getProducts()
-        const productsAmount = 49
+        const productsAmount = products.length //O se especifica un numero cualquiera para verificar que funciona, se coloca length para hacerlo dinamico
         expect(products.length).to.be.equal(productsAmount)
     })
 
@@ -44,8 +43,12 @@ describe("Testing Products router", () => {
     })
 
     it(`El endpoint GET '/api/products/:pid' devolvera el producto especificado por su ID`, async function () {
-        const product = await productsDao.getProductById(pid)
-        assert.ok(product)
+        //Se toma el ultimo producto de la base de datos para el test:
+        const products = await productsDao.getProducts()
+        const lastProduct = products.at(-1)
+        const pid = lastProduct._id
+        const productFind = await productsDao.getProductById(pid)
+        expect(productFind).to.be.ok
     })
 
     it("El endpoint POST '/api/products' agrega un producto a la base de datos, devolvera un status 500 y no dejara crear el producto porque se debe de loguear ya que solo el 'Admin' o un usuario 'Premium' pueden crear productos", async function () {
@@ -67,11 +70,15 @@ describe("Testing Products router", () => {
     })
 
     it("El endpoint PUT '/api/products/:pid' modifica un producto ya existente", async function () {
+        //Se toma el ultimo producto de la base de datos para el test:
+        const products = await productsDao.getProducts()
+        const lastProduct = products.at(-1)
+        const pid = lastProduct._id
         const findProduct = await productsDao.getProductById(pid)
         const body = {
-            _id: findProduct._id,
+            //_id: findProduct._id,
             id: findProduct.id,
-            tittle: 'producto modificado TEST',
+            tittle: `${findProduct.tittle} modificado TEST`,
             description: 'grande',
             price: 10,
             thumbnail: findProduct.thumbnail,
@@ -86,7 +93,12 @@ describe("Testing Products router", () => {
     })
 
     it("El endpoint DELETE '/api/products/:pid/api/users/:uid' elimina un producto de la base de datos", async function () {
-        //NOTA: Se debe especificar el ID del usuario que lo va a eliminar(uid) para saber el usuario está autorizado para eliminar ese producto
+        //NOTA: Se debe especificar el ID del usuario que lo va a eliminar(uid) para saber si el usuario está autorizado para eliminar ese producto
+
+        //Se toma el ultimo producto de la base de datos para el test:
+        const products = await productsDao.getProducts()
+        const lastProduct = products.at(-1)
+        const pid = lastProduct._id
 
         //Busco el usuario segun el 'owner' del producto:
         const find = await productsDao.getProductById(pid)

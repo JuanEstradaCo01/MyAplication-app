@@ -76,7 +76,7 @@ class DBCartManager {
         const carritoEliminado = await this.getCartById(cid)
 
         if (!carritoEliminado) {
-            throw new Error("El producto no existe")
+            throw new Error("El carrito no existe")
         }
 
         await this.model.deleteOne({ _id: cid})

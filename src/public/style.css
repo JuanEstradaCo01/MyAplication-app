@@ -512,6 +512,8 @@ th{
 }
 
 #headerapp{
+    display: flex;
+    justify-content: center;
     background-color: rgb(2, 136, 80);
     font-size: 2rem;
     height: 6rem;

@@ -22,14 +22,20 @@ class CartsController {
 
     async getCartById(req, res) {
         const cid = req.params.cid
-
         try{
-            const cartBuscar = await this.service.getCartById(cid)
+
+            const cartBuscar = await this.service.getCartById(cid) 
+            const cartName = cartBuscar.name
+            const cartProducts = cartBuscar.products 
+            const totalPrices =  60
+            const iva = totalPrices * 0.19
+            const totalBuy = totalPrices + iva
+        
             if(!cartBuscar){
                 return res.status(404).json({error: `No existe el carrito`}).req.logger.error(`No existe el carrito`)
             }
         
-            return res.send(cartBuscar)
+            return res.render("cart", {cartName, cartProducts, totalBuy})
         }catch(e){
             return res.status(404).json({error: `No existe el carrito con el ID:${cid}`}).req.logger.error(`No existe el carrito con el ID:${cid}`)
         }

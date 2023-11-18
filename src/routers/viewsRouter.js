@@ -1,9 +1,14 @@
 const express = require("express")
 const { Router } = express
+const DBUserManager = require("../dao/DBUserManager")
+const userDao = new DBUserManager()
+const DBCartManager = require("../dao/DBCartManager")
+const cartDao = new DBCartManager()
 const viewsRouter = new Router()
 const products = require("../managerDB.json")
 const { generateToken,verifyToken } = require("../utils/jwt")
 const BaseRouter = require("./BaseRouter")
+const cartsModels = require("../dao/models/cartsModels")
 
 
 const sessionMidleware = (req, res, next) => {
@@ -126,7 +131,13 @@ class ViewsRouter extends BaseRouter {
             return res.render("actualizar", {pid})
         })
         
-        this.get("/cart", (req, res) => {
+        this.get("/cart", async (req, res) => {
+            /*const uid = req.session.passport.user
+            const user = await userDao.getUserById(uid)
+            const cart = await cartDao.getCartById(user.cart)
+            const cartName = cart.name
+            const cartProducts = cart.products*/
+    
             return res.render("cart")
         })
 

@@ -13,6 +13,8 @@ const UserManager = require("../dao/DBUserManager")
 const usermanager = new UserManager()
 const bcrypt = require("bcrypt")
 const nodemailer = require("nodemailer")  
+const DBUserManager = require("../dao/DBUserManager")
+const userDao = new DBUserManager()
 
 const BaseRouter = require("./BaseRouter")
 

@@ -61,7 +61,15 @@ class ProductsController {
             const pid = req.params.pid
         
             const productBuscar = await this.service.getProductById(pid)
-            return res.json(productBuscar)
+            const name = productBuscar.tittle
+            const size = productBuscar.description
+            const price = productBuscar.price
+            const image = productBuscar.thumbnail
+            const code = productBuscar.code
+            const status = productBuscar.status
+            const stock = productBuscar.stock
+            const category = productBuscar.category
+            return res.render("productDetail", {name,size,price,image,code,status,stock,category})
 
         }catch(e){
             return res.status(404).json({error: "El producto no existe en la base de datos"}).req.logger.error("El producto no existe en la base de datos")

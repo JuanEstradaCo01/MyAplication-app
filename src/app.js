@@ -138,7 +138,12 @@ app.use(flash())
 
 
 //configurando handlebars
-app.engine("handlebars", handlebars.engine())
+app.engine("handlebars", handlebars.engine(
+  //Se configura el 'runtimeOptions' para que handlebars acceda a los valores que se le dan
+  {runtimeOptions: {
+  allowProtoPropertiesByDefault: true,
+  allowProtoMethodsByDefault: true
+}}))
 app.set("views", "./views")
 app.set("view engine", "handlebars")
 

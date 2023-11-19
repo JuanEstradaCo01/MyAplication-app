@@ -16,13 +16,16 @@
                    display: flex;
                    justify-content: center;
                    align-items: center">
-        <h2>〽My aplication</h2>
+        <h2>🌫My aplication</h2>
+      
     </header>
     
     <h1 style="display: flex;
                justify-content: center;
                align-items: center;
-               margin: 2rem;"><span class="material-symbols-outlined">shopping_cart</span>  {{cartName}}</h1>
+               margin: 2rem;">
+        <span class="material-symbols-outlined">shopping_cart</span>  {{cartName}}
+    </h1>
 
     <div id="tablePaginate" style="display: flex;
                                    justify-content: center;
@@ -41,10 +44,10 @@
             <tbody>
                 {{#each cartProducts}}
                 <tr>
-                    <td style="text-align: center;" class="center">{{this.name}}mani</td>
-                    <td style="text-align: center;" class="center">{{this.size}}pequeño</td>
-                    <td style="text-align: center;" class="center">{{this.quantity}}10</td>
-                    <td style="text-align: center;" class="center">${{this.price}}20</td>
+                    <td style="text-align: center;">{{this.name}}</td>
+                    <td style="text-align: center;">{{this.size}}</td>
+                    <td style="text-align: center;">{{this.quantity}}</td>
+                    <td style="text-align: center;">${{this.price}}</td>
                 </tr>
                 {{/each}}
             </tbody>

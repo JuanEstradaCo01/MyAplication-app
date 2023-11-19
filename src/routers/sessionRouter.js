@@ -59,7 +59,7 @@ class SessionRouter extends BaseRouter {
     })
     
     this.get("/", ( req, res) => {
-        return res.json(req.session)
+        return res.redirect("/api/sessions/login")
     
         
         if (!req.session.counter) {
@@ -111,27 +111,6 @@ class SessionRouter extends BaseRouter {
     
         return next()
     } ,async(req, res) => {
-        /*let user = await userModel.findOne({username: req.body.login})
-    
-        if (!user) {
-            return res.status(404).json({
-                error: "No existe el usuario"
-            })
-        }
-    
-        if (!isValidPassword(req.body.password, user.password)) {
-            return res.status(404).json({
-                error: "(Datos incorrectos) Usuario y/o contraseña incorrecta"
-            })
-        }
-    
-        //Para no mostrar la contraseña 
-        user = user.toObject()
-        delete user.password
-    
-    
-        req.session.usuario = user*/
-    
         const user = req.user
         const limit = 50 //req.query.limit || 10
         const page = req.query.page || 1
@@ -179,7 +158,7 @@ class SessionRouter extends BaseRouter {
         //Valido si el usuario es admin:(Respuestas de Admin)
         if (user.rol === "Admin"){
           req.logger.info("✔ ¡Sesion iniciada!")
-          return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("products", {products, user})//Renderizado a perfil de Admin
+          return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("adminProfile", {products, user})//Renderizado a perfil de Admin
           //return res.status(200).json(req.user)//Respuesta de JSON
           //return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).redirect("/api/sessions/current")//Redireccion a current
           //return res.redirect("/products")//Redireccion a perfil de admin
@@ -188,14 +167,14 @@ class SessionRouter extends BaseRouter {
         //Respuesta usuario Premium
         if(user.rol === "Premium"){
           req.logger.info("✔ ¡Sesion iniciada!")
-          return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("profilePremium", {products, user, cartId})
+          return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("premiumProfile", {products, user, cartId})
         }
     
         //(Respuestas de User):
         if(user.rol === "User"){
           //return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).redirect("/api/sessions/current")//Redireccion a current
           req.logger.info("✔ ¡Sesion iniciada!")
-          return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("profile",{products, user, cartId})//Renderizado a perfil de User
+          return res.cookie(`Token`, token, {maxAge: 60 * 60 * 1000}).render("userProfile",{products, user, cartId})//Renderizado a perfil de User
           //return res.redirect("/profile")//Redireccion a perfil de User
           //return res.status(200).json(req.user)//Respuesta de JSON
         }

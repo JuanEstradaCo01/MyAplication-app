@@ -23,14 +23,15 @@ class CartsController {
     async getCartById(req, res) {
         const cid = req.params.cid
         try{
-
             const cartBuscar = await this.service.getCartById(cid) 
             const cartName = cartBuscar.name
             const cartProducts = cartBuscar.products 
-            const totalPrices =  60
+            //Sumo el precio de todos los productos:
+            const pricesReduce = cartProducts.reduce((item, price) => item + price.price, 0)
+            const totalPrices =  pricesReduce
             const iva = totalPrices * 0.19
             const totalBuy = totalPrices + iva
-        
+
             if(!cartBuscar){
                 return res.status(404).json({error: `No existe el carrito`}).req.logger.error(`No existe el carrito`)
             }
@@ -99,7 +100,6 @@ class CartsController {
             const precio = product.price
             const cartId = cart._id
             
-    
             await this.service.addProductToCart(cid, cart)
             req.logger.info(`¡Producto agregado exitosamente al carrito!(${nombre})`)
             return res.render("addProduct", {nombre, tamaño, code, precio, cartId})

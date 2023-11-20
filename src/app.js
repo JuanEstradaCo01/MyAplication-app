@@ -128,7 +128,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static("public"))
 
-
 //Flash:
 app.use(flash())
 
@@ -211,7 +210,6 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }))
-
 
 
 //Passport:
@@ -320,7 +318,6 @@ const swaggerOptions = {
 const specs = swaggerDocs(swaggerOptions)
 //Ruta para la documentacion del proyecto en swagger (/apidocs):
 app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
-
 
 app.use("/api/products", productRouter.getRouter())
 app.use("/api/carts", cartRouter.getRouter())

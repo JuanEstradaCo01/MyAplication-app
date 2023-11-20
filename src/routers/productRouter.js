@@ -1,6 +1,6 @@
 const express = require("express")
 const ProductManager = require("../dao/FS/FSProductManager")
-const uploader = require("../utils")
+const uploader = require("../utils/multer")
 const init = require("../utils/io")
 //const managerDB = new ProductManager("./managerDB.json") //Para usar FS
 const { Router } = express
@@ -10,7 +10,6 @@ const BaseRouter = require("./BaseRouter")
 const dbproductManager = new DBProductManager() //Para usar mongo
 const ProductsController = require("../controllers/productsController")
 const productsController = new ProductsController()
-
 
 class ProductRouter extends BaseRouter {
     init () {

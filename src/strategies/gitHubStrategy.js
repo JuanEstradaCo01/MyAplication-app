@@ -22,7 +22,7 @@ const gitHubStrategy = new GitHubStrategy({
             email: "fulano@mail.com",//profile._json.email,
             age: 27, //profile._json.name,
             password: " ",
-            rol: profile._json.type,
+            rol: "User",
             provider: profile.provider,
             access_token: ""
         })

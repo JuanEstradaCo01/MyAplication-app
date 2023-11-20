@@ -32,6 +32,10 @@ class CartsController {
             const iva = totalPrices * 0.19
             const totalBuy = totalPrices + iva
 
+            if(cartProducts.length === 0){
+                return res.render("emptyCart")
+            }
+
             if(!cartBuscar){
                 return res.status(404).json({error: `No existe el carrito`}).req.logger.error(`No existe el carrito`)
             }

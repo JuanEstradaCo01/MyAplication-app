@@ -1,9 +1,8 @@
-const TicketDto = require("../dao/DTOs/ticketDto")
-const TicketRepository = require("../dao/repository/ticketRepository")
 const TicketService = require("../services/ticketsService")
-const DBTicketManager = require("../dao/DBTicketManager")
-const ticketManager = new DBTicketManager()
-const ticketRepository = new TicketRepository()
+const DBCartManager = require("../dao/DBCartManager")
+const cartDao = new DBCartManager()
+const DBUserManager = require("../dao/DBUserManager")
+const userDao = new DBUserManager()
 
 class TicketsController {
     constructor() {
@@ -32,15 +31,44 @@ class TicketsController {
     }
 
     async generateTicket(req, res) {
-        const data = req.body
+        try{
+            const uid = req.session.passport.user
+            const user = await userDao.getUserById(uid)
+            const cid = user.cart
+            const cart = await cartDao.getCartById(cid)
+            const cartProducts = cart.products
 
-        const ticketsGenerados = await ticketManager.getTickets()
+            const data = req.body
+            const tickets = await this.service.getTickets()  
+            const date = new Date().toLocaleString()
+    
 
-        data.code = ticketsGenerados.length + 1
-        
-        const ticketGenerated = await this.service.generateTicket(data)
-        
-        return res.send({ticketGenerated}).req.logger.info("¡Ticket generado exitosamente!")
+            cart.products.forEach(function (item) {
+                item.totalAllQuantity = item.quantity * item.price
+            })
+
+            //Logica para calcular los datos del ticket:
+            const prices = cartProducts.reduce((item, price) => item + price.totalAllQuantity, 0)
+
+            data.totalPrices = prices
+            const iva = prices * 0.19
+            let totalBuy = prices + iva
+            totalBuy = Number(totalBuy.toFixed(2))
+            data.amount = totalBuy
+            data.code = tickets.length + 1 
+            data.purchase_datetime = date
+            data.purchaser = user.email
+
+            await cartDao.updateCart(cid, cart)
+            
+            await this.service.generateTicket(data)
+            
+            req.logger.info("¡Ticket generado exitosamente!")
+            return res.render("ticket", {data, cartProducts})
+        }catch(e){
+            req.logger.error("Ha ocurrido un error al generar el ticket")
+            return res.status(500).json({error: "Ha ocurrido un error al generar el ticket"})
+        }
     }
 }
  

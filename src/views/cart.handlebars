@@ -38,7 +38,7 @@
                     <th style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Producto</th>
                     <th style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Tamaño</th>
                     <th style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Cantidad</th>
-                    <th style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Precio</th>
+                    <th style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Precio U.</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,7 +65,13 @@
     <div style="display: flex;
                 justify-content: center;
                 align-items: center;
-                margin: 2rem;"><button type="button" class="btn btn-outline-success">COMPRAR</button>
+                margin: 2rem;">
+                <form style="display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 2rem;" action="/api/tickets" method="post">
+                    <button type="submit" class="btn btn-outline-success">COMPRAR</button>
+                </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

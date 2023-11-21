@@ -30,7 +30,8 @@ class CartsController {
             const pricesReduce = cartProducts.reduce((item, price) => item + price.price, 0)
             const totalPrices =  pricesReduce
             const iva = totalPrices * 0.19
-            const totalBuy = totalPrices + iva
+            let totalBuy = totalPrices + iva
+            totalBuy = Number(totalBuy.toFixed(2))
 
             if(cartProducts.length === 0){
                 return res.render("emptyCart")

@@ -15,8 +15,8 @@ class DBTicketManager {
 
     async generateTicket(body) {
         return this.model.create({
-            code: body.code || 0,
-            purchase_datetime: body.purchase_datetime || new Date().toLocaleDateString(),
+            code: body.code,
+            purchase_datetime: body.purchase_datetime,
             amount: body.amount, 
             purchaser: body.purchaser 
         })

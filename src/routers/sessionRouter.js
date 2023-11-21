@@ -9,8 +9,6 @@ const DBProductManager = require("../dao/DBProductManager")
 const dbproductManager = new DBProductManager() //Para usar mongo
 const DBCartManager = require("../dao/DBCartManager")
 const dbcartManager = new DBCartManager()
-const UserManager = require("../dao/DBUserManager")
-const usermanager = new UserManager()
 const bcrypt = require("bcrypt")
 const nodemailer = require("nodemailer")  
 const DBUserManager = require("../dao/DBUserManager")
@@ -192,6 +190,7 @@ class SessionRouter extends BaseRouter {
     
     this.post("/recovery", async (req, res) => {
       let verificar = await userModel.findOne({email: req.body.email})
+      const email = req.body.email
 
       //Especifico la hora actual en la que se va a restablecer la contraseña 
       const dateNow = new Date().toLocaleString()
@@ -235,6 +234,36 @@ class SessionRouter extends BaseRouter {
 
         req.logger.info("¡Se restableció correctamente la contraseña! ✔")
     
+        //Mailling:
+      const transport = nodemailer.createTransport({
+        //host: 'smtp.ethereal.email', // (para ethereal-pruebas)
+        host: process.env.PORT, //(para Gmail)
+        service: "gmail", //(para Gmail)
+        port: 587,
+        auth: {
+          user: process.env.USER,
+          pass: process.env.PASS
+        },
+        tls: {
+          rejectUnauthorized: false
+        }
+      })
+      const correo = await transport.sendMail({
+          from: process.env.USER,//Correo del emisor
+          to: `${email}`,//Correo del receptor
+          subject: "My aplication",//Asunto del correo
+          html: `<div>
+          <h1>Recovery successful ✅</h1>
+          <h3>¡Hola, ${verificar.first_name}!</h3>
+          <p>Se ha restablecido correctamente la contraseña de tu cuenta, si no has sido tú ponte en contacto con soporte, gracias por confiar en nosotros.</p>
+          </div>`,//Cuerpo del mensaje
+          /*attachments: [{
+            filename: "",//Nombre del archivo(eje: pera.jpg)
+            path:"",//ruta de la imagen(eje:./imgs/Pera.jpg)
+            cid: ""//Nombre de la imagen(eje: Pera)
+          }]*/
+        })
+
         return res.redirect("/recoverysuccess")
       })
 
@@ -244,7 +273,7 @@ class SessionRouter extends BaseRouter {
       const email = req.body.email
       
       //Valido si el correo que me llego esta en la base de datos
-      const users = await usermanager.getUsers()
+      const users = await userDao.getUsers()
       const user = users.find(item=>item.email === email)
 
       if(!user){
@@ -265,13 +294,13 @@ class SessionRouter extends BaseRouter {
       const body = user
       const id = user._id
 
-      const update = await usermanager.updateUser(id, body)
+      const update = await userDao.updateUser(id, body)
 
-      //Mailling con Gmail:
+      //Mailling:
       const transport = nodemailer.createTransport({
-        host: 'smtp.ethereal.email', // (para ethereal-pruebas)
-        //host: process.env.PORT, (para Gmail)
-        //service: "gmail", (para Gmail)
+        //host: 'smtp.ethereal.email', // (para ethereal-pruebas)
+        host: process.env.PORT, //(para Gmail)
+        service: "gmail", //(para Gmail)
         port: 587,
         auth: {
           user: process.env.USER,
@@ -284,10 +313,10 @@ class SessionRouter extends BaseRouter {
       const correo = await transport.sendMail({
           from: process.env.USER,//Correo del emisor
           to: `${email}`,//Correo del receptor
-          subject: "Recovery Password",//Asunto del correo
+          subject: "My aplication",//Asunto del correo
           html: `<div>
-          <h1>Restablecer contraseña</h1>
-          <h3>Hola, ${user.first_name}</h3>
+          <h1>Recovery password</h1>
+          <h3>¡Hola, ${user.first_name}!</h3>
           <p>Da click <a href="http://localhost:${process.env.PORT}/recovery">AQUI</a> para restablecer contraseña</p>
           </div>`,//Cuerpo del mensaje
           /*attachments: [{

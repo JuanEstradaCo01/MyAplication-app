@@ -1,12 +1,7 @@
-const express = require("express")
 //const CartManager = require("../dao/FS/FSCartManager.js") --> Para FS
 //const carrito = new CartManager("../carrito.json") --> para FS
 //const ProductManager = require("../dao/FS/FSProductManager.js") --> para FS
 //const managerDB = new ProductManager("../managerDB.json") --> para FS
-const { Router } = express
-const cartRouter = Router()
-
-
 const DBProductManager = require("../dao/DBProductManager")
 const dbproductManager = new DBProductManager() //Para usar mongo
 const DBCartManager = require("../dao/DBCartManager")

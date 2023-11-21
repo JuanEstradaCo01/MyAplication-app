@@ -1,20 +1,15 @@
-const express = require("express")
-const UserManager = require("../dao/DBUserManager")
-const usermanager = new UserManager()
-const {generateToken} = require("../utils/jwt")
+const UsersController = require("../controllers/usersController")
+const BaseRouter = require("./BaseRouter")
+const usersController = new UsersController()
 
+class UserRouter extends BaseRouter {
+    init() {
+        this.get("/", usersController.getUsers.bind(usersController))
 
-const userRouter = express()
+        this.get("/:uid", usersController.getUserById.bind(usersController))
 
-userRouter.get("/", async (req, res) => {
-    const users = await usermanager.getUsers()
-    return res.status(200).json(users)
-})
+        this.put("/:uid", usersController.updateUser.bind(usersController))
+    }
+}
 
-userRouter.get("/:uid", async (req, res) => {
-    const uid = req.params.uid
-    const user = await usermanager.getUserById(uid)
-    return res.status(200).json(user)
-})
-
-module.exports = userRouter
+module.exports = UserRouter

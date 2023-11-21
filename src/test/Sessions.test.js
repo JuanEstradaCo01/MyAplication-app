@@ -18,9 +18,9 @@ const requester = supertest(`http://localhost:${process.env.PORT}`)
 
 describe("Testing session", function () {
     const user = {
-        first_name: "Guillermo",
+        first_name: "Testing",
         last_name: "Lopez",
-        email: "guillermo@mail.com",
+        email: "testing@mail.com",
         password: "Guillermo00",
         age: 45,
         typeCount: "User"

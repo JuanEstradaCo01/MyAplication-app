@@ -61,15 +61,22 @@ class ProductsController {
             const pid = req.params.pid
         
             const productBuscar = await this.service.getProductById(pid)
+
             const name = productBuscar.tittle
             const size = productBuscar.description
             const price = productBuscar.price
             const image = productBuscar.thumbnail
             const code = productBuscar.code
-            const status = productBuscar.status
-            const stock = productBuscar.stock
+            let status = productBuscar.status
+            let stock = productBuscar.stock
             const category = productBuscar.category
             const owner = productBuscar.owner
+
+            //Valido si hay stock suficiente del producto:
+            if(stock <= 0){
+                status = false
+                return res.render("productDetail", {name,owner,size,price,image,code,status,stock,category})
+            }
             return res.render("productDetail", {name,owner,size,price,image,code,status,stock,category})
 
         }catch(e){

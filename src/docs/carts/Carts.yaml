@@ -167,14 +167,16 @@ components:
                 name: Nombre del producto dentro del carrito
                 size: Tamaño o descripcion del producto
                 quantity: Cantidad de unidades del producto
-                price: Precio del producto
+                price: Precio por unidad
+                totalPrice: Precio total
       example:
         name: Carrito de Felipe
         products: [{
             name: Manzana,
             size: pequeño,
             quantity: 3,
-            price: 7
+            price: 7,
+            totalPrice: 21
           }
         ]
 
@@ -205,14 +207,16 @@ components:
               name: Nombre del producto 
               size: Tamaño o descripcion
               quantity: Cantidad de unidades 
-              price: Precio
+              price: Precio por unidad
+              totalPrice: Precio total
       example:
         name: Carrito de David
         products: [{
           name: Manzana,
           size: pequeño,
           quantity: 3,
-          price: 4
+          price: 4,
+          totalPrice: 12
         }]
         
   

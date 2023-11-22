@@ -43,8 +43,8 @@ class DBProductManager {
             price: body.price || product.price,
             thumbnail: body.thumbnail || product.thumbnail,
             code: body.code || product.code,
-            status: body.status || product.status,
-            stock: body.stock || product. stock,
+            status: body.status, //|| product.status,
+            stock: body.stock, //|| product. stock,
             category: body.category || product.category
         }
 

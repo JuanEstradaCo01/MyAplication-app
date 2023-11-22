@@ -1,11 +1,11 @@
 [
   {
     "id": 1,
-    "tittle": "papaya",
+    "tittle": "PAPAYA",
     "description": "mediano",
     "price": 100,
     "thumbnail": "Sin imagen",
-    "code": "abc0001",
+    "code": "abc0000",
     "status": true,
     "stock": 300,
     "category": "fruta",
@@ -13,7 +13,7 @@
   },
   {
     "id": 2,
-    "tittle": "manzana",
+    "tittle": "MANZANA",
     "description": "mediano",
     "price": 90,
     "thumbnail": "Sin imagen",
@@ -25,7 +25,7 @@
   },
   {
     "id": 3,
-    "tittle": "sandia",
+    "tittle": "SANDIA",
     "description": "grande",
     "price": 100,
     "thumbnail": "Sin imagen",
@@ -37,7 +37,7 @@
   },
   {
     "id": 4,
-    "tittle": "papaya",
+    "tittle": "LULO",
     "description": "pequeño",
     "price": 250,
     "thumbnail": "Sin imagen",
@@ -49,7 +49,7 @@
   },
   {
     "id": 5,
-    "tittle": "banano",
+    "tittle": "BANANO",
     "description": "pequeño",
     "price": 50,
     "thumbnail": "Sin imagen",
@@ -61,7 +61,7 @@
   },
   {
     "id": 6,
-    "tittle": "fresa",
+    "tittle": "FRESA",
     "description": "pequeño",
     "price": 30,
     "thumbnail": "Sin imagen",
@@ -73,7 +73,7 @@
   },
   {
     "id": 7,
-    "tittle": "guanabana",
+    "tittle": "GUANABANA",
     "description": "mediano",
     "price": 140,
     "thumbnail": "Sin imagen",
@@ -85,7 +85,7 @@
   },
   {
     "id": 8,
-    "tittle": "coco",
+    "tittle": "COCO",
     "description": "grande",
     "price": 130,
     "thumbnail": "Sin imagen",
@@ -97,7 +97,7 @@
   },
   {
     "id": 9,
-    "tittle": "lulo",
+    "tittle": "MANGO",
     "description": "pequeño",
     "price": 25,
     "thumbnail": "Sin imagen",
@@ -109,7 +109,7 @@
   },
   {
     "id": 10,
-    "tittle": "ciruela",
+    "tittle": "CIRUELA",
     "description": "pequeño",
     "price": 50,
     "thumbnail": "Sin imagen",
@@ -121,7 +121,7 @@
   },
   {
     "id": 11,
-    "tittle": "lenteja",
+    "tittle": "LENTEJA",
     "description": "pequeño",
     "price": 100,
     "thumbnail": "Sin imagen",
@@ -133,7 +133,7 @@
   },
   {
     "id": 12,
-    "tittle": "mango",
+    "tittle": "MANGA",
     "description": "mediano",
     "price": 70,
     "thumbnail": "Sin imagen",
@@ -145,7 +145,7 @@
   },
   {
     "id": 13,
-    "tittle": "uva",
+    "tittle": "UVA",
     "description": "pequeño",
     "price": 20,
     "thumbnail": "Sin imagen",
@@ -157,7 +157,7 @@
   },
   {
     "id": 14,
-    "tittle": "aguacate",
+    "tittle": "AGUACATE",
     "description": "mediano",
     "price": 150,
     "thumbnail": "Sin imagen",
@@ -169,7 +169,7 @@
   },
   {
     "id": 15,
-    "tittle": "tomate",
+    "tittle": "TOMATE",
     "description": "pequeño",
     "price": 15,
     "thumbnail": "Sin imagen",
@@ -181,7 +181,7 @@
   },
   {
     "id": 16,
-    "tittle": "limon",
+    "tittle": "LIMÓN",
     "description": "pequeño",
     "price": 10,
     "thumbnail": "Sin imagen",
@@ -193,7 +193,7 @@
   },
   {
     "id": 17,
-    "tittle": "piña",
+    "tittle": "PIÑA",
     "description": "grande",
     "price": 100,
     "thumbnail": "Sin imagen",
@@ -205,7 +205,7 @@
   },
   {
     "id": 18,
-    "tittle": "cebolla",
+    "tittle": "CEBOLLA",
     "description": "mediano",
     "price": 20,
     "thumbnail": "Sin imagen",
@@ -217,7 +217,7 @@
   },
   {
     "id": 19,
-    "tittle": "mandarina",
+    "tittle": "MANDARINA",
     "description": "pequeño",
     "price": 25,
     "thumbnail": "Sin imagen",
@@ -229,7 +229,7 @@
   },
   {
     "id": 20,
-    "tittle": "zanahoria",
+    "tittle": "ZANAHORIA",
     "description": "mediano",
     "price": 40,
     "thumbnail": "Sin imagen",

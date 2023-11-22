@@ -65,13 +65,19 @@ class CartsController {
         try{
             const product = await dbproductManager.getProductById(pid)
 
-            //Valido si el producto que se quiere agregar es del usuario actual y si él lo creo, en ese caso no se permite agregar:
+            //Valido si el producto que se quiere agregar es del usuario actual y si él lo creo, en ese caso no se permite crear:
             const users = await usermanager.getUsers()
             const user = users.find(item=>item.cart._id == cid)
             if(user.typeCount === "Premium" && product.owner === user.email){
                 return res.status(500).json({error: "No puedes agregar un producto que te pertenece"}).req.logger.error("No puedes agregar un producto que te pertenece")
             }
 
+            //Valido si hay stock suficiente del producto:
+            if(product.stock <= 0){
+                product.status = false
+                req.logger.warning(`Producto agotado (${product.tittle})`)
+                return res.status(500).json({StockInsuficiente: `Producto agotado (${product.tittle})`})
+            }
 
             if (!product) {
                 return res.status(404).json({error: "No se encontro el producto a agregar al carrito"}).req.logger.error("No se encontro el producto a agregar al carrito")

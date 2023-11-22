@@ -13,7 +13,7 @@ const cartsSchema = mongoose.Schema({
             size: String,
             quantity: Number,
             price: Number,
-            totalAllQuantity: {
+            totalPrice: {
                 type: Number,
                 default: 0
             }

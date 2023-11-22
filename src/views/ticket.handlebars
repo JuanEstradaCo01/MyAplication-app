@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Document</title>
 </head>
-<body style="background-color: grey;">
+<body style="background-color: rgb(53, 51, 51);">
 
     <header style="background-color: rgb(2, 136, 80);
                    font-size: 2rem;
@@ -19,24 +19,33 @@
         <h2>🌫My aplication</h2>
     </header>
 
-    <h1 style="text-align: center;">Detalles de la compra</h1>
+    <div style="display: flex;
+                justify-content: center;
+                color: rgb(6, 185, 6);
+                margin: 3rem;" 
+         id="divh1Profile">
+        <h1>Detalles de la compra</h1>
+    </div>
 
-    <div style="background-color: white;border: 3px solid black;display: flex;justify-content: center;align-items: center;flex-direction: column;margin: 10rem">
-        <h2>Ticket de compra</h2>
+    <div style="background-color: white;border: 3px solid black;display: flex;justify-content: center;align-items: center;flex-direction: column;margin: auto;width: 25rem;font-family: 'Arvo', serif;">
+        <h3 style="margin-top: 2rem;">My aplication</h2>
+        <p><strong>Registro: </strong>00001111444</p>
+        <p><strong>Tel: </strong>00000</p>
         <p><strong>Ticket No. </strong>{{data.code}}</p>
         <p><strong>Fecha: </strong>{{data.purchase_datetime}}</p>
-        <p><strong>Correo: </strong>{{data.purchaser}}</p>
-        <div style="margin-left: 1rem;border: 2px solid black;">
+        <p style="margin-bottom: 0rem;"><strong>Correo: </strong>{{data.purchaser}}</p>
+        <div style="margin-left: 1rem;padding: 1.5rem 3rem 3rem 3rem;">
+            <h6><strong>Concepto:</strong></h6>
             {{#each cartProducts}}
                 <ul>
-                    <li><strong>{{this.name}}</strong> X<strong>{{this.quantity}} </strong>{{this.size}}</li>
-                    <p>Precio U. <strong>${{this.price}}</strong> - Total: <strong>${{this.totalAllQuantity}}</strong></p>
+                    <li><strong>{{this.name}}</strong> X<strong> {{this.quantity}} </strong>{{this.size}}</li>
+                    <p>Precio U. <strong>${{this.price}}</strong> - Total: <strong>${{this.totalPrice}}</strong></p>
                 </ul>
             {{/each}}
         </div>
-        <h6>Total bruto: ${{data.totalPrices}}</h6>
+        <h6><strong>Total bruto:</strong> ${{data.totalPrices}}</h6>
         <p>IVA 19%</p>
-        <h4><strong>Total compra: </strong>${{data.amount}}</h4>
+        <h4 style="margin-bottom: 2rem;"><strong>Total compra: </strong>${{data.amount}}</h4>
     </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

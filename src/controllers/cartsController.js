@@ -4,6 +4,8 @@ const dbproductManager = new DBProductManager()
 const productsModels = require("../dao/models/productsModels")
 const UserManager = require("../dao/DBUserManager")
 const usermanager = new UserManager()
+const DBCartManager = require("../dao/DBCartManager")
+const cartDao = new DBCartManager()
 
 class CartsController {
     constructor() {
@@ -26,9 +28,10 @@ class CartsController {
             const cartBuscar = await this.service.getCartById(cid) 
             const cartName = cartBuscar.name
             const cartProducts = cartBuscar.products 
-            //Sumo el precio de todos los productos:
-            const pricesReduce = cartProducts.reduce((item, price) => item + price.price, 0)
-            const totalPrices =  pricesReduce
+
+            //Logica para los calculos:
+            const prices = cartProducts.reduce((item, price) => item + price.totalPrice, 0)
+            const totalPrices =  prices
             const iva = totalPrices * 0.19
             let totalBuy = totalPrices + iva
             totalBuy = Number(totalBuy.toFixed(2))

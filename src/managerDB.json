@@ -3,550 +3,240 @@
     "id": 1,
     "tittle": "papaya",
     "description": "mediano",
-    "price": 10,
+    "price": 100,
     "thumbnail": "Sin imagen",
     "code": "abc0001",
     "status": true,
     "stock": 300,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 2,
     "tittle": "manzana",
     "description": "mediano",
-    "price": 9,
+    "price": 90,
     "thumbnail": "Sin imagen",
     "code": "abc0002",
     "status": true,
     "stock": 20,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 3,
     "tittle": "sandia",
     "description": "grande",
-    "price": 10,
+    "price": 100,
     "thumbnail": "Sin imagen",
     "code": "abc0003",
     "status": true,
     "stock": 300,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 4,
     "tittle": "papaya",
     "description": "pequeño",
-    "price": 25,
+    "price": 250,
     "thumbnail": "Sin imagen",
     "code": "abc0004",
     "status": true,
     "stock": 76,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 5,
     "tittle": "banano",
     "description": "pequeño",
-    "price": 5,
+    "price": 50,
     "thumbnail": "Sin imagen",
     "code": "abc0005",
     "status": true,
     "stock": 150,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 6,
     "tittle": "fresa",
     "description": "pequeño",
-    "price": 3,
+    "price": 30,
     "thumbnail": "Sin imagen",
     "code": "abc0006",
     "status": true,
     "stock": 250,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 7,
     "tittle": "guanabana",
     "description": "mediano",
-    "price": 14,
+    "price": 140,
     "thumbnail": "Sin imagen",
     "code": "abc0007",
     "status": true,
     "stock": 90,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 8,
     "tittle": "coco",
     "description": "grande",
-    "price": 13,
+    "price": 130,
     "thumbnail": "Sin imagen",
     "code": "abc0008",
     "status": true,
     "stock": 120,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 9,
     "tittle": "lulo",
     "description": "pequeño",
-    "price": 2.5,
+    "price": 25,
     "thumbnail": "Sin imagen",
     "code": "abc0009",
     "status": true,
     "stock": 500,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 10,
     "tittle": "ciruela",
     "description": "pequeño",
-    "price": 5,
+    "price": 50,
     "thumbnail": "Sin imagen",
     "code": "abc00010",
     "status": true,
     "stock": 300,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 11,
     "tittle": "lenteja",
     "description": "pequeño",
-    "price": 10,
+    "price": 100,
     "thumbnail": "Sin imagen",
     "code": "abc00011",
     "status": true,
     "stock": 500,
-    "category": "grano"
+    "category": "grano",
+    "owner": "Admin"
   },
   {
     "id": 12,
     "tittle": "mango",
     "description": "mediano",
-    "price": 7,
+    "price": 70,
     "thumbnail": "Sin imagen",
     "code": "abc00012",
     "status": true,
     "stock": 90,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 13,
     "tittle": "uva",
     "description": "pequeño",
-    "price": 2,
+    "price": 20,
     "thumbnail": "Sin imagen",
     "code": "abc00013",
     "status": true,
     "stock": 200,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 14,
     "tittle": "aguacate",
     "description": "mediano",
-    "price": 15,
+    "price": 150,
     "thumbnail": "Sin imagen",
     "code": "abc00014",
     "status": true,
     "stock": 100,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 15,
     "tittle": "tomate",
     "description": "pequeño",
-    "price": 1.5,
+    "price": 15,
     "thumbnail": "Sin imagen",
     "code": "abc00015",
     "status": true,
     "stock": 500,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 16,
     "tittle": "limon",
     "description": "pequeño",
-    "price": 1,
+    "price": 10,
     "thumbnail": "Sin imagen",
     "code": "abc00016",
     "status": true,
     "stock": 500,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 17,
     "tittle": "piña",
     "description": "grande",
-    "price": 10,
+    "price": 100,
     "thumbnail": "Sin imagen",
     "code": "abc00017",
     "status": true,
     "stock": 100,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 18,
     "tittle": "cebolla",
     "description": "mediano",
-    "price": 2,
+    "price": 20,
     "thumbnail": "Sin imagen",
     "code": "abc00018",
     "status": true,
     "stock": 50,
-    "category": "verdura"
+    "category": "verdura",
+    "owner": "Admin"
   },
   {
     "id": 19,
     "tittle": "mandarina",
     "description": "pequeño",
-    "price": 2.5,
+    "price": 25,
     "thumbnail": "Sin imagen",
     "code": "abc00019",
     "status": true,
     "stock": 250,
-    "category": "fruta"
+    "category": "fruta",
+    "owner": "Admin"
   },
   {
     "id": 20,
     "tittle": "zanahoria",
     "description": "mediano",
-    "price": 4,
+    "price": 40,
     "thumbnail": "Sin imagen",
     "code": "abc00020",
     "status": true,
     "stock": 100,
-    "category": "verdura"
-  },
-  {
-    "id": 21,
-    "tittle": "papa",
-    "description": "pequeño",
-    "price": 2,
-    "thumbnail": "Sin imagen",
-    "code": "abc00021",
-    "status": true,
-    "stock": 500,
-    "category": "verdura"
-  },
-  {
-    "id": 22,
-    "tittle": "guayaba",
-    "description": "pequeño",
-    "price": 2,
-    "thumbnail": "Sin imagen",
-    "code": "abc00022",
-    "status": true,
-    "stock": 1000,
-    "category": "fruta"
-  },
-  {
-    "id": 23,
-    "tittle": "Lulo",
-    "description": "mediano",
-    "price": 2.5,
-    "thumbnail": "Sin imagen",
-    "code": "abc00023",
-    "status": true,
-    "stock": 100,
-    "category": "verdura"
-  },
-  {
-    "id": 24,
-    "tittle": "piña",
-    "description": "grande",
-    "price": 7,
-    "thumbnail": "Sin imagen",
-    "code": "abc00024",
-    "status": true,
-    "stock": 150,
-    "category": "fruta"
-  },
-  {
-    "id": 25,
-    "tittle": "fresa",
-    "description": "pequeño",
-    "price": 1.5,
-    "thumbnail": "Sin imagen",
-    "code": "abc00025",
-    "status": true,
-    "stock": 500,
-    "category": "fruta"
-  },
-  {
-    "id": 26,
-    "tittle": "mandarina",
-    "description": "mediano",
-    "price": 3,
-    "thumbnail": "Sin imagen",
-    "code": "abc00026",
-    "status": true,
-    "stock": 1000,
-    "category": "fruta"
-  },
-  {
-    "id": 27,
-    "tittle": "naranja",
-    "description": "pequeño",
-    "price": 3,
-    "thumbnail": "Sin imagen",
-    "code": "abc00027",
-    "status": true,
-    "stock": 1000,
-    "category": "fruta"
-  },
-  {
-    "id": 28,
-    "tittle": "mora",
-    "description": "pequeño",
-    "price": 1.5,
-    "thumbnail": "Sin imagen",
-    "code": "abc00028",
-    "status": true,
-    "stock": 1000,
-    "category": "fruta"
-  },
-  {
-    "id": 29,
-    "tittle": "bombom",
-    "description": "pequeño",
-    "price": 0.5,
-    "thumbnail": "Sin imagen",
-    "code": "abc00029",
-    "status": true,
-    "stock": 500,
-    "category": "dulce"
-  },
-  {
-    "id": 30,
-    "tittle": "chicle",
-    "description": "pequeño",
-    "price": 0.3,
-    "thumbnail": "Sin imagen",
-    "code": "abc00030",
-    "status": true,
-    "stock": 1000,
-    "category": "dulce"
-  },
-  {
-    "id": 31,
-    "tittle": "papasFritas",
-    "description": "mediano",
-    "price": 2.5,
-    "thumbnail": "Sin imagen",
-    "code": "abc00031",
-    "status": true,
-    "stock": 300,
-    "category": "dulce"
-  },
-  {
-    "id": 32,
-    "tittle": "aguaEmbotellada",
-    "description": "mediano",
-    "price": 2,
-    "thumbnail": "Sin imagen",
-    "code": "abc00032",
-    "status": true,
-    "stock": 200,
-    "category": "bebida"
-  },
-  {
-    "id": 33,
-    "tittle": "jugo",
-    "description": "mediano",
-    "price": 3,
-    "thumbnail": "Sin imagen",
-    "code": "abc00033",
-    "status": true,
-    "stock": 300,
-    "category": "bebida"
-  },
-  {
-    "id": 34,
-    "tittle": "energizante",
-    "description": "mediano",
-    "price": 5,
-    "thumbnail": "Sin imagen",
-    "code": "abc00034",
-    "status": true,
-    "stock": 200,
-    "category": "bebida"
-  },
-  {
-    "id": 35,
-    "tittle": "gaseosa",
-    "description": "grande",
-    "price": 5,
-    "thumbnail": "Sin imagen",
-    "code": "abc00035",
-    "status": true,
-    "stock": 150,
-    "category": "bebida"
-  },
-  {
-    "id": 36,
-    "tittle": "té",
-    "description": "pequeño",
-    "price": 1,
-    "thumbnail": "Sin imagen",
-    "code": "abc00036",
-    "status": true,
-    "stock": 300,
-    "category": "varios"
-  },
-  {
-    "id": 37,
-    "tittle": "leche",
-    "description": "mediano",
-    "price": 5,
-    "thumbnail": "Sin imagen",
-    "code": "abc00037",
-    "status": true,
-    "stock": 150,
-    "category": "bebida"
-  },
-  {
-    "id": 38,
-    "tittle": "yogurt",
-    "description": "pequeño",
-    "price": 2.5,
-    "thumbnail": "Sin imagen",
-    "code": "abc00038",
-    "status": true,
-    "stock": 200,
-    "category": "bebida"
-  },
-  {
-    "id": 39,
-    "tittle": "chocolate",
-    "description": "mediano",
-    "price": 4,
-    "thumbnail": "Sin imagen",
-    "code": "abc00039",
-    "status": true,
-    "stock": 200,
-    "category": "dulce"
-  },
-  {
-    "id": 40,
-    "tittle": "maiz",
-    "description": "pequeño",
-    "price": 3.5,
-    "thumbnail": "Sin imagen",
-    "code": "abc00040",
-    "status": true,
-    "stock": 200,
-    "category": "verdura"
-  },
-  {
-    "id": 41,
-    "tittle": "azucar",
-    "description": "grande",
-    "price": 4,
-    "thumbnail": "Sin imagen",
-    "code": "abc00041",
-    "status": true,
-    "stock": 100,
-    "category": "varios"
-  },
-  {
-    "id": 42,
-    "tittle": "sal",
-    "description": "mediano",
-    "price": 2.5,
-    "thumbnail": "Sin imagen",
-    "code": "abc00042",
-    "status": true,
-    "stock": 150,
-    "category": "varios"
-  },
-  {
-    "id": 43,
-    "tittle": "salchicha",
-    "description": "mediano",
-    "price": 5,
-    "thumbnail": "Sin imagen",
-    "code": "abc00043",
-    "status": true,
-    "stock": 180,
-    "category": "varios"
-  },
-  {
-    "id": 44,
-    "tittle": "carbon",
-    "description": "grande",
-    "price": 5,
-    "thumbnail": "Sin imagen",
-    "code": "abc00044",
-    "status": true,
-    "stock": 100,
-    "category": "varios"
-  },
-  {
-    "id": 45,
-    "tittle": "galletas",
-    "description": "pequeño",
-    "price": 2,
-    "thumbnail": "Sin imagen",
-    "code": "abc00045",
-    "status": true,
-    "stock": 200,
-    "category": "dulce"
-  },
-  {
-    "id": 46,
-    "tittle": "mani",
-    "description": "grande",
-    "price": 4.5,
-    "thumbnail": "Sin imagen",
-    "code": "abc00046",
-    "status": true,
-    "stock": 300,
-    "category": "dulce"
-  },
-  {
-    "id": 47,
-    "tittle": "galletaSalada",
-    "description": "mediano",
-    "price": 3,
-    "thumbnail": "Sin imagen",
-    "code": "abc00047",
-    "status": true,
-    "stock": 500,
-    "category": "varios"
-  },
-  {
-    "id": 48,
-    "tittle": "harina",
-    "description": "pequeño",
-    "price": 3.4,
-    "thumbnail": "Sin imagen",
-    "code": "abc00048",
-    "status": true,
-    "stock": 300,
-    "category": "varios"
-  },
-  {
-    "id": 49,
-    "tittle": "lecheEnPolvo",
-    "description": "grande",
-    "price": 7,
-    "thumbnail": "Sin imagen",
-    "code": "abc00049",
-    "status": true,
-    "stock": 250,
-    "category": "varios"
-  },
-  {
-    "id": 50,
-    "tittle": "aguaConGas",
-    "description": "mediano",
-    "price": 3,
-    "thumbnail": "Sin imagen",
-    "code": "abc00050",
-    "status": true,
-    "stock": 156,
-    "category": "bebida"
+    "category": "verdura",
+    "owner": "Admin"
   }
 ]

@@ -69,7 +69,8 @@ class ProductsController {
             const status = productBuscar.status
             const stock = productBuscar.stock
             const category = productBuscar.category
-            return res.render("productDetail", {name,size,price,image,code,status,stock,category})
+            const owner = productBuscar.owner
+            return res.render("productDetail", {name,owner,size,price,image,code,status,stock,category})
 
         }catch(e){
             return res.status(404).json({error: "El producto no existe en la base de datos"}).req.logger.error("El producto no existe en la base de datos")

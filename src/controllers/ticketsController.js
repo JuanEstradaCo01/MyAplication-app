@@ -44,11 +44,11 @@ class TicketsController {
     
 
             cart.products.forEach(function (item) {
-                item.totalAllQuantity = item.quantity * item.price
+                item.totalPrice = item.quantity * item.price
             })
 
             //Logica para calcular los datos del ticket:
-            const prices = cartProducts.reduce((item, price) => item + price.totalAllQuantity, 0)
+            const prices = cartProducts.reduce((item, price) => item + price.totalPrice, 0)
 
             data.totalPrices = prices
             const iva = prices * 0.19

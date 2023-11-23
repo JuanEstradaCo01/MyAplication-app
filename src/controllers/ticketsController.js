@@ -42,7 +42,6 @@ class TicketsController {
             const tickets = await this.service.getTickets()  
             const date = new Date().toLocaleString()
     
-
             cart.products.forEach(function (item) {
                 item.totalPrice = item.quantity * item.price
             })

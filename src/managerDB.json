@@ -6,8 +6,8 @@
     "price": 100,
     "thumbnail": "Sin imagen",
     "code": "abc0000",
-    "status": true,
-    "stock": 300,
+    "status": false,
+    "stock": 0,
     "category": "fruta",
     "owner": "Admin"
   },

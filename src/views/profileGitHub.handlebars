@@ -18,6 +18,8 @@
         <h2>🌫My aplication</h2>
     </header>
     
+    <hr>
+
     <div style="display: flex;
                 justify-content: center;
                 color: rgb(6, 185, 6);" 
@@ -25,9 +27,10 @@
         <h1 class="headerPerfilh1">Perfil de usuario</h1>
     </div>
     
+    <hr>
     
     <div style="display: flex; flex-direction: column;">
-        <h2 style="margin-left: 1rem"><strong>¡Hola, {{user.first_name}}!</strong></h2>
+        <h2 style="margin-left: 1rem"><strong>¡Hola, {{username}}!</strong></h2>
         <div class="mr-5 d-grid gap-2 d-md-flex justify-content-md-end">
             <a href="/api/carts/{{cartId}}"><button id= "{{cartId}}" type="button" class="btn btn-outline-primary"><span class="material-symbols-outlined">shopping_cart</span></button></a>
         </div>
@@ -39,12 +42,12 @@
         <h4 class="titulo" style="color: rgb(207, 49, 10);"><strong>Datos del usuario</strong></h4>
 
         <div style="margin-left: 1rem;">
-            <p class="parrafo"><strong>Nombre:</strong> {{user.first_name}}</p>
-            <p class="parrafo"><strong>Apellido:</strong> {{user.last_name}}</p>
-            <p class="parrafo"><strong>Email:</strong> {{user.email}}</p>
-            <p class="parrafo"><strong>Edad:</strong> {{user.age}}</p>
-            <p class="parrafo"><strong>Rol:</strong> {{user.rol}}</p>
-            <p class="parrafo"><strong>Provider:</strong> {{user.provider}}</p>
+            <p class="parrafo"><strong>Nombre:</strong> {{username}}</p>
+            <p class="parrafo"><strong>Apellido:</strong> {{lastname}}</p>
+            <p class="parrafo"><strong>Email:</strong> {{email}}</p>
+            <p class="parrafo"><strong>Edad:</strong> {{age}}</p>
+            <p class="parrafo"><strong>Rol:</strong> {{rol}}</p>
+            <p class="parrafo"><strong>Provider:</strong> {{provider}}</p>
         </div>     
 
         <form class="logout" action="/api/sessions/logout" method="POST">
@@ -95,14 +98,14 @@
                 
                     <td class="none"><a href="/api/products/{{this._id}}"><button id= "{{this._id}}" type="button" class="btn btn-secondary">Detalle</button></a></td>
 
-                    <td class="none"><form action="/api/carts/{{this.cartId}}/products/{{this._id}}" method="POST"><a onclick=(add())><button type="submit" class="btn btn-outline-warning" id="{{this._id}}">Agregar al carrito</button></a></form></td>
+                    <td class="none"><form action="/api/carts/{{this.cartId}}/products/{{this._id}}" method="POST"><a ><button type="submit" class="btn btn-outline-warning" id="{{this._id}}">Agregar al carrito</button></a></form></td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
     </div>
 
-    <footer style="display: flex;flex-direction: row;justify-content: center;align-items: center;background-color: rgb(2, 136, 80);color: white;bottom: 0;width: 100%;height: 7rem;">
+    <footer style="display: flex;flex-direction: row;justify-content: center;align-items: center;background-color: rgb(2, 136, 80);color: white;position: absolute;bottom: 0;width: 100%;height: 7rem;">
         <div style="display: flex;justify-content: center;align-items: center;">
             <div>
                 <h3>🌫My aplication</h3>

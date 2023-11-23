@@ -16,10 +16,20 @@ class UsersController {
     }
 
     async getUserById(req, res){
+        const uid = req.params.uid
+        const role = req.params.role
         try{
-            const uid = req.params.uid
             const user = await this.service.getUserById(uid)
-            return res.status(200).json(user)
+            if(!user){
+                req.logger.warning("No se encontro el usuario")
+                return res.status(404).json({error: "No se encontro el usuario"})
+            }
+            user.typeCount = role
+            user.provider = "Local"
+            const cartId = user.cart
+    
+            return res.render("profileParams", {user, cartId}) 
+            //res.status(200).json(user)
         }catch(e){
             req.logger.error(`Ha ocurrido un error al buscar el usuario con el ID: ${uid}`)
             return res.status(500).json({Error: `Ha ocurrido un error al buscar el usuario con el ID: ${uid}`})

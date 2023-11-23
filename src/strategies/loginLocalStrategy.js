@@ -19,16 +19,6 @@ const loginLocalStrategy = new LocalStrategy(
                 console.log("Contraseña incorrecta")
                 return done(null, false, { message: "Contraseña incorrecta" })
             }
-            
-            //Si no existe carrito al iniciar sesion creo uno:
-            const nombre = user.first_name
-            if(!user.cart){
-                const newCart = await cartsModels.create({
-                    name: `Carrito de ${nombre}`
-                })
-
-                await userModel.updateOne({_id: user._id}, {cart: newCart._id})
-            }
 
             //Eliminar contraseña
             user = user.toObject()

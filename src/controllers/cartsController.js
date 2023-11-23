@@ -30,10 +30,14 @@ class CartsController {
             const cartProducts = cartBuscar.products 
 
             //Logica para los calculos:
+            cartBuscar.products.forEach(function (item) {
+                item.totalPrice = item.quantity * item.price
+            })
+
             const prices = cartProducts.reduce((item, price) => item + price.totalPrice, 0)
-            const totalPrices =  prices
-            const iva = totalPrices * 0.19
-            let totalBuy = totalPrices + iva
+    
+            const iva = prices * 0.19
+            let totalBuy = prices + iva
             totalBuy = Number(totalBuy.toFixed(2))
 
             if(cartProducts.length === 0){

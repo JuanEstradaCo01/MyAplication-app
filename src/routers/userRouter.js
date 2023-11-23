@@ -8,6 +8,8 @@ class UserRouter extends BaseRouter {
 
         this.get("/:uid", usersController.getUserById.bind(usersController))
 
+        this.get("/:role/:uid", usersController.getUserById.bind(usersController))
+
         this.put("/:uid", usersController.updateUser.bind(usersController))
     }
 }

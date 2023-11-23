@@ -24,7 +24,7 @@
                 color: rgb(6, 185, 6);
                 margin: 3rem;" 
          id="divh1Profile">
-        <h1>Detalles de la compra</h1>
+        <h1>Detalles de la compra:</h1>
     </div>
 
     <div style="background-color: white;border: 3px solid black;display: flex;justify-content: center;align-items: center;flex-direction: column;margin: auto;width: 25rem;font-family: 'Arvo', serif;">
@@ -46,9 +46,13 @@
         <h6><strong>Total bruto:</strong> ${{data.totalPrices}}</h6>
         <p>IVA 19%</p>
         <h4 style="margin-bottom: 2rem;"><strong>Total compra: </strong>${{data.amount}}</h4>
+
+        <h5 style="margin: 2rem;">¡Gracias por tu compra!</h5>      
     </div>
 
-    <button type="button" class="btn btn-outline-warning mt-5">Finalizar compra</button>
+    <div style="display: flex;justify-content: center;align-items:center;">
+        <button type="button" class="btn btn-outline-warning mt-5">Finalizar compra</button>
+    </div>
 
     <footer style="display: flex;flex-direction: row;justify-content: center;align-items: center;background-color: rgb(2, 136, 80);color: white;bottom: 0;width: 100%;height: 7rem;margin-top: 5rem;">
         <div style="display: flex;justify-content: center;align-items: center;">

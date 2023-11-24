@@ -93,7 +93,7 @@
                 
                     <td class="none"><a href="/api/products/{{this._id}}"><button id= "{{this._id}}" type="button" class="btn btn-secondary">Detalle</button></a></td>
 
-                    <td class="none"><form action="/api/carts/{{this.cartId}}/products/{{this._id}}" method="POST"><a onclick=(add())><button type="submit" class="btn btn-outline-warning" id="{{this._id}}">Agregar al carrito</button></a></form></td>
+                    <td class="none"><form action="/api/carts/{{this.cartId}}/products/{{this._id}}" method="POST"><a><button type="submit" class="btn btn-outline-warning" id="{{this._id}}">Agregar al carrito</button></a></form></td>
                 </tr>
                 {{/each}}
             </tbody>

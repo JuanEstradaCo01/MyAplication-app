@@ -29,7 +29,8 @@ class DBUserManager {
             password: body.password || user.password,
             typeCount: body.typeCount || user.typeCount,
             date: body.date,
-            expiratedLink: body.expiratedLink
+            expiratedLink: body.expiratedLink,
+            last_connection: body.last_connection
         }
 
         await this.model.updateOne({ _id: id}, update)

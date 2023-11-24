@@ -18,7 +18,14 @@ const userSchema = Schema({
     },
     rol: String,
     provider: String,
-    access_token: String
+    access_token: String,
+    documents: {
+        type: [{
+            name: String,  //Nombre del documento
+            reference: String  //Link del documento
+        }]
+    },
+    last_connection: String
 })
 
 module.exports = model("users", userSchema)

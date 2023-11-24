@@ -41,6 +41,7 @@ const passportCall = (strategy) => {
 class SessionRouter extends BaseRouter {
   init() {
     this.get("/github", passport.authenticate("github", { scope: ["user:email"] }), async (req, res) => {
+
     })
 
     this.get("/github-callback", passport.authenticate("github", { failureRedirect: "/login" }), async (req, res) => {
@@ -156,6 +157,11 @@ class SessionRouter extends BaseRouter {
             await userModel.updateOne({_id: user._id}, {cart: newCart._id})
         }
 
+        //Envio el _id del cart:
+        const users = await userDao.getUsers()
+        const find = users.find(item=>item.email === user.email)
+        const cartId = find.cart.toString()
+
         //Pagino los productos
         const prods = await dbproductManager.getProducts()
 
@@ -166,8 +172,13 @@ class SessionRouter extends BaseRouter {
         products.docs = products.docs.map(user => user.toObject())
 
         products.docs.forEach(function (item) {
-          item.cartId = user.cart
+          item.cartId = cartId
         })
+
+        //Actualizo la propiedad 'last_connection':
+        const userLastConnection = new Date().toLocaleString()
+        user.last_connection = userLastConnection
+        await userDao.updateUser(user._id, user)
 
         //Valido el tipo de cuenta y modifico el rol (el admin se evalua por el correo)
         if (user.email === "adminCoder@coder.com") {
@@ -188,9 +199,7 @@ class SessionRouter extends BaseRouter {
           cart: req.user.cart
         })
         user.access_token = token
-
-        const cartId = user.cart._id //_id undefinded??
-
+      
         //Valido si el usuario es admin:(Respuestas de Admin)
         if (user.rol === "Admin") {
           req.logger.info("✔ ¡Sesion iniciada!")
@@ -216,7 +225,14 @@ class SessionRouter extends BaseRouter {
         }
       })
 
-    this.post("/logout", (req, res) => {
+    this.post("/logout", async (req, res) => {
+      //Actualizo la propiedad 'last_connection':
+      const uid = req.session.passport.user
+      const user = await userDao.getUserById(uid)
+      const userLastConnection = new Date().toLocaleString()
+      user.last_connection = userLastConnection
+      await userDao.updateUser(user._id, user)
+      
       req.session.destroy(e => {
         if (!e) {
           req.logger.info("⛔ ¡Sesion cerrada!")

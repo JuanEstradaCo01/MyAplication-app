@@ -48,20 +48,27 @@ class DBUserManager {
         const documentsStatus = "ready"
 
         const update = {
-            _id: user._id,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            email: user.email,user,
-            age: user.age,
-            typeCount: user.typeCount,
-            date: user.date,
-            expiratedLink: user.expiratedLink,
-            last_connection: user.last_connection,
             documentsStatus: documentsStatus,
             documents: [{
                 name: body.name,
                 reference: body.reference
             }] 
+        }
+
+        await this.model.updateOne({ _id: id}, update)
+
+        return update
+    }
+
+    async uploadProfileImage(id, body){
+        const user = await this.getUserById(id)
+
+        if (!user) {
+            throw new Error("El usuario no existe")
+        }
+
+        const update = {
+            image: body.image
         }
 
         await this.model.updateOne({ _id: id}, update)

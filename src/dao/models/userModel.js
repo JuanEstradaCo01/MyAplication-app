@@ -1,6 +1,7 @@
 const { Schema, model, default: mongoose } = require("mongoose")
 
 const userSchema = Schema({
+    image: String,
     first_name: String,
     last_name: String,
     email: {

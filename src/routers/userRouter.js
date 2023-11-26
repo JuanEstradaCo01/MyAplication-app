@@ -1,7 +1,7 @@
 const UsersController = require("../controllers/usersController")
 const BaseRouter = require("./BaseRouter")
 const usersController = new UsersController()
-const uploader = require("../utils/multer")
+const uploadProfile = require("../uploads/uploadProfile")
 
 class UserRouter extends BaseRouter {
     init() {
@@ -13,7 +13,11 @@ class UserRouter extends BaseRouter {
 
         this.put("/:uid", usersController.updateUser.bind(usersController))
 
-        this.post("/:uid/documents",uploader.array("file"), usersController.uploadDocuments.bind(usersController))
+        //Endpoint donde cargo documentos con Multer
+        this.post("/:uid/documents",uploadProfile.array("reference"), usersController.uploadDocuments.bind(usersController))
+
+        //Endpoint donde cargo la imagen de perfil con Multer
+        this.put("/:uid/profile",uploadProfile.single("path"), usersController.uploadProfileImage.bind(usersController))
     }
 }
 

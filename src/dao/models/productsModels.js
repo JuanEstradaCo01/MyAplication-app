@@ -10,7 +10,7 @@ const productsSchema = mongoose.Schema({
         default: "mediano"
     },
     price: Number,
-    thumbnail: String, //(sin imagen)
+    thumbnail: String, 
     code: {
         type: String,
         unique: true

@@ -9,7 +9,9 @@ const products = require("../managerDB.json")
 const { generateToken,verifyToken } = require("../utils/jwt")
 const BaseRouter = require("./BaseRouter")
 const cartsModels = require("../dao/models/cartsModels")
-
+//const multer  = require('multer')
+//const uploadProduct = multer( {dest: "./documents/products"} )
+const uploadProduct = require("../uploads/uploadProduct")
 
 const sessionMidleware = (req, res, next) => {
     if (req.session.usuario) {

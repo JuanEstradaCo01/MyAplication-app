@@ -20,6 +20,10 @@ class UsersService {
     uploadDocuments(id, body){
         return this.storage.uploadDocuments(id, body)
     }
+
+    uploadProfileImage(id, body){
+        return this.storage.uploadProfileImage(id, body)
+    }
 }
 
 module.exports = UsersService

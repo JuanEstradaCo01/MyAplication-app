@@ -52,7 +52,11 @@ class UsersController {
     async uploadDocuments(req, res){
         const uid = req.params.uid
         const body = req.body
-        console.log({body})
+        const file = req.files[0]
+        const doc = {
+            name: body.name,
+            reference: file.path
+        } 
         try{
             const user = await this.service.getUserById(uid)
 
@@ -61,7 +65,7 @@ class UsersController {
                 return res.status(404).json({Error: `No se ha encontrado el usuario con el ID:${uid}`})
             }
             
-            const upload = await this.service.uploadDocuments(user._id, body)
+            const upload = await this.service.uploadDocuments(user._id, doc)
 
             if(!upload){
                 req.logger.error("Ocurrio un error al subir el documento")
@@ -74,6 +78,26 @@ class UsersController {
         }catch(e){
             req.logger.fatal("Ha ocurrido un error al cargar el documento")
             return res.status(500).json({Error: "Ha ocurrido un error al cargar el documento", e})
+        }
+    }
+
+    async uploadProfileImage(req, res){
+        const uid = req.params.uid
+        const file = req.file
+        try{
+            const user = await this.service.getUserById(uid)
+            if(!user){
+                req.logger.error(`No se ha encontrado el usuario con el ID:${uid}`)
+                return res.status(404).json({Error: `No se ha encontrado el usuario con el ID:${uid}`})
+            }
+            user.image = file.path
+
+            await this.service.uploadProfileImage(user._id, user)
+            req.logger.info("Se actualizó correctamente la imagen de perfil")
+            return res.status(200).json({ok: "Se actualizó correctamente la imagen de perfil"})
+        }catch(e){
+            req.logger.fatal("Ha ocurrido un error al actualizar la imagen de perfil")
+            return res.status(500).json({error: "Ha ocurrido un error al actualizar la imagen de perfil"})
         }
     }
 }

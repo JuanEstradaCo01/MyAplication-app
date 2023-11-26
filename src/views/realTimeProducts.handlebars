@@ -11,7 +11,7 @@
     <div id="formulario">
         <h1>Agregar producto:</h1>
 
-        <form action="/api/products" method="post">          
+        <form style="width: 30rem;" action="/api/products" method="post">          
             <label for="id">ID</label><input name="id" type="number" placeholder="ID autogenerable" value="0">
 
             <label for="tittle">Nombre: </label><input type="text" name="tittle" placeholder="Nombre del producto" required>
@@ -25,7 +25,7 @@
 
             <label for="price">Precio: </label><input type="number" name="price" placeholder="Precio" required>
 
-            <label for="thumbnail">Imagen: </label><input name="thumbnail" type="text" id="thumbnail" placeholder="sin imagen" value="sin imagen">
+            <label for="file">Imagen: </label><input type="file" name="file" id="thumbnail">
 
             <label for="code">Codigo: </label><input type="number" name="code" placeholder="Codigo autogenerable" required value="0">
 

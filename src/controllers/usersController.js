@@ -48,6 +48,34 @@ class UsersController {
             return res.status(500).json({error: "Ha ocurrido un erro al modificar el usuario"})
         }
     }
+
+    async uploadDocuments(req, res){
+        const uid = req.params.uid
+        const body = req.body
+        console.log({body})
+        try{
+            const user = await this.service.getUserById(uid)
+
+            if(!user){
+                req.logger.error(`No se ha encontrado el usuario con el ID:${uid}`)
+                return res.status(404).json({Error: `No se ha encontrado el usuario con el ID:${uid}`})
+            }
+            
+            const upload = await this.service.uploadDocuments(user._id, body)
+
+            if(!upload){
+                req.logger.error("Ocurrio un error al subir el documento")
+            }
+
+            req.logger.info("¡Documento subido exitosamente!")
+            
+            return res.status(200).json({ok: "¡Documento subido exitosamente!"})
+            
+        }catch(e){
+            req.logger.fatal("Ha ocurrido un error al cargar el documento")
+            return res.status(500).json({Error: "Ha ocurrido un error al cargar el documento", e})
+        }
+    }
 }
 
 module.exports = UsersController

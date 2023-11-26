@@ -19,6 +19,10 @@ const userSchema = Schema({
     rol: String,
     provider: String,
     access_token: String,
+    documentsStatus: {
+        type: String,
+        default: "empty"
+    },
     documents: {
         type: [{
             name: String,  //Nombre del documento

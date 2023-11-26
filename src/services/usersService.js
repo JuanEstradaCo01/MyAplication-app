@@ -16,6 +16,10 @@ class UsersService {
     updateUser(id, body){
         return this.storage.updateUser(id, body)
     }
+
+    uploadDocuments(id, body){
+        return this.storage.uploadDocuments(id, body)
+    }
 }
 
 module.exports = UsersService

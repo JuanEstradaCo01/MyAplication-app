@@ -194,6 +194,32 @@ class ProductsController {
             return res.status(500).json({message: "Ha ocurrido un error"}).req.logger.warning("Ha ocurrido un error")
         }   
     }
+
+    async updateProductImage(req, res) {
+        const pid = req.params.pid
+        const file = req.file
+        try{
+            const product = await this.service.getProductById(pid)
+
+            if(!product){
+                req.logger.error("El producto no existe")
+                return res.status(404).json({Error: "El producto no existe"})
+            }
+
+            const productImage = {
+                thumbnail: file.path
+            }
+
+            await this.service.updateProductImage(product._id, productImage)
+
+            req.logger.info(`Se ha modificado la imagen de ${product.tittle} correctamente`)
+
+            return res.status(200).json({ok: `Se ha modificado la imagen de ${product.tittle} correctamente`})
+        }catch(e){
+            req.logger.fatal("Ha ocurrido un error al modificar la imagen del producto")
+            return res.status(500).josn({error: "Ha ocurrido un error al modificar la imagen del producto"})
+        }
+    }
 }
 
 module.exports = ProductsController

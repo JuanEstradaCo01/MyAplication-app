@@ -71,13 +71,13 @@ class UsersController {
                 req.logger.error("Ocurrio un error al subir el documento")
             }
 
-            req.logger.info("¡Documento subido exitosamente!")
+            req.logger.info(`¡Documento de ${user.first_name} subido exitosamente!`)
             
-            return res.status(200).json({ok: "¡Documento subido exitosamente!"})
+            return res.status(200).json({ok: `¡Documento de ${user.first_name} subido exitosamente!`})
             
         }catch(e){
             req.logger.fatal("Ha ocurrido un error al cargar el documento")
-            return res.status(500).json({Error: "Ha ocurrido un error al cargar el documento", e})
+            return res.status(500).json({Error: "Ha ocurrido un error al cargar el documento"})
         }
     }
 
@@ -93,8 +93,8 @@ class UsersController {
             user.image = file.path
 
             await this.service.uploadProfileImage(user._id, user)
-            req.logger.info("Se actualizó correctamente la imagen de perfil")
-            return res.status(200).json({ok: "Se actualizó correctamente la imagen de perfil"})
+            req.logger.info(`¡Se actualizó correctamente la imagen de perfil de ${user.first_name}!`)
+            return res.status(200).json({ok: `¡Se actualizó correctamente la imagen de perfil de ${user.first_name}!`})
         }catch(e){
             req.logger.fatal("Ha ocurrido un error al actualizar la imagen de perfil")
             return res.status(500).json({error: "Ha ocurrido un error al actualizar la imagen de perfil"})

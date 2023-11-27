@@ -10,11 +10,14 @@ class ProductRouter extends BaseRouter {
         
         this.get("/:pid", productsController.getProductById.bind(productsController))
         
-        this.post("/",uploadProduct.single("file"),productsController.addProduct.bind(productsController))   
+        this.post("/",productsController.addProduct.bind(productsController))   
         
         this.put("/:pid", productsController.updateProduct.bind(productsController))
         
         this.delete("/:pid/api/users/:uid", productsController.deleteProduct.bind(productsController))
+
+        //Endpoint donde subo la imagen del producto
+        this.put("/:pid/product", uploadProduct.single("thumbnail"),productsController.updateProductImage.bind(productsController))
     }
 }
 

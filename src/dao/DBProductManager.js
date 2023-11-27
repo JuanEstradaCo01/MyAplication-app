@@ -64,6 +64,22 @@ class DBProductManager {
 
         return true
     }
+
+    async updateProductImage(id, body){
+        const product = this.getProductById(id)
+
+        if (!product) {
+            throw new Error("El producto no existe")
+        }
+
+        const update = {
+            thumbnail: body.thumbnail
+        }
+
+        await this.model.updateOne({ _id: id}, update)
+
+        return update
+    }
 }
 
 module.exports = DBProductManager

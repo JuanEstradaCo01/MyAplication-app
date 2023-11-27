@@ -9,9 +9,9 @@ class UserRouter extends BaseRouter {
 
         this.get("/:uid", usersController.getUserById.bind(usersController))
 
-        this.get("/:role/:uid", usersController.getUserById.bind(usersController))
-
         this.put("/:uid", usersController.updateUser.bind(usersController))
+
+        this.get("/:rol/:uid", usersController.getUserById.bind(usersController))
 
         //Endpoint donde cargo documentos con Multer
         this.post("/:uid/documents",uploadProfile.array("reference"), usersController.uploadDocuments.bind(usersController))

@@ -25,6 +25,10 @@ class ProductsService {
     deleteProduct(id) {
         return this.storage.deleteProduct(id)
     }
+
+    updateProductImage(id, body){
+        return this.storage.updateProductImage(id, body)
+    }
 }
 
 module.exports = ProductsService

@@ -64,7 +64,50 @@
 
     <hr>
 
-    <footer style="display: flex;flex-direction: row;justify-content: center;align-items: center;background-color: rgb(2, 136, 80);color: white;position: absolute;bottom: 0;width: 100%;height: 7rem;">
+    <h2 style="margin-top: 3rem;margin-left: 1rem; text-align: center">Lista de productos de la tienda: <span class="material-symbols-outlined">list_alt</span></h2>
+
+    <div style="display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 2rem;
+                text-align: center;"
+                id="tablePaginate">
+        <table style="border: 2.5px solid black; padding: 5rem;width: 95vh" class="tablePag">
+            <thead>
+                <tr>
+                    <th  style="padding: .7rem;background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;"><strong>#</strong></th>
+                    <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">ID</th>
+                    <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Producto</th>
+                    <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Tamaño</th>
+                    <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Stock</th>
+                    <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Categoria</th>
+                    <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Precio</th>
+                    <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;" class="none"></th>
+                    <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;" class="none"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td style="padding: .6rem;" class="center"><strong>{{this.id}}</strong></td>
+                    <td class="center">{{this._id}}</td>
+                    <td class="center">{{this.tittle}}</td>
+                    <td class="center">{{this.description}}</td>
+                    <td class="center">{{this.stock}}</td>
+                    <td class="center">{{this.category}}</td>
+                    <td class="center">${{this.price}}</td>
+                
+                    <td class="none"><a href="/api/products/{{this._id}}"><button id= "{{this._id}}" type="button" class="btn btn-secondary">Detalle</button></a></td>
+
+                    <td class="none"><form action="/api/carts/{{this.cartId}}/products/{{this._id}}" method="POST"><a onclick=(add())><button type="submit" class="btn btn-outline-warning" id="{{this._id}}">Agregar al carrito</button></a></form></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <footer style="display: flex;flex-direction: row;justify-content: center;align-items: center;background-color: rgb(2, 136, 80);color: white;bottom: 0;width: 100%;height: 7rem;">
         <div style="display: flex;justify-content: center;align-items: center;">
             <div>
                 <h3>🌫My aplication</h3>

@@ -38,6 +38,18 @@ class DBUserManager {
         return update
     }
 
+    async deleteUser(id){
+        const user = await this.model.findById(id)
+
+        if (!user) {
+            throw new Error("El usuario no existe")
+        }
+
+        await this.model.deleteOne({ _id: id}, user)
+
+        return true
+    }
+
     async uploadDocuments(id, body) {
         const user = await this.getUserById(id)
 
@@ -45,14 +57,11 @@ class DBUserManager {
             throw new Error("El usuario no existe")
         }
 
-        const documentsStatus = "ready"
+        const status = "ready"
 
         const update = {
-            documentsStatus: documentsStatus,
-            documents: [{
-                name: body.name,
-                reference: body.reference
-            }] 
+            status: status,
+            documents: body
         }
 
         await this.model.updateOne({ _id: id}, update)
@@ -74,6 +83,10 @@ class DBUserManager {
         await this.model.updateOne({ _id: id}, update)
 
         return update
+    }
+
+    async getUserByIdWithRol(id){
+        return this.model.findById(id)
     }
 }
 

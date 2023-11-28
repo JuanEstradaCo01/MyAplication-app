@@ -17,12 +17,20 @@ class UsersService {
         return this.storage.updateUser(id, body)
     }
 
+    deleteUser(id){
+        return this.storage.deleteUser(id)
+    }
+
     uploadDocuments(id, body){
         return this.storage.uploadDocuments(id, body)
     }
 
     uploadProfileImage(id, body){
         return this.storage.uploadProfileImage(id, body)
+    }
+
+    getUserByIdWithRol(id){
+        return this.storage.getUserByIdWithRol(id)
     }
 }
 

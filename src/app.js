@@ -219,26 +219,6 @@ initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
 
-
-/*
-app.get("/login", (req, res) => {
-  const { username, password } = req.query
-
-  const user = usuarios.find( ele => ele.username === username && ele.password === password)
-
-  if (!user) {
-    return res.status(404).json({
-      error: "User not found"
-    })
-  }
-
-  req.session.username = user.username
-  req.session.admin = user.admin
-
-  return res.json(user)
-})
-*/
-
 const authMidleware = (req, res, next) => {
   if (!req.session.username) {
     return res.status(401).send("Necesitas iniciar sesion para continuar")
@@ -247,20 +227,6 @@ const authMidleware = (req, res, next) => {
   return next()
 }
 
-app.get("/auth", authMidleware, (req, res) => {
-  return res.send(`Autenticacion correcta. Bienvenido ${req.session.username}`)
-})
-
-const adminMidleware = (req, res, next) => {
-  if (!req.session.admin)
-    return res.status(401).send("Acceso negado, no eres administrador")
-
-  return next()
-}
-
-app.get("/admin", authMidleware, adminMidleware,(req, res) => {
-  return res.send(`Cuenta de administrador. Hola ${req.session.username}`)
-})
 
 app.get("/healthcheck", (req, res) => {
     return res.json({
@@ -286,19 +252,14 @@ app.post("/api/products", async(req, res) => {
     return res.redirect("/realtimeProducts")
 })*/
 
-
-//Expresion regular: donde se codifican como byte utf-8 (á,é,í,ó,ú)⬇                    
-app.get("/api/dictionary/:palabra([a-z%C3%A1%C3%A9%C3%AD%C3%B3%C3%BA%C3%BC]+)", (req, res) => {
-  return res.send(req.params.palabra)
-})
-
 //Winston-Logger: 
 app.use(addLogger)
 
 app.get("/loggerTest", (req, res) => {
-  if(mode === "dev"){
+  if(mode === "dev" || "prod"){
     req.logger.debug("❗Debug")
   }
+  
   if(mode === "prod"){
     req.logger.info("🛑 Info")
     req.logger.error("❌ Error")

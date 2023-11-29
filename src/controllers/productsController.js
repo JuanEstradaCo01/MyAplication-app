@@ -73,7 +73,7 @@ class ProductsController {
             const owner = productBuscar.owner
 
             //Valido si hay stock suficiente del producto:
-            if(stock <= 0){
+            if(stock === 0){
                 status = false
                 return res.render("productDetail", {name,owner,size,price,image,code,status,stock,category})
             }

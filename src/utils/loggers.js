@@ -59,18 +59,18 @@ if(mod === "prod") {
         levels: levelsSystem.levels,
         transports: [
             new winston.transports.Console({
-                level: "info",
+                level: "debug",
                 format: winston.format.combine(
                     winston.format.colorize({colors: levelsSystem.colors}),
                     winston.format.simple()
                 )
-            }),
-            new winston.transports.File({
+            })
+            /*new winston.transports.File({
                 filename: "./errors.log",
                 level: "error",
                 format: winston.format.simple()
-            })
-        ]
+            })*/
+        ], level:"debug"
     })
 
     const addLogger = (req, res, next) => {

@@ -44,7 +44,6 @@ footer{
     align-items: center;
     background-color: rgb(2, 136, 80);
     color: white;
-    position:absolute;
     bottom: 0;
     width: 100%;
 }
@@ -446,7 +445,6 @@ th{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-left: 2rem;
     background-color: rgb(39, 39, 39);
     border-radius: 5%;
     height: 32rem;
@@ -524,4 +522,16 @@ th{
     margin-top: .5rem;
     font-size: 1rem;
     border-radius: .5rem;
+}
+
+@media screen and (max-width: 720px) {
+    .centrarForm {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 680px) {
+    footer {
+        flex-direction: column;
+    }
 }

@@ -6,7 +6,7 @@ const { generateToken } = require("../utils/jwt")
 const gitHubStrategy = new GitHubStrategy({
     clientID: "Iv1.45aff0769d29e7de",
     clientSecret: "8322bbd99aab84ce08f9e92bc88e1086fa7ebba9",
-    callbackURL: "http://localhost:8080/api/sessions/github-callback"
+    callbackURL: `${process.env.URL_RAILWAY}/api/sessions/github-callback`
 }, async (accessToken, refreshToken, profile, done) => {
 
     try{

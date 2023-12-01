@@ -85,8 +85,6 @@ class ProductsController {
     }
 
     async addProduct(req, res, next){
-        const file = req.file
-        console.log({file})
         try{
             let {id,tittle,description,price,thumbnail,code,status,stock,category} = req.body
                   

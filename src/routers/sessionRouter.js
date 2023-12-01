@@ -125,12 +125,42 @@ class SessionRouter extends BaseRouter {
 
         nuevoUsuario.access_token = token
 
+        //Mailling:
+        const transport = nodemailer.createTransport({
+          //host: 'smtp.ethereal.email', // (para ethereal-pruebas)
+          host: process.env.PORT, //(para Gmail)
+          service: "gmail", //(para Gmail)
+          port: 587,
+          auth: {
+            user: process.env.USER,
+            pass: process.env.PASS
+          },
+          tls: {
+            rejectUnauthorized: false
+          }
+        })
+        const correo = await transport.sendMail({
+          from: process.env.USER,//Correo del emisor
+          to: `${nuevoUsuario.email}`,//Correo del receptor
+          subject: "My aplication",//Asunto del correo
+          html: `<div>
+          <h1>Register succesfull ✅</h1>
+          <h3>¡Hola, ${nuevoUsuario.first_name}!</h3>
+          <p>Te damos la bienvenida a MyAplication, nos da gusto de tenerte con nosotros.</p>
+          </div>`,//Cuerpo del mensaje
+          /*attachments: [{
+            filename: "",//Nombre del archivo(eje: pera.jpg)
+            path:"",//ruta de la imagen(eje:./imgs/Pera.jpg)
+            cid: ""//Nombre de la imagen(eje: Pera)
+          }]*/
+        })
+
         req.logger.info("¡Se registro un nuevo usuario!")
 
         //return res.status(201).json({ ...nuevoUsuario, access_token: token})
         return res.redirect("/login") //Respuesta de redireccion
         //return res.status(201).json(req.user) //Respuesta de api(JSON)
-      })
+    })
 
     this.post("/login",
       passport.authenticate("login", { failureRedirect: "/login", failureFlash: true }), (req, res, next) => {
@@ -148,18 +178,18 @@ class SessionRouter extends BaseRouter {
 
         //Si no existe carrito al iniciar sesion creo uno:
         const nombre = user.first_name
-        if(!user.cart){
-            const newCart = await cartsModels.create({
-                name: `Carrito de ${nombre}`,
-                products: []
-            })
+        if (!user.cart) {
+          const newCart = await cartsModels.create({
+            name: `Carrito de ${nombre}`,
+            products: []
+          })
 
-            await userModel.updateOne({_id: user._id}, {cart: newCart._id})
+          await userModel.updateOne({ _id: user._id }, { cart: newCart._id })
         }
 
         //Envio el _id del cart:
         const users = await userDao.getUsers()
-        const find = users.find(item=>item.email === user.email)
+        const find = users.find(item => item.email === user.email)
         const cartId = find.cart.toString()
 
         //Pagino los productos
@@ -199,7 +229,7 @@ class SessionRouter extends BaseRouter {
           cart: req.user.cart
         })
         user.access_token = token
-      
+
         //Valido si el usuario es admin:(Respuestas de Admin)
         if (user.rol === "Admin") {
           req.logger.info("✔ ¡Sesion iniciada!")
@@ -223,7 +253,7 @@ class SessionRouter extends BaseRouter {
           //return res.redirect("/profile")//Redireccion a perfil de User
           //return res.status(200).json(req.user)//Respuesta de JSON
         }
-      })
+    })
 
     this.post("/logout", async (req, res) => {
       //Actualizo la propiedad 'last_connection':
@@ -232,7 +262,7 @@ class SessionRouter extends BaseRouter {
       const userLastConnection = new Date().toLocaleString()
       user.last_connection = userLastConnection
       await userDao.updateUser(user._id, user)
-      
+
       req.session.destroy(e => {
         if (!e) {
           req.logger.info("⛔ ¡Sesion cerrada!")

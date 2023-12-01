@@ -401,7 +401,7 @@ class SessionRouter extends BaseRouter {
         html: `<div>
           <h1>Recovery password</h1>
           <h3>¡Hola, ${user.first_name}!</h3>
-          <p>Da click <a href="/recovery">AQUI</a> para restablecer contraseña</p>
+          <p>Da click <a href="https://myaplication.up.railway.app/recovery">AQUI</a> para restablecer contraseña</p>
           </div>`,//Cuerpo del mensaje
         /*attachments: [{
           filename: "",//Nombre del archivo(eje: pera.jpg)

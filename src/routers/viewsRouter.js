@@ -156,7 +156,7 @@ class ViewsRouter extends BaseRouter {
         })
 
         this.get("/", (req, res) => {
-            return res.render("login")
+            return res.redirect("/login")
         })
 }}
 

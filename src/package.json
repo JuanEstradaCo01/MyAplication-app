@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "ProductManager.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node app.js --mode prod",
     "dev": "nodemon app.js --mode dev",
     "prod": "nodemon app.js --mode prod",
     "test": "mocha test/*"

@@ -128,7 +128,7 @@ app.use(cors())
 //Configuracion basica
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static("public"))
+app.use(express.static("views/login"))
 
 //Flash:
 app.use(flash())

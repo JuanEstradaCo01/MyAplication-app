@@ -61,7 +61,7 @@
                 margin: 2rem;
                 text-align: center;"
                 id="tablePaginate">
-        <table style="border: 2.5px solid black; padding: 5rem;width: 95vh" class="tablePag">
+        <table style="border: 2.5px solid black; padding: 5rem;width: auto" class="tablePag">
             <thead>
                 <tr>
                     <th  style="padding: .7rem;background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;"><strong>#</strong></th>
@@ -69,7 +69,6 @@
                     <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Producto</th>
                     <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Tamaño</th>
                     <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Stock</th>
-                    <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Categoria</th>
                     <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Precio</th>
                     <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;" class="none"></th>
                     <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;" class="none"></th>
@@ -85,7 +84,6 @@
                     <td class="center">{{this.tittle}}</td>
                     <td class="center">{{this.description}}</td>
                     <td class="center">{{this.stock}}</td>
-                    <td class="center">{{this.category}}</td>
                     <td class="center">${{this.price}}</td>
                 
                     <td class="none"><a href="/api/products/{{this._id}}"><button id= "{{this._id}}" type="button" class="btn btn-secondary">Detalle</button></a></td>

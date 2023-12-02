@@ -158,11 +158,9 @@ const httpServer = app.listen(PORT, () => {
 
 const io = socketServer(httpServer)
 
-
 //chat
 const users = []
 const mensajesArray = []
-
 
 io.on("connection", socket => {
     console.log("Nuevo cliente conectado", socket.id)

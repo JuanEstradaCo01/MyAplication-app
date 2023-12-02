@@ -182,7 +182,7 @@ io.on("connection", socket => {
 
     socket.on('nuevoMensaje', mensaje => {
         const usuario = users.find(u => u.socketId === socket.id)
-        const nuevoMensaje = {
+        /*const nuevoMensaje = {
             usuario: usuario.nombre,
             mensaje
         }
@@ -190,7 +190,7 @@ io.on("connection", socket => {
 
         const message = JSON.stringify(nuevoMensaje)
         
-        mensajesArray.push(nuevoMensaje)
+        mensajesArray.push(nuevoMensaje)*/
 
         io.emit('mensaje', message)
     })

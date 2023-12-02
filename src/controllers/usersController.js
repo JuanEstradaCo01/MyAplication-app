@@ -10,7 +10,16 @@ class UsersController {
     async getUsers(req, res) {
         try {
             const users = await this.service.getUsers()
-            return res.status(200).json(users)
+            const usersToView = []
+            users.forEach(function(item) {
+                const user = {
+                    first_name: item.first_name,
+                    email: item.email,
+                    typeCount: item.typeCount
+                }
+                usersToView.push(user)
+            })
+            return res.status(200).json(usersToView)
         } catch (e) {
             req.logger.error("Ha ocurrido un error al buscar los usuarios")
             return res.status(500).json({ Error: "Ha ocurrido un error al buscar los usuarios" })

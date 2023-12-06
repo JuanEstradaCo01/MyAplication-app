@@ -21,6 +21,10 @@ class UsersService {
         return this.storage.deleteUser(id)
     }
 
+    deleteUsersByInactivity(){
+        return this.storage.deleteUsersByInactivity()
+    }
+
     uploadDocuments(id, body){
         return this.storage.uploadDocuments(id, body)
     }

@@ -175,8 +175,9 @@ class CartsController {
             const cartToDelete = carts.find(el => el._id == id)
             const name = cartToDelete.name
             const cart = await this.service.deleteCart(id)
+            req.logger.info(`Se ha eliminado el ${name}`)
         
-            return res.status(200).json({OK: `Se ha eliminado el carrito ${name}`}).req.logger.info(`Se ha eliminado el carrito ${name}`)
+            return res.status(200).json({OK: `Se ha eliminado el ${name}`})
         }catch (e) {
             return res.status(404).json({error: "No existe el carrito a eliminar"}).req.logger.error("No existe el carrito a eliminar")
         }

@@ -16,6 +16,8 @@ class UserRouter extends BaseRouter {
 
         this.delete("/:uid", usersController.deleteUser.bind(usersController))
 
+        this.delete("/", usersController.deleteUsersByInactivity.bind(usersController))
+
         //Endpoint donde cargo documentos con Multer
         this.post("/:uid/documents",uploadDocuments.array("reference"), usersController.uploadDocuments.bind(usersController))
 

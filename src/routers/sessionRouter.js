@@ -205,11 +205,17 @@ class SessionRouter extends BaseRouter {
           item.cartId = cartId
         })
 
+        //Actualizo la propiedad 'inactivity' (2 dias):
+        const now = new Date().getTime()
+        const add = 2880 * 60000
+        const addedDays = new Date(now + add).toLocaleString()
+        user.inactivity = addedDays
+
         //Actualizo la propiedad 'last_connection':
         const userLastConnection = new Date().toLocaleString()
         user.last_connection = userLastConnection
         await userDao.updateUser(user._id, user)
-
+        
         //Valido el tipo de cuenta y modifico el rol (el admin se evalua por el correo)
         if (user.email === "adminCoder@coder.com") {
           user.rol = "Admin"
@@ -261,6 +267,13 @@ class SessionRouter extends BaseRouter {
       const user = await userDao.getUserById(uid)
       const userLastConnection = new Date().toLocaleString()
       user.last_connection = userLastConnection
+
+      //Actualizo la propiedad 'inactivity' (2 dias):
+      const now = new Date().getTime()
+      const add = 2880 * 60000
+      const addedDays = new Date(now + add).toLocaleString()
+      user.inactivity = addedDays
+
       await userDao.updateUser(user._id, user)
 
       req.session.destroy(e => {

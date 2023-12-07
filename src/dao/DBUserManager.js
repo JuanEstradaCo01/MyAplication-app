@@ -30,7 +30,8 @@ class DBUserManager {
             typeCount: body.typeCount || user.typeCount,
             date: body.date,
             expiratedLink: body.expiratedLink,
-            last_connection: body.last_connection
+            last_connection: body.last_connection,
+            inactivity: body.inactivity
         }
 
         await this.model.updateOne({ _id: id}, update)
@@ -48,6 +49,10 @@ class DBUserManager {
         await this.model.deleteOne({ _id: id}, user)
 
         return true
+    }
+
+    async deleteUsersByInactivity(){
+        await this.model.deleteMany({inactivity: true})
     }
 
     async uploadDocuments(id, body) {

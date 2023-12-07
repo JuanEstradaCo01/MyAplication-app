@@ -1,6 +1,9 @@
 const UsersService = require("../services/usersService")
+const userService = new UsersService()
 const ProductDao = require("../dao/DBProductManager")
 const productDao = new ProductDao()
+const CartDao = require("../dao/DBCartManager")
+const cartDao = new CartDao()
 
 class UsersController {
     constructor() {
@@ -61,7 +64,6 @@ class UsersController {
 
     async deleteUser(req, res) {
         const uid = req.params.uid
-        
         try{
             const user = await this.service.getUserById(uid)
             if(!user){
@@ -69,15 +71,67 @@ class UsersController {
                 return res.status(404).json({NotFound: "El usuario no fue encontrado"})
             }
 
+            //Elimino el usuario y su carrito:
             await this.service.deleteUser(uid)
+            const cart = user.cart
+            if(cart === undefined){
+                req.logger.info(`Se ha eliminado el usuario ${user.first_name}`)
+                return res.status(200).json({OK: `Se ha eliminado el usuario ${user.first_name}`})
+            }
+            await cartDao.deleteCart(cart)
         
             req.logger.info(`Se ha eliminado el usuario ${user.first_name}`)
+            req.logger.info(`Se ha eliminado el carrito de ${user.first_name}`)
 
             return res.status(200).json({OK: `Se ha eliminado el usuario ${user.first_name}`})
         }catch (e) {
             req.logger.fatal("Ha ocurrido un error al eliminar el usuario")
             return res.status(500).json({error: "Ha ocurrido un error al eliminar el usuario"})
         }
+    }
+
+    async deleteUsersByInactivity(req, res) {
+        const users = await this.service.getUsers()
+
+        users.forEach(async function (item){
+            const now = new Date().toLocaleString()
+            const userInactivity = item.inactivity
+            
+            if(now > userInactivity){
+                item.deleteByInactivity = true
+            }
+            
+            //Actualizo los datos por cada usuario iterado en la DB:
+            await userService.updateUser(item._id, item)
+
+            if(item.deleteByInactivity === "false"){
+                req.logger.info(`No se pudo eliminar ${item.first_name} porque el usuario es activo`)
+            }
+
+            const cart = item.cart
+            /*if(cart === undefined){
+                req.logger.info(`Se ha eliminado el carrito de ${item.first_name}`)
+                return res.status(200).json({OK: `Se ha eliminado el carrito de ${item.first_name}`})
+            }*/
+            await cartDao.deleteCart(cart)
+
+            if(item.deleteByInactivity === "true"){
+                //Elimino a cada usuario que este inactivo:
+                await userService.deleteUser(item._id)
+                req.logger.info(`Se ha eliminado el usuario ${item.first_name} por inactividad`)
+                req.logger.info(`Se ha eliminado el carrito de ${item.first_name}`)
+            }
+        })
+        
+        //Valido si existen usuarios inactivos:
+        const findInactivity = users.find(item=>item.deleteByInactivity === "true")
+        if(findInactivity === undefined){
+            req.logger.info("No se encontro ningun usuario inactivo")
+            return res.status(404).json({OK: "No se encontro ningun usuario inactivo"})
+        }
+
+        req.logger.info("Se han eliminado todos los usuarios inactivos exitosamente ✅")
+        return res.status(200).json({OK: "Se han eliminado todos los usuarios inactivos exitosamente ✅"})
     }
 
     async uploadDocuments(req, res) {

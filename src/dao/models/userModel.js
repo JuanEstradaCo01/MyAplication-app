@@ -30,7 +30,12 @@ const userSchema = Schema({
             reference: String  //Link del documento
         }]
     },
-    last_connection: String
+    last_connection: String,
+    inactivity: String,
+    deleteByInactivity: {
+        type: String,
+        default: false
+    }
 })
 
 module.exports = model("users", userSchema)

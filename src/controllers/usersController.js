@@ -62,6 +62,20 @@ class UsersController {
         }
     }
 
+    async updateRolUser(req, res) {
+        try{
+            const body = req.body
+            const uid = req.params.uid
+            const user = await this.service.getUserById(uid)
+            await this.service.updateRolUser(uid, body)
+            req.logger.info(`Rol del usuario ${user.first_name} ha sido modificado exitosamente (${body.typeCount}) `)
+            return res.redirect("/usersDetail") 
+            //res.status(200).json(body)
+        }catch(e){
+            return e
+        }
+    }
+
     async deleteUser(req, res) {
         const uid = req.params.uid
         try{
@@ -109,10 +123,10 @@ class UsersController {
             }
 
             const cart = item.cart
-            /*if(cart === undefined){
+            if(cart === undefined){
                 req.logger.info(`Se ha eliminado el carrito de ${item.first_name}`)
                 return res.status(200).json({OK: `Se ha eliminado el carrito de ${item.first_name}`})
-            }*/
+            }
             await cartDao.deleteCart(cart)
 
             if(item.deleteByInactivity === "true"){

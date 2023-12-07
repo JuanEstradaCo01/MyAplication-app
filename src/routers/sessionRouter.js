@@ -203,6 +203,7 @@ class SessionRouter extends BaseRouter {
 
         products.docs.forEach(function (item) {
           item.cartId = cartId
+          item.uid = user._id.toString()
         })
 
         //Actualizo la propiedad 'inactivity' (2 dias):

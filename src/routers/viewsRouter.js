@@ -4,13 +4,13 @@ const DBUserManager = require("../dao/DBUserManager")
 const userDao = new DBUserManager()
 const DBCartManager = require("../dao/DBCartManager")
 const cartDao = new DBCartManager()
+const DBProductManager = require("../dao/DBProductManager")
+const productDao = new DBProductManager()
 const viewsRouter = new Router()
 const products = require("../managerDB.json")
 const { generateToken,verifyToken } = require("../utils/jwt")
 const BaseRouter = require("./BaseRouter")
 const cartsModels = require("../dao/models/cartsModels")
-//const multer  = require('multer')
-//const uploadProduct = multer( {dest: "./documents/products"} )
 const uploadProduct = require("../uploads/uploadProduct")
 
 const sessionMidleware = (req, res, next) => {
@@ -54,11 +54,8 @@ class ViewsRouter extends BaseRouter {
         
         this.get("/realtimeproducts", (req, res) => {
         
-            const params = {
-                titulo: "Productos",
-                products
-            }
-            return res.render("realTimeProducts", params)
+            
+            return res.render("realTimeProducts")
         })
         
         this.get("/register", sessionMidleware, async (req, res) => {
@@ -128,9 +125,11 @@ class ViewsRouter extends BaseRouter {
             return res.redirect("/api/sessions/current")
         })
         
-        this.get("/actualizar", (req, res) => {
-            const pid = req.query.id
-            return res.render("actualizar", {pid})
+        this.get("/actualizar", async (req, res) => {
+            const pid = req.query.pid
+            const product = await productDao.getProductById(pid)
+            const name = product.tittle
+            return res.render("actualizar", {pid, name})
         })
         
         this.get("/cart", async (req, res) => {
@@ -157,6 +156,34 @@ class ViewsRouter extends BaseRouter {
 
         this.get("/", (req, res) => {
             return res.redirect("/login")
+        })
+
+        this.get("/usersDetail", async (req, res) => {
+            const users = await userDao.getUsers()
+            if(users.length === 0){
+                return res.render("emptyUsers")
+            }
+            const usersToView = []
+            users.forEach(item => {
+                const user = {
+                    _id: item._id,
+                    name: item.first_name,
+                    lastName: item.last_name,
+                    email: item.email,
+                    age: item.age,
+                    rol: item.typeCount
+                }
+                usersToView.push(user)
+            })
+
+            return res.render("usersDetail", {usersToView})
+        })
+
+        this.get("/updateUser", async (req, res) => {
+            const uid = req.query.uid
+            const user = await userDao.getUserById(uid)
+            const name = user.first_name
+            return res.render("updateUser", {name, uid})
         })
 }}
 

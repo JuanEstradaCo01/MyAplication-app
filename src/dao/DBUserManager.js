@@ -39,6 +39,22 @@ class DBUserManager {
         return update
     }
 
+    async updateRolUser(id, body) {
+        const user = await this.getUserById(id)
+
+        if (!user) {
+            throw new Error("El usuario no existe")
+        }
+
+        const update = {
+            typeCount: body.typeCount
+        }
+
+        await this.model.updateOne({ _id: id}, update)
+
+        return update
+    }
+
     async deleteUser(id){
         const user = await this.model.findById(id)
 

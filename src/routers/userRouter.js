@@ -12,9 +12,13 @@ class UserRouter extends BaseRouter {
 
         this.put("/:uid", usersController.updateUser.bind(usersController))
 
+        this.post("/:uid", usersController.updateRolUser.bind(usersController))
+
         this.get("/:rol/:uid", usersController.getUserByIdWithRol.bind(usersController))
 
         this.delete("/:uid", usersController.deleteUser.bind(usersController))
+
+        this.post("/delete/:uid", usersController.deleteUser.bind(usersController))
 
         this.delete("/", usersController.deleteUsersByInactivity.bind(usersController))
 

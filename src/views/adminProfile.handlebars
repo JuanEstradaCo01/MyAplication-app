@@ -33,6 +33,10 @@
     </div>
 
     <hr>
+
+    <a href="/usersDetail"><button type="button" class="m-3 btn btn-info">Usuarios</button></a>
+
+    <hr>
     
     <div style="margin-left: 1rem" class="datosUser">
         <h4 class="titulo" style="color: rgb(207, 49, 10);"><strong>Datos del usuario</strong></h4>
@@ -88,8 +92,8 @@
                 
                     <td class="none"><a href="/api/products/{{this._id}}"><button id= "{{this._id}}" type="button" class="btn btn-secondary">Detalle</button></a></td>
                 
-                    <td class="none"><a href="/actualizar?id={{this._id}}"><button type="button" class="btn btn-primary" id={{this._id}}>Actualizar</button></a></td>
-                    <td class="none"><a href="/api/products/{{this._id}}"><button type="button" id={{this._id}} class="btn btn-outline-danger">Eliminar</button></a></td>
+                    <td class="none"><a href="/actualizar?pid={{this._id}}"><button type="button" class="btn btn-primary" id={{this._id}}>Actualizar</button></a></td>
+                    <td class="none"><form action="/api/products/{{this._id}}/api/users/{{this.uid}}" method="POST"><button type="submit" id={{this._id}} class="btn btn-outline-danger">Eliminar</button></form></td>
                 </tr>
                 {{/each}}
             </tbody>

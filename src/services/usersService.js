@@ -17,6 +17,10 @@ class UsersService {
         return this.storage.updateUser(id, body)
     }
 
+    updateRolUser(id, body){
+        return this.storage.updateRolUser(id, body)
+    }
+
     deleteUser(id){
         return this.storage.deleteUser(id)
     }

@@ -73,17 +73,10 @@ class DBCartManager {
     }
     
     async deleteCart (cid) {
-        const carritoEliminado = await this.getCartById(cid)
-
-        if (!carritoEliminado) {
-            throw new Error("El carrito no existe")
-        }
-
         await this.model.deleteOne({ _id: cid})
         
         return true
     }
-
 }
 
 module.exports = DBCartManager

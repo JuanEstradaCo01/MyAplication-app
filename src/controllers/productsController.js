@@ -107,15 +107,17 @@ class ProductsController {
             const product = new ProductDto({id,tittle,description,price,thumbnail,code,status,stock,category})
 
             //Busco el usuario que creo el producto (solo deja crear el producto si se esta logueado)
-            passportCall("jwt")
-            if(req.user.email === "adminCoder@coder.com"){
+            const userInSession = req.session.passport.user
+            const user = await usermanager.getUserById(userInSession)
+            
+            if(user.typeCount === "Admin"){
                 product.owner = "Admin"
                 const productoCreado = await productRepository.addProduct(product)
  
                 return res.json({productoCreado}).req.logger.info(`✔ ¡Producto agregado exitosamente!(${productoCreado.tittle})`)
             }
 
-            product.owner = req.user.email
+            product.owner = user.email
             
             const productoCreado = await productRepository.addProduct(product)
  
@@ -142,9 +144,9 @@ class ProductsController {
             return res.status(500).json({error: "No se pudo actualizar el producto"}).req.logger.warning("No se pudo actualizar el producto")
         }
 
-        req.logger.info("Se actualizó correctamente el producto")
+        req.logger.info(`Se actualizó correctamente el producto (${tittle})`)
 
-        return res.json(update)
+        return res.render("productReady", {tittle, description, price, thumbnail, code, status, stock, category})
     }
 
     async deleteProduct(req, res) {

@@ -9,6 +9,7 @@ const CustomError = require("../services/errors/CustomError")
 const generateProductErrorInfo = require("../services/errors/info")
 const EErrors = require("../services/errors/enums")
 const passport = require("passport")
+const nodemailer = require("nodemailer")
 
 
 const passportCall = (strategy) => {
@@ -157,6 +158,7 @@ class ProductsController {
         const uid = req.params.uid
     
         try {
+            const users = await usermanager.getUsers()
             const user = await usermanager.getUserById(uid)
             
             if(!user){
@@ -167,6 +169,41 @@ class ProductsController {
 
             if(!productToDelete){
                 return res.status(404).json({error: "No existe el producto a eliminar"}).req.logger.error("No existe el producto a eliminar")
+            }
+
+            if(productToDelete.owner !== "Admin"){
+                const userFind = users.find(item=>item.email === productToDelete.owner)
+
+                //Envio un correo informando que su producto creado por el usuario 'Premium' se elimino:
+                const transport = nodemailer.createTransport({
+                    //host: 'smtp.ethereal.email', // (para ethereal-pruebas)
+                    host: process.env.PORT, //(para Gmail)
+                    service: "gmail", //(para Gmail)
+                    port: 587,
+                    auth: {
+                        user: process.env.USER,
+                        pass: process.env.PASS
+                    },
+                    tls: {
+                        rejectUnauthorized: false
+                    }
+                })
+                const correo = await transport.sendMail({
+                    from: process.env.USER,//Correo del emisor
+                    to: `${productToDelete.owner}`,//Correo del receptor
+                    subject: "My aplication",//Asunto del correo
+                    html: `<div>
+                    <h1>Deleted Product ⚠</h1>
+                    <h3>¡Hola, ${userFind.first_name}!</h3>
+                    <p>Lamentamos informarte que tu producto ${productToDelete.tittle} ha sido eliminado de nuestra base de datos.</p>
+                    <h2>ATT: Team My Aplication.</h2>
+                    </div>`,//Cuerpo del mensaje
+                    /*attachments: [{
+                      filename: "",//Nombre del archivo(eje: pera.jpg)
+                      path:"",//ruta de la imagen(eje:./imgs/Pera.jpg)
+                      cid: ""//Nombre de la imagen(eje: Pera)
+                    }]*/
+                })
             }
 
             const userRol = user.typeCount

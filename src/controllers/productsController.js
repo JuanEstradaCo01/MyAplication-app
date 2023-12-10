@@ -1,8 +1,6 @@
 const ProductsService = require("../services/productsService")
 const ProductDto = require("../dao/DTOs/productDto")
 const productRepository = require("../services/index")
-const DBCartManager = require("../dao/DBCartManager")
-const cartmanager = new DBCartManager()
 const UserManager = require("../dao/DBUserManager")
 const usermanager = new UserManager()
 const CustomError = require("../services/errors/CustomError")

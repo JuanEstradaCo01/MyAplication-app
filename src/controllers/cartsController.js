@@ -1,11 +1,8 @@
 const CartsService = require("../services/cartsService")
 const DBProductManager = require("../dao/DBProductManager")
 const dbproductManager = new DBProductManager()
-const productsModels = require("../dao/models/productsModels")
 const UserManager = require("../dao/DBUserManager")
 const usermanager = new UserManager()
-const DBCartManager = require("../dao/DBCartManager")
-const cartDao = new DBCartManager()
 
 class CartsController {
     constructor() {

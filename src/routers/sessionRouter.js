@@ -1,4 +1,3 @@
-const express = require("express")
 const passport = require("passport")
 const userModel = require("../dao/models/userModel")
 const notifier = require('node-notifier')

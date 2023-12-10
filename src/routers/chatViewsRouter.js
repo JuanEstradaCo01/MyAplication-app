@@ -1,7 +1,6 @@
 const { Router } = require("express")
 const DBMessagesManager = require("../dao/DBMessagesManager")
 const dbmessagesmanager = new DBMessagesManager()
-//import { mensajeObjeto } from "../public/js"
 
 
 const viewsRouterFn = (io) => {

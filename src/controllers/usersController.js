@@ -1,6 +1,10 @@
 const UsersService = require("../services/usersService")
+const userService = new UsersService()
 const ProductDao = require("../dao/DBProductManager")
 const productDao = new ProductDao()
+const CartDao = require("../dao/DBCartManager")
+const cartDao = new CartDao()
+const nodemailer = require("nodemailer")
 
 class UsersController {
     constructor() {
@@ -10,7 +14,16 @@ class UsersController {
     async getUsers(req, res) {
         try {
             const users = await this.service.getUsers()
-            return res.status(200).json(users)
+            const usersToView = []
+            users.forEach(function (item) {
+                const user = {
+                    first_name: item.first_name,
+                    email: item.email,
+                    typeCount: item.typeCount
+                }
+                usersToView.push(user)
+            })
+            return res.status(200).json(usersToView)
         } catch (e) {
             req.logger.error("Ha ocurrido un error al buscar los usuarios")
             return res.status(500).json({ Error: "Ha ocurrido un error al buscar los usuarios" })
@@ -50,25 +63,121 @@ class UsersController {
         }
     }
 
+    async updateRolUser(req, res) {
+        try {
+            const body = req.body
+            const uid = req.params.uid
+            const user = await this.service.getUserById(uid)
+            await this.service.updateRolUser(uid, body)
+            req.logger.info(`Rol del usuario ${user.first_name} ha sido modificado exitosamente (${body.typeCount}) `)
+            return res.redirect("/usersDetail")
+            //res.status(200).json(body)
+        } catch (e) {
+            return e
+        }
+    }
+
     async deleteUser(req, res) {
         const uid = req.params.uid
-        
-        try{
+        try {
             const user = await this.service.getUserById(uid)
-            if(!user){
+            if (!user) {
                 req.logger.error("El usuario no fue encontrado")
-                return res.status(404).json({NotFound: "El usuario no fue encontrado"})
+                return res.status(404).json({ NotFound: "El usuario no fue encontrado" })
             }
 
+            //Elimino el usuario y su carrito:
             await this.service.deleteUser(uid)
-        
-            req.logger.info(`Se ha eliminado el usuario ${user.first_name}`)
+            const cart = user.cart
+            if (cart === undefined) {
+                req.logger.info(`Se ha eliminado el usuario ${user.first_name}`)
+                return res.status(200).json({ OK: `Se ha eliminado el usuario ${user.first_name}` })
+            }
+            await cartDao.deleteCart(cart)
 
-            return res.status(200).json({OK: `Se ha eliminado el usuario ${user.first_name}`})
-        }catch (e) {
+            req.logger.info(`Se ha eliminado el usuario ${user.first_name}`)
+            req.logger.info(`Se ha eliminado el carrito de ${user.first_name}`)
+
+            return res.status(200).json({ OK: `Se ha eliminado el usuario ${user.first_name}` })
+        } catch (e) {
             req.logger.fatal("Ha ocurrido un error al eliminar el usuario")
-            return res.status(500).json({error: "Ha ocurrido un error al eliminar el usuario"})
+            return res.status(500).json({ error: "Ha ocurrido un error al eliminar el usuario" })
         }
+    }
+
+    async deleteUsersByInactivity(req, res) {
+        const users = await this.service.getUsers()
+
+        users.forEach(async function (item) {
+            const now = new Date().toLocaleString()
+            const userInactivity = item.inactivity
+
+            if (now > userInactivity) {
+                item.deleteByInactivity = true
+            }
+
+            //Actualizo los datos por cada usuario iterado en la DB:
+            await userService.updateUser(item._id, item)
+
+            if (item.deleteByInactivity === "false") {
+                req.logger.info(`No se pudo eliminar ${item.first_name} porque el usuario es activo`)
+            }
+
+            const cart = item.cart
+            if (cart === undefined) {
+                req.logger.info(`Se ha eliminado el carrito de ${item.first_name}`)
+                return res.status(200).json({ OK: `Se ha eliminado el carrito de ${item.first_name}` })
+            }
+            await cartDao.deleteCart(cart)
+
+            if (item.deleteByInactivity === "true") {
+                //Envio un correo a cada usuario informando de la eliminacion de la cuenta:
+                const transport = nodemailer.createTransport({
+                    //host: 'smtp.ethereal.email', // (para ethereal-pruebas)
+                    host: process.env.PORT, //(para Gmail)
+                    service: "gmail", //(para Gmail)
+                    port: 587,
+                    auth: {
+                        user: process.env.USER,
+                        pass: process.env.PASS
+                    },
+                    tls: {
+                        rejectUnauthorized: false
+                    }
+                })
+                const correo = await transport.sendMail({
+                    from: process.env.USER,//Correo del emisor
+                    to: `${item.email}`,//Correo del receptor
+                    subject: "My aplication",//Asunto del correo
+                    html: `<div>
+                    <h1>Deleted account ⚠</h1>
+                    <h3>¡Hola, ${item.first_name}!</h3>
+                    <p>Lamentamos informarte que tu cuenta de My Aplication ha sido eliminada por <strong>INACTIVIDAD</strong>, gracias por usar nuestros servicios y esperamos verte de nuevo con nosotros, en tal caso deberias registrarte nuevamente.</p>
+                    <h2>ATT: Team My Aplication.</h2>
+                </div>`,//Cuerpo del mensaje
+                    /*attachments: [{
+                      filename: "",//Nombre del archivo(eje: pera.jpg)
+                      path:"",//ruta de la imagen(eje:./imgs/Pera.jpg)
+                      cid: ""//Nombre de la imagen(eje: Pera)
+                    }]*/
+                })
+
+                //Elimino a cada usuario que este inactivo:
+                await userService.deleteUser(item._id)
+                req.logger.info(`Se ha eliminado el usuario ${item.first_name} por inactividad`)
+                req.logger.info(`Se ha eliminado el carrito de ${item.first_name}`)
+            }
+        })
+
+        //Valido si existen usuarios inactivos:
+        const findInactivity = users.find(item => item.deleteByInactivity === "true")
+        if (findInactivity === undefined) {
+            req.logger.info("No se encontro ningun usuario inactivo")
+            return res.status(404).json({ OK: "No se encontro ningun usuario inactivo" })
+        }
+
+        req.logger.info("Se han eliminado todos los usuarios inactivos exitosamente ✅")
+        return res.status(200).json({ OK: "Se han eliminado todos los usuarios inactivos exitosamente ✅" })
     }
 
     async uploadDocuments(req, res) {
@@ -155,31 +264,31 @@ class UsersController {
             const userDocuments = user.documents
 
             //Busco y valido si existe un documento con el name 'identificacion':
-            const findIdentificacion = userDocuments.find(item=>item.name === "identificacion")
+            const findIdentificacion = userDocuments.find(item => item.name === "identificacion")
 
             //Busco y valido si existe un documento con el name 'domicilio':
-            const findDomicilio = userDocuments.find(item=>item.name === "domicilio")
+            const findDomicilio = userDocuments.find(item => item.name === "domicilio")
 
             //Busco y valido si existe un documento con el name 'estado de cuenta':
-            const findEstadoDeCuenta = userDocuments.find(item=>item.name === "estado de cuenta")
+            const findEstadoDeCuenta = userDocuments.find(item => item.name === "estado de cuenta")
 
             //Valido si el usuario completó toda la documentacion y autorizo cambiar a 'Premium':
-            if((findIdentificacion === undefined || 
-                findDomicilio === undefined || 
-                findEstadoDeCuenta === undefined) & (role === "Premium")){
-                    return res.status(401).json({Unauthorized: "No has terminado de cargar la documentacion (identificacion, domicilio o estado de cuenta)"})
-                }
+            if ((findIdentificacion === undefined ||
+                findDomicilio === undefined ||
+                findEstadoDeCuenta === undefined) & (role === "Premium")) {
+                return res.status(401).json({ Unauthorized: "No has terminado de cargar la documentacion (identificacion, domicilio o estado de cuenta)" })
+            }
 
             const products = await productDao.getProducts()
 
-            if(role === "Premium"){
-                return res.render("profileParamsPremium", {user, cartId, products})
+            if (role === "Premium") {
+                return res.render("profileParamsPremium", { user, cartId, products })
             }
-            if(role === "User"){
-                return res.render("profileParamsUser", {user,cartId,products})
+            if (role === "User") {
+                return res.render("profileParamsUser", { user, cartId, products })
             }
 
-            return res.status(404).json({NotFound: "No existe el rol especificado"})
+            return res.status(404).json({ NotFound: "No existe el rol especificado" })
         } catch (e) {
             req.logger.error(`Ha ocurrido un error al buscar el usuario con el ID: ${uid}`)
             return res.status(500).json({ Error: `Ha ocurrido un error al buscar el usuario con el ID: ${uid}` })

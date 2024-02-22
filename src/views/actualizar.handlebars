@@ -7,9 +7,9 @@
 </head>
 <body>
     <div id="formulario">
-        <h1>Actualizar producto:</h1>
+        <h1>Modificar {{name}}:</h1>
 
-        <form id="formu" action="/api/products/{{pid}}" method="get">
+        <form id="formu" action="/api/products/{{pid}}" method="POST">
             <label for="tittle">Tittle: </label><input type="text" name="tittle" id="tittle" placeholder="Nombre del producto" required>
             <label for="description">Description: </label><input name="description" type="text" id="description" placeholder="Descripcion del producto" required>
             <label for="price">Price: </label><input type="number" id="price" name="price" placeholder="Precio" required>
@@ -19,7 +19,7 @@
             <label for="stock">Stock: </label><input type="number" name="stock" id="stock" placeholder="Cantidad disponible" required>
             <label for="category">Category: </label><input type="text" name="category" id="category" placeholder="Tipo de producto" required>
     
-            <input class="inputEnviar" type="submit" value="Agregar" id="formButton">
+            <input style="margin: 1.5rem;" class="inputEnviar" type="submit" value="Modificar" id="formButton">
         </form>
     </div>
 

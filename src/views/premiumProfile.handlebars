@@ -16,7 +16,7 @@
                    justify-content: center;
                    align-items: center;
                    flex.direction: column">
-        <h2>🌫My aplication</h2>
+        <h2>🌫My aplication SHOP</h2>
     </header>
     <hr>
 
@@ -57,6 +57,10 @@
 
     <hr>
 
+    <div style="margin-left: 2rem;">
+        <a href="/chatLogin"><button id={{this._id}} type="button" class="btn btn-outline-success">Chat <span class="material-symbols-outlined">sms</span></button></a></body>
+    </div>
+
     <h2 style="margin-top: 3rem;margin-left: 1rem; text-align: center">Lista de productos de la tienda:<a href="/realTimeProducts"><button style="margin-left: 1rem;" type="button" class="btn btn-outline-success">Crear Producto</button></a></h2>
 
     <div style="display: flex;
@@ -76,6 +80,7 @@
                     <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;">Precio</th>
                     <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;" class="none"></th>
                     <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;" class="none"></th>
+                    <th  style="background-color: rgb(224, 224, 43);;border-bottom: 5px solid black;" class="none"></th>
                 </tr>
             </thead>
 
@@ -92,6 +97,8 @@
                     <td class="none"><a href="/api/products/{{this._id}}"><button id= "{{this._id}}" type="button" class="btn btn-secondary">Detalle</button></a></td>
 
                     <td class="none"><form action="/api/carts/{{this.cartId}}/products/{{this._id}}" method="POST"><a><button type="submit" class="btn btn-outline-warning" id="{{this._id}}">Agregar al carrito</button></a></form></td>
+
+                    <td class="none"><form action="/api/products/{{this._id}}/api/users/{{this.uid}}" method="POST"><button type="submit" id={{this._id}} class="btn btn-outline-danger">Eliminar</button></form></td>
                 </tr>
                 {{/each}}
             </tbody>

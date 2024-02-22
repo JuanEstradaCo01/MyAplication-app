@@ -1,13 +1,12 @@
 const GitHubStrategy = require("passport-github2")
 const userModel = require("../dao/models/userModel")
-const cartsModels = require("../dao/models/cartsModels")
-const { generateToken } = require("../utils/jwt")
 
 const gitHubStrategy = new GitHubStrategy({
-    clientID: "Iv1.45aff0769d29e7de",
-    clientSecret: "8322bbd99aab84ce08f9e92bc88e1086fa7ebba9",
-    callbackURL: `http://localhost:8080/api/sessions/github-callback`
+    clientID: `Iv1.45aff0769d29e7de`,
+    clientSecret: `4dad4b5305419b28cc3f6347a53fa910081861dd`,
+    callbackURL: `${process.env.URL}/api/sessions/github-callback`
     //${process.env.URL_RAILWAY}
+    //http://localhost:8080
 }, async (accessToken, refreshToken, profile, done) => {
 
     try{
@@ -20,13 +19,12 @@ const gitHubStrategy = new GitHubStrategy({
         }
 
         const newUser = await userModel.create({
-            first_name: profile._json.login,
-            last_name: "lopez",//profile.username,
-            email: "fulano@mail.com",//profile._json.email,
-            age: 27, //profile._json.name,
+            first_name: profile.name || profile._json.login,
+            last_name: profile._json.login,
+            email: profile._json.email || `${profile._json.login}@email.com`,
+            age: 30, //profile._json.name,
             typeCount: "User",
-            password: " ",
-            provider: "GitHub",//profile.provider,
+            provider: profile.provider,
             date: new Date().toLocaleString(),
             expiratedLink: ""
         })

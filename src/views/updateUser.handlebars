@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body style="display: flex; flex-direction: column;" id="body">
+
+    <header id="headerapp">
+        <h2>🌫My aplication SHOP</h2>
+    </header>
+
+    <div id="formulario">
+        <h1>Modificar Rol ({{name}}):</h1>
+
+        <form style="width: 30rem;" action="/api/users/{{uid}}" method="post">          
+
+            <label for="typeCount">Tipo de cuenta</label><select id="typeCount" name="typeCount" class="selec">
+                <option value="value1" hidden selected>Selecciona una opcion</option>
+                <option value="Premium">Premium</option>
+                <option value="User">User</option>
+            </select>
+    
+            <input class="inputEnviar" type="submit" value="Modificar" id="formButton">
+        </form>
+    </div>
+
+</body>
+</html>

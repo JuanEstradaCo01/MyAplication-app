@@ -1,14 +1,13 @@
 const ProductsService = require("../services/productsService")
 const ProductDto = require("../dao/DTOs/productDto")
 const productRepository = require("../services/index")
-const DBCartManager = require("../dao/DBCartManager")
-const cartmanager = new DBCartManager()
 const UserManager = require("../dao/DBUserManager")
 const usermanager = new UserManager()
 const CustomError = require("../services/errors/CustomError")
 const generateProductErrorInfo = require("../services/errors/info")
 const EErrors = require("../services/errors/enums")
 const passport = require("passport")
+const nodemailer = require("nodemailer")
 
 
 const passportCall = (strategy) => {
@@ -107,15 +106,17 @@ class ProductsController {
             const product = new ProductDto({id,tittle,description,price,thumbnail,code,status,stock,category})
 
             //Busco el usuario que creo el producto (solo deja crear el producto si se esta logueado)
-            passportCall("jwt")
-            if(req.user.email === "adminCoder@coder.com"){
+            const userInSession = req.session.passport.user
+            const user = await usermanager.getUserById(userInSession)
+            
+            if(user.typeCount === "Admin"){
                 product.owner = "Admin"
                 const productoCreado = await productRepository.addProduct(product)
  
                 return res.json({productoCreado}).req.logger.info(`✔ ¡Producto agregado exitosamente!(${productoCreado.tittle})`)
             }
 
-            product.owner = req.user.email
+            product.owner = user.email
             
             const productoCreado = await productRepository.addProduct(product)
  
@@ -142,9 +143,9 @@ class ProductsController {
             return res.status(500).json({error: "No se pudo actualizar el producto"}).req.logger.warning("No se pudo actualizar el producto")
         }
 
-        req.logger.info("Se actualizó correctamente el producto")
+        req.logger.info(`Se actualizó correctamente el producto (${tittle})`)
 
-        return res.json(update)
+        return res.render("productReady", {tittle, description, price, thumbnail, code, status, stock, category})
     }
 
     async deleteProduct(req, res) {
@@ -155,6 +156,7 @@ class ProductsController {
         const uid = req.params.uid
     
         try {
+            const users = await usermanager.getUsers()
             const user = await usermanager.getUserById(uid)
             
             if(!user){
@@ -165,6 +167,41 @@ class ProductsController {
 
             if(!productToDelete){
                 return res.status(404).json({error: "No existe el producto a eliminar"}).req.logger.error("No existe el producto a eliminar")
+            }
+
+            if(productToDelete.owner !== "Admin"){
+                const userFind = users.find(item=>item.email === productToDelete.owner)
+
+                //Envio un correo informando que su producto creado por el usuario 'Premium' se elimino:
+                const transport = nodemailer.createTransport({
+                    //host: 'smtp.ethereal.email', // (para ethereal-pruebas)
+                    host: process.env.PORT, //(para Gmail)
+                    service: "gmail", //(para Gmail)
+                    port: 587,
+                    auth: {
+                        user: process.env.USER,
+                        pass: process.env.PASS
+                    },
+                    tls: {
+                        rejectUnauthorized: false
+                    }
+                })
+                const correo = await transport.sendMail({
+                    from: process.env.USER,//Correo del emisor
+                    to: `${productToDelete.owner}`,//Correo del receptor
+                    subject: "My aplication",//Asunto del correo
+                    html: `<div>
+                    <h1>Deleted Product ⚠</h1>
+                    <h3>¡Hola, ${userFind.first_name}!</h3>
+                    <p>Lamentamos informarte que tu producto ${productToDelete.tittle} ha sido eliminado de nuestra base de datos.</p>
+                    <h2>ATT: Team My Aplication.</h2>
+                    </div>`,//Cuerpo del mensaje
+                    /*attachments: [{
+                      filename: "",//Nombre del archivo(eje: pera.jpg)
+                      path:"",//ruta de la imagen(eje:./imgs/Pera.jpg)
+                      cid: ""//Nombre de la imagen(eje: Pera)
+                    }]*/
+                })
             }
 
             const userRol = user.typeCount

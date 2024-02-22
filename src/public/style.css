@@ -536,3 +536,48 @@ th{
         flex-direction: column;
     }
 }
+
+#barraBaja{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.formChat{
+    width: 100%;
+}
+
+@media screen and (max-width: 599px) {
+    #barraBaja{
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+#mensajeInput{
+    margin-left: .5rem;
+    width: 90%;
+    height: 3.5rem;
+    font-size: 1.2rem;
+    background-color: rgb(43, 42, 42);
+    color: white;
+    border-radius: 1rem;
+    border: rgb(43, 42, 42);
+}
+
+#mensajeEnviar{
+    min-width: 3rem;
+    height: 3.5rem;
+    background-color: rgb(13, 121, 13);
+    border-color: rgb(20, 139, 20);
+    color: white;
+    border-radius: 1rem;
+    font-size: 1.3rem;
+    font-weight: bolder;
+}
+
+#mensajeEnviar:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+}

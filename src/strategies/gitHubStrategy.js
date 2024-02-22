@@ -4,7 +4,7 @@ const userModel = require("../dao/models/userModel")
 const gitHubStrategy = new GitHubStrategy({
     clientID: `Iv1.45aff0769d29e7de`,
     clientSecret: `4dad4b5305419b28cc3f6347a53fa910081861dd`,
-    callbackURL: `${process.env.URL_RAILWAY}/api/sessions/github-callback`
+    callbackURL: `${process.env.URL}/api/sessions/github-callback`
     //${process.env.URL_RAILWAY}
     //http://localhost:8080
 }, async (accessToken, refreshToken, profile, done) => {
